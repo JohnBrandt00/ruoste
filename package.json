@@ -1,8 +1,8 @@
 {
   "name": "ruoste",
   "displayName": "RUOSTE",
-  "description": "Swiss industrial brutalism for VS Code \u2014 paper, ink and oxide rust. Three themes, Phosphor file and product icons, Geist Mono with a one-click installer, and a GitHub Actions panel. Tuned for C# and TypeScript.",
-  "version": "2.1.0",
+  "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, a GitHub Actions panel and a full Spotify player. Tuned for C# and TypeScript.",
+  "version": "2.2.0",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -37,7 +37,12 @@
     "github actions",
     "workflow",
     "ci",
-    "continuous integration"
+    "continuous integration",
+    "spotify",
+    "music",
+    "player",
+    "now playing",
+    "media control"
   ],
   "icon": "media/icon.png",
   "galleryBanner": {
@@ -103,6 +108,20 @@
           "name": "GitHub Actions",
           "icon": "media/activity-bar.svg",
           "contextualTitle": "RUOSTE \u2014 GitHub Actions"
+        },
+        {
+          "id": "ruoste.spotify.nowPlaying",
+          "name": "Now Playing",
+          "type": "webview",
+          "icon": "media/activity-bar.svg",
+          "contextualTitle": "RUOSTE \u2014 Spotify"
+        },
+        {
+          "id": "ruoste.spotify.library",
+          "name": "Spotify Library",
+          "icon": "media/activity-bar.svg",
+          "contextualTitle": "RUOSTE \u2014 Spotify Library",
+          "when": "ruoste.spotify.signedIn"
         }
       ]
     },
@@ -116,6 +135,11 @@
         "view": "ruoste.actions",
         "contents": "Sign in to GitHub to watch workflow runs for this repository.\n[Sign in to GitHub](command:ruoste.actions.signIn)\nRUOSTE uses VS Code's built-in GitHub account \u2014 no personal access token needed.",
         "when": "ruoste.actions.hasRepo && !ruoste.actions.signedIn"
+      },
+      {
+        "view": "ruoste.spotify.library",
+        "contents": "Connect Spotify to browse your playlists, queue and devices.\n[Connect Spotify](command:ruoste.spotify.signIn)",
+        "when": "!ruoste.spotify.signedIn"
       }
     ],
     "commands": [
@@ -167,6 +191,119 @@
         "title": "Cancel Run",
         "category": "RUOSTE",
         "icon": "$(stop-circle)"
+      },
+      {
+        "command": "ruoste.spotify.signIn",
+        "title": "Connect Spotify",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.signOut",
+        "title": "Disconnect Spotify",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.setClientId",
+        "title": "Set Spotify Client ID",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.toggle",
+        "title": "Play / Pause",
+        "category": "RUOSTE Spotify",
+        "icon": "$(play)"
+      },
+      {
+        "command": "ruoste.spotify.next",
+        "title": "Next Track",
+        "category": "RUOSTE Spotify",
+        "icon": "$(chevron-right)"
+      },
+      {
+        "command": "ruoste.spotify.previous",
+        "title": "Previous Track",
+        "category": "RUOSTE Spotify",
+        "icon": "$(chevron-left)"
+      },
+      {
+        "command": "ruoste.spotify.shuffle",
+        "title": "Toggle Shuffle",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.repeat",
+        "title": "Cycle Repeat",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.like",
+        "title": "Save / Unsave Track",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.device",
+        "title": "Transfer Playback\u2026",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.search",
+        "title": "Search Spotify",
+        "category": "RUOSTE Spotify",
+        "icon": "$(search)"
+      },
+      {
+        "command": "ruoste.spotify.dj",
+        "title": "Spotify DJ",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.refresh",
+        "title": "Refresh Spotify",
+        "category": "RUOSTE Spotify",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "ruoste.spotify.playTrack",
+        "title": "Play Track",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.playPlaylist",
+        "title": "Play Playlist",
+        "category": "RUOSTE Spotify",
+        "icon": "$(play)"
+      },
+      {
+        "command": "ruoste.spotify.queueTrack",
+        "title": "Add to Queue",
+        "category": "RUOSTE Spotify",
+        "icon": "$(add)"
+      },
+      {
+        "command": "ruoste.spotify.queueFromClipboard",
+        "title": "Queue Spotify Link from Clipboard",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.addToPlaylist",
+        "title": "Add to Playlist\u2026",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.transfer",
+        "title": "Transfer Playback Here",
+        "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.spotify.openInSpotify",
+        "title": "Open in Spotify",
+        "category": "RUOSTE Spotify",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "ruoste.spotify.copyLink",
+        "title": "Copy Spotify Link",
+        "category": "RUOSTE Spotify"
       }
     ],
     "menus": {
@@ -179,6 +316,16 @@
         {
           "command": "ruoste.actions.open",
           "when": "view == ruoste.actions",
+          "group": "navigation@2"
+        },
+        {
+          "command": "ruoste.spotify.search",
+          "when": "view == ruoste.spotify.library && ruoste.spotify.signedIn",
+          "group": "navigation@1"
+        },
+        {
+          "command": "ruoste.spotify.refresh",
+          "when": "view == ruoste.spotify.library",
           "group": "navigation@2"
         }
       ],
@@ -202,6 +349,41 @@
           "command": "ruoste.actions.copyUrl",
           "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.(run|job)/",
           "group": "1_copy"
+        },
+        {
+          "command": "ruoste.spotify.queueTrack",
+          "when": "view == ruoste.spotify.library && viewItem == ruoste.spotify.track",
+          "group": "inline@1"
+        },
+        {
+          "command": "ruoste.spotify.playPlaylist",
+          "when": "view == ruoste.spotify.library && viewItem == ruoste.spotify.playlist",
+          "group": "inline@1"
+        },
+        {
+          "command": "ruoste.spotify.queueTrack",
+          "when": "view == ruoste.spotify.library && viewItem == ruoste.spotify.playlist",
+          "group": "inline@2"
+        },
+        {
+          "command": "ruoste.spotify.addToPlaylist",
+          "when": "view == ruoste.spotify.library && viewItem == ruoste.spotify.track",
+          "group": "1_mod@1"
+        },
+        {
+          "command": "ruoste.spotify.openInSpotify",
+          "when": "view == ruoste.spotify.library && viewItem =~ /^ruoste\\.spotify\\.(track|playlist)/",
+          "group": "2_open@1"
+        },
+        {
+          "command": "ruoste.spotify.copyLink",
+          "when": "view == ruoste.spotify.library && viewItem =~ /^ruoste\\.spotify\\.(track|playlist)/",
+          "group": "2_open@2"
+        },
+        {
+          "command": "ruoste.spotify.transfer",
+          "when": "view == ruoste.spotify.library && viewItem == ruoste.spotify.device",
+          "group": "inline@1"
         }
       ],
       "commandPalette": [
@@ -219,6 +401,34 @@
         },
         {
           "command": "ruoste.actions.cancel",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.spotify.playTrack",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.spotify.playPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.spotify.queueTrack",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.spotify.addToPlaylist",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.spotify.transfer",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.spotify.openInSpotify",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.spotify.copyLink",
           "when": "false"
         }
       ]
@@ -259,6 +469,42 @@
           "type": "boolean",
           "default": true,
           "description": "Show the latest run's status in the status bar."
+        },
+        "ruoste.spotify.clientId": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Spotify **Client ID** from [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard). Register `vscode://gapashu.ruoste/spotify` as a Redirect URI on that app. Run **RUOSTE Spotify: Set Spotify Client ID** for a guided setup.",
+          "order": 10
+        },
+        "ruoste.spotify.pollInterval": {
+          "type": "number",
+          "default": 2,
+          "minimum": 1,
+          "maximum": 30,
+          "markdownDescription": "Seconds between player polls while a track is playing.",
+          "order": 11
+        },
+        "ruoste.spotify.idlePollInterval": {
+          "type": "number",
+          "default": 15,
+          "minimum": 5,
+          "maximum": 120,
+          "markdownDescription": "Seconds between polls while paused. Polling stops entirely when no RUOSTE view is visible.",
+          "order": 12
+        },
+        "ruoste.spotify.statusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the current track in the status bar.",
+          "order": 13
+        },
+        "ruoste.spotify.statusBarMaxLength": {
+          "type": "number",
+          "default": 32,
+          "minimum": 10,
+          "maximum": 100,
+          "description": "Truncate the status bar label to this many characters.",
+          "order": 14
         }
       }
     }
@@ -269,11 +515,12 @@
   ],
   "scripts": {
     "build": "python3 build/emit_themes.py && python3 build/emit_icons.py && node build/build_font.mjs 0",
-    "check": "tsc -p jsconfig.json && node --test test/util.test.js && python3 build/check_package.py",
+    "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js && python3 build/check_package.py",
     "verify": "node preview/audit.mjs && node preview/spot.mjs && node preview/icons_e2e.mjs",
     "preview": "node preview/render.mjs",
     "package": "vsce package --allow-missing-repository --no-dependencies --baseImagesUrl https://x.invalid/ && node build/fix-readme.mjs",
-    "all": "npm run build && npm run check && npm run package"
+    "all": "npm run build && npm run check && npm run package",
+    "ui": "node preview/spotify_ui.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/core": "^2.1.1",

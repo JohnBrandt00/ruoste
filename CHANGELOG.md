@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.2.0 — Spotify
+
+A full Spotify player, taking its cue from
+[CodeBeats](https://github.com/JunAkerBuilds/CodeBeats) and going further.
+
+- **Now Playing webview** — artwork with a blurred backdrop, drag-to-seek
+  scrubber, transport, shuffle/repeat/like, volume, device switch and a live
+  queue. Every colour comes from the active theme, so it tracks RUOSTE, Paperi
+  and Kontrasti without a second stylesheet.
+- **Library tree** — Up Next, Playlists (to track level), Liked Songs, Devices.
+- **Search** across tracks, albums, artists and playlists, with play and
+  add-to-queue buttons on every result.
+- **Queue** — add tracks, albums or playlists; queue straight from a Spotify
+  link on the clipboard.
+- **Add to playlist**, which needs `playlist-modify-private/public` — a scope
+  CodeBeats does not request.
+- **Auth**: OAuth PKCE through VS Code's URI handler instead of a self-signed
+  HTTPS server on a fixed port. No certificate warning, nothing to collide with,
+  works over Remote-SSH and WSL, and falls back to pasting the redirect URL where
+  the handler cannot fire. Tokens live in `SecretStorage`.
+- **Failure handling**: 401 refreshes and retries once, 429 honours
+  `Retry-After`, and the three kinds of 403 — Premium required, missing scope,
+  endpoint retired in Nov 2024 — are reported apart from each other.
+- **Polling** runs at 2 s while playing, 15 s while paused, and stops completely
+  when no RUOSTE view is visible.
+- **DJ**: attempts the DJ context, and on the expected 403 hands off to the
+  Spotify app and then follows the session. Spotify closed algorithmic and
+  editorial contexts to apps registered after 27 November 2024.
+- 13 new unit tests behind a `vscode` module stub, so extension logic is testable
+  outside the extension host.
+
 ## 2.1.0
 
 - **`RUOSTE: Install Geist Mono`** — the extension now installs the bundled font

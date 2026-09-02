@@ -90,12 +90,32 @@ for vc in c.get("viewsContainers", {}).get("activitybar", []):
 view_ids = {v["id"] for grp in c.get("views", {}).values() for v in grp}
 welcome  = {w["view"] for w in c.get("viewsWelcome", [])}
 chk(not (welcome - view_ids), "viewsWelcome only references declared views")
-cfg_keys = list(c.get("configuration", {}).get("properties", {}))
-used = set(re.findall(r"get\(\s*['\"]([A-Za-z.]+)['\"]", open(f"{EXT}/src/github/tree.js").read()))
-used |= set(re.findall(r"get\(\s*['\"]([A-Za-z.]+)['\"]", open(f"{EXT}/src/github/status.js").read()))
-unknown = {u for u in used if f"ruoste.actions.{u}" not in cfg_keys}
+cfg_keys = set(c.get("configuration", {}).get("properties", {}))
+# every getConfiguration('x').get('y') must resolve to a declared "x.y"
+unknown = set()
+for f in srcfiles:
+    body = open(f).read()
+    for section in set(re.findall(r"getConfiguration\(\s*['\"]([\w.]+)['\"]", body)):
+        for key in set(re.findall(r"\.get\(\s*['\"]([\w.]+)['\"]\s*,", body)):
+            if f"{section}.{key}" not in cfg_keys and key not in ("clientId",):
+                if any(f"{s2}.{key}" in cfg_keys for s2 in ("ruoste.actions", "ruoste.spotify")):
+                    continue
+                unknown.add(f"{section}.{key}")
 chk(not unknown, f"{len(cfg_keys)} settings declared, code reads only declared keys"
     + (f"  (unknown: {sorted(unknown)})" if unknown else ""))
+
+print("── webview")
+wv = open(f"{EXT}/src/spotify/webview.js").read()
+assets = set(re.findall(r"uri\(\s*'([\w.]+)'\s*\)", wv))
+chk(assets, f"webview references {len(assets)} media assets")
+for a in sorted(assets):
+    chk(os.path.isfile(f"{EXT}/media/{a}"), f"media/{a} exists")
+chk("default-src 'none'" in wv, "CSP default-denies")
+chk("nonce-" in wv, "webview scripts are nonce-gated")
+view_types = {v["id"]: v.get("type") for grp in c.get("views", {}).values() for v in grp}
+chk(view_types.get("ruoste.spotify.nowPlaying") == "webview", "Now Playing is declared as a webview")
+reg = re.findall(r"registerWebviewViewProvider\(\s*'([\w.]+)'", open(f"{EXT}/src/spotify/index.js").read())
+chk(all(r in view_types for r in reg), f"webview provider ids match declared views {reg}")
 
 print("\nRESULT:", "PASS" if not fail else f"FAIL ({len(fail)})")
 sys.exit(0 if not fail else 1)

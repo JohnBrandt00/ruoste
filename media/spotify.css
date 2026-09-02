@@ -1,0 +1,149 @@
+/* RUOSTE · Spotify — Swiss industrial brutalism: hairlines, flat surfaces,
+   one accent. Every colour comes from the active VS Code theme, so this
+   tracks RUOSTE / Paperi / Kontrasti automatically. */
+:root {
+  --ink:    var(--vscode-sideBar-background, #100E0B);
+  --fg:     var(--vscode-foreground, #E4DFD3);
+  --mute:   var(--vscode-descriptionForeground, #A6A196);
+  --rule:   var(--vscode-panel-border, #2C2822);
+  --accent: var(--vscode-activityBar-activeBorder, #C57749);
+  --hover:  var(--vscode-list-hoverBackground, rgba(255,255,255,.05));
+  --sel:    var(--vscode-list-activeSelectionBackground, rgba(197,119,73,.22));
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--vscode-editor-font-family, ui-monospace, monospace);
+  font-size: 11px;
+  color: var(--fg);
+  background: transparent;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* blurred artwork wash behind everything — the only soft edge in the design */
+#backdrop {
+  position: fixed; inset: -40px;
+  background-size: cover; background-position: center;
+  filter: blur(44px) saturate(.7);
+  opacity: 0; transition: opacity .5s ease, background-image .5s ease;
+  pointer-events: none; z-index: 0;
+}
+#backdrop.on { opacity: .18; }
+
+#app { position: relative; z-index: 1; padding: 12px 12px 16px; }
+
+/* ── signed out ───────────────────────────────────────────────────────── */
+#gate { padding: 26px 4px; text-align: left; }
+.gate-title { font-size: 10px; letter-spacing: .24em; color: var(--mute); margin-bottom: 10px; }
+.gate-body  { font-size: 11px; color: var(--mute); line-height: 1.6; margin-bottom: 16px; }
+button.primary {
+  font: inherit; letter-spacing: .12em; text-transform: uppercase;
+  background: var(--accent); color: var(--ink);
+  border: 0; padding: 8px 14px; cursor: pointer;
+}
+button.primary:hover { filter: brightness(1.12); }
+
+/* ── artwork ──────────────────────────────────────────────────────────── */
+#artwrap {
+  position: relative; width: 100%; aspect-ratio: 1;
+  border: 1px solid var(--rule); background: var(--hover);
+  margin-bottom: 12px; overflow: hidden;
+}
+#art { width: 100%; height: 100%; object-fit: cover; display: none; }
+#art.on { display: block; }
+#artfallback {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 34px; color: var(--rule);
+}
+#art.on + #artfallback { display: none; }
+
+.chip.dj {
+  position: absolute; top: 8px; right: 8px;
+  background: var(--accent); color: var(--ink); border: 0;
+  padding: 3px 8px; letter-spacing: .16em; font-size: 9px; display: none;
+}
+.chip.dj.on { display: block; }
+
+/* ── metadata ─────────────────────────────────────────────────────────── */
+#meta { margin-bottom: 12px; min-height: 32px; }
+#titlerow { overflow: hidden; white-space: nowrap; }
+#title { font-size: 13px; font-weight: 600; display: inline-block; }
+#title.scroll { animation: marquee 14s linear infinite; }
+@keyframes marquee {
+  0%, 12%   { transform: translateX(0); }
+  88%, 100% { transform: translateX(calc(-100% + 190px)); }
+}
+#artist {
+  font-size: 11px; color: var(--mute); margin-top: 3px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ── scrubber ─────────────────────────────────────────────────────────── */
+#scrub { margin-bottom: 12px; cursor: pointer; padding: 5px 0; }
+#bar { position: relative; height: 3px; background: var(--rule); }
+#fill { height: 100%; background: var(--accent); width: 0%; }
+#knob {
+  position: absolute; top: 50%; left: 0; width: 2px; height: 11px;
+  background: var(--accent); transform: translate(-1px, -50%);
+  opacity: 0; transition: opacity .12s;
+}
+#scrub:hover #knob, #scrub.dragging #knob { opacity: 1; }
+#times {
+  display: flex; justify-content: space-between;
+  font-size: 9.5px; color: var(--mute); margin-top: 5px; letter-spacing: .06em;
+}
+
+/* ── transport ────────────────────────────────────────────────────────── */
+#transport { display: flex; align-items: center; justify-content: center; gap: 4px; margin-bottom: 12px; }
+button.ghost, button.play, button.chip {
+  font: inherit; cursor: pointer; color: var(--fg);
+  background: transparent; border: 1px solid transparent;
+}
+button.ghost { padding: 6px 9px; font-size: 11px; color: var(--mute); }
+button.ghost:hover { color: var(--fg); background: var(--hover); }
+button.ghost.active { color: var(--accent); }
+button.play {
+  width: 38px; height: 38px; border: 1px solid var(--accent);
+  color: var(--accent); font-size: 13px; margin: 0 4px;
+}
+button.play:hover { background: var(--accent); color: var(--ink); }
+
+/* ── secondary row ────────────────────────────────────────────────────── */
+#secondary {
+  display: flex; align-items: center; gap: 6px;
+  padding-top: 10px; border-top: 1px solid var(--rule); margin-bottom: 12px;
+}
+button.chip {
+  border: 1px solid var(--rule); padding: 4px 7px;
+  font-size: 9px; letter-spacing: .12em; color: var(--mute); text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 92px;
+}
+button.chip:hover { color: var(--fg); border-color: var(--mute); }
+button.chip.active { color: var(--accent); border-color: var(--accent); }
+#volwrap { flex: 1; min-width: 42px; display: flex; align-items: center; }
+#vol { -webkit-appearance: none; appearance: none; width: 100%; height: 3px; background: var(--rule); outline: none; cursor: pointer; }
+#vol::-webkit-slider-thumb { -webkit-appearance: none; width: 2px; height: 11px; background: var(--accent); cursor: pointer; }
+
+/* ── queue ────────────────────────────────────────────────────────────── */
+.label { font-size: 9px; letter-spacing: .2em; color: var(--mute); margin-bottom: 6px; }
+#queuewrap { border-top: 1px solid var(--rule); padding-top: 10px; }
+#queue { list-style: none; max-height: 190px; overflow-y: auto; }
+#queue li {
+  display: flex; gap: 8px; align-items: baseline;
+  padding: 4px 5px; cursor: pointer; border-left: 2px solid transparent;
+}
+#queue li:hover { background: var(--hover); border-left-color: var(--accent); }
+#queue .n { color: var(--rule); font-size: 9px; min-width: 14px; }
+#queue .t { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#queue .a { color: var(--mute); font-size: 10px; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#queue::-webkit-scrollbar { width: 6px; }
+#queue::-webkit-scrollbar-thumb { background: var(--rule); }
+
+#error {
+  margin-top: 12px; padding: 7px 9px; font-size: 10px; line-height: 1.5;
+  color: var(--vscode-inputValidation-errorForeground, var(--fg));
+  border: 1px solid var(--vscode-inputValidation-errorBorder, var(--rule));
+  background: var(--vscode-inputValidation-errorBackground, transparent);
+}

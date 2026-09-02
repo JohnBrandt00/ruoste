@@ -6,6 +6,7 @@ const api = require('./github/api');
 const { ActionsProvider } = require('./github/tree');
 const { ActionsStatus } = require('./github/status');
 const { watchRepository } = require('./github/repo');
+const { activateSpotify } = require('./spotify');
 
 /** @param {vscode.ExtensionContext} ctx */
 function activate(ctx) {
@@ -83,6 +84,9 @@ function activate(ctx) {
   );
 
   void provider.refresh(false);
+
+  // ── spotify ────────────────────────────────────────────────────────────
+  activateSpotify(ctx);
 }
 
 function deactivate() { /* subscriptions handle teardown */ }

@@ -168,6 +168,54 @@ from the active theme so it never looks bolted on.
 | `ruoste.actions.currentBranchOnly` | `false` | limit to the checked-out branch |
 | `ruoste.actions.statusBar` | `true` | show the status bar item |
 
+## Spotify
+
+A full player in the sidebar — Now Playing webview, plus a library tree for your
+queue, playlists, liked songs and devices.
+
+![RUOSTE Spotify](media/preview-spotify-dark.png)
+
+**Setup.** Create a free app at
+[developer.spotify.com/dashboard](https://developer.spotify.com/dashboard), add
+`vscode://gapashu.ruoste/spotify` as a Redirect URI, then run
+**RUOSTE Spotify: Set Spotify Client ID** — it copies the redirect URI to your
+clipboard and validates the ID.
+
+**Playback control needs Spotify Premium**, and VS Code cannot play audio: this
+is a remote for a Spotify client you already have running. Reading what is
+playing works on a free account.
+
+| | |
+|---|---|
+| Transport | play/pause, next, previous, drag-to-seek, volume, shuffle, repeat |
+| Queue | see what's up next, click to jump, add any track/album/playlist, queue from a link on your clipboard |
+| Playlists | browse to track level, play in context so the queue survives, add the current track to a playlist |
+| Search | tracks, albums, artists and playlists — play or queue any result from the picker |
+| Library | liked songs, save/unsave, transfer playback between devices |
+| DJ | follows along when Spotify's AI DJ is playing, and hands off to the app to start it |
+
+**On the DJ.** Spotify closed algorithmic and editorial contexts to new apps in
+November 2024, so no extension can *start* the AI DJ — the play call returns 403.
+RUOSTE tries anyway (older apps with extended access still work), and otherwise
+deep-links you into Spotify to start it, then picks the session up and controls
+it from here. Reading DJ playback was never restricted.
+
+### How this differs from CodeBeats
+
+[CodeBeats](https://github.com/JunAkerBuilds/CodeBeats) is the extension this
+took its cue from. The differences that matter:
+
+| | CodeBeats | RUOSTE |
+|---|---|---|
+| OAuth callback | self-signed HTTPS server on `127.0.0.1:4567` | VS Code's own URI handler — no cert warning, no port to collide with, works over Remote-SSH and WSL, with a paste fallback |
+| Token storage | extension state | `SecretStorage` (encrypted at rest) |
+| Search | — | tracks, albums, artists, playlists |
+| Add to queue | — | any track, album or playlist, plus from a clipboard link |
+| Add to playlist | — | yes (`playlist-modify-*`, a scope CodeBeats does not request) |
+| Polling | fixed | 2 s while playing, 15 s idle, stops entirely when no view is visible |
+| 403 handling | one generic message | tells Premium-required, missing-scope and retired-endpoint apart |
+| Errors | — | 401 auto-refresh and retry, 429 `Retry-After` backoff, no-device prompts a transfer |
+
 ## Building from source
 
 ```bash
@@ -175,6 +223,7 @@ npm install
 npm run build     # regenerate themes, icons and the product icon font
 npm run check     # typecheck against @types/vscode, unit tests, package validation
 npm run verify    # tokenize real C#/TS through the actual grammars
+npm run ui        # render the Spotify webview against mock state, both themes
 npm run package   # -> ruoste-x.y.z.vsix
 ```
 
