@@ -1,0 +1,12 @@
+node_modules/
+*.vsix
+*.tgz
+
+# generated during the font build
+build/phosphor.ttf
+build/phosphor.svg
+build/fontprobe.png
+build/producticons.json
+
+# preview renders (regenerate with `npm run preview`)
+preview/*.png

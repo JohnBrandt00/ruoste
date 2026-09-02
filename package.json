@@ -1,0 +1,295 @@
+{
+  "name": "ruoste",
+  "displayName": "RUOSTE",
+  "description": "Swiss industrial brutalism for VS Code \u2014 paper, ink and oxide rust. Three themes, Phosphor file and product icons, Geist Mono with a one-click installer, and a GitHub Actions panel. Tuned for C# and TypeScript.",
+  "version": "2.1.0",
+  "publisher": "gapashu",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Themes",
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "theme",
+    "dark",
+    "light",
+    "high contrast",
+    "brutalism",
+    "swiss",
+    "industrial",
+    "phosphor",
+    "product icon theme",
+    "icons",
+    "csharp",
+    "dotnet",
+    "typescript",
+    "geist mono",
+    "monospace",
+    "minimal",
+    "warm",
+    "sepia",
+    "rust",
+    "finnish",
+    "github actions",
+    "workflow",
+    "ci",
+    "continuous integration"
+  ],
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#14120E",
+    "theme": "dark"
+  },
+  "contributes": {
+    "themes": [
+      {
+        "label": "RUOSTE",
+        "uiTheme": "vs-dark",
+        "path": "./themes/ruoste-color-theme.json"
+      },
+      {
+        "label": "RUOSTE Paperi",
+        "uiTheme": "vs",
+        "path": "./themes/ruoste-paperi-color-theme.json"
+      },
+      {
+        "label": "RUOSTE Kontrasti",
+        "uiTheme": "hc-black",
+        "path": "./themes/ruoste-kontrasti-color-theme.json"
+      }
+    ],
+    "iconThemes": [
+      {
+        "id": "ruoste-icons",
+        "label": "RUOSTE (Phosphor Duotone)",
+        "path": "./themes/ruoste-icon-theme.json"
+      }
+    ],
+    "productIconThemes": [
+      {
+        "id": "ruoste-product-icons",
+        "label": "RUOSTE (Phosphor)",
+        "path": "./themes/ruoste-product-icon-theme.json"
+      }
+    ],
+    "configurationDefaults": {
+      "editor.fontFamily": "'Geist Mono', 'GeistMono Nerd Font', 'JetBrains Mono', 'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace",
+      "editor.fontLigatures": true,
+      "editor.codeLensFontFamily": "'Geist Mono', 'JetBrains Mono', monospace",
+      "editor.inlayHints.fontFamily": "'Geist Mono', 'JetBrains Mono', monospace",
+      "terminal.integrated.fontFamily": "'Geist Mono', 'GeistMono Nerd Font', 'JetBrains Mono', Menlo, Consolas, monospace",
+      "debug.console.fontFamily": "'Geist Mono', 'JetBrains Mono', Menlo, Consolas, monospace",
+      "notebook.output.fontFamily": "'Geist Mono', 'JetBrains Mono', Menlo, Consolas, monospace",
+      "chat.editor.fontFamily": "'Geist Mono', 'JetBrains Mono', Menlo, Consolas, monospace",
+      "scm.inputFontFamily": "editor"
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ruoste",
+          "title": "RUOSTE",
+          "icon": "media/activity-bar.svg"
+        }
+      ]
+    },
+    "views": {
+      "ruoste": [
+        {
+          "id": "ruoste.actions",
+          "name": "GitHub Actions",
+          "icon": "media/activity-bar.svg",
+          "contextualTitle": "RUOSTE \u2014 GitHub Actions"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "ruoste.actions",
+        "contents": "Open a folder whose git remote points at GitHub to watch its workflow runs here.\n[Open Folder](command:vscode.openFolder)",
+        "when": "!ruoste.actions.hasRepo"
+      },
+      {
+        "view": "ruoste.actions",
+        "contents": "Sign in to GitHub to watch workflow runs for this repository.\n[Sign in to GitHub](command:ruoste.actions.signIn)\nRUOSTE uses VS Code's built-in GitHub account \u2014 no personal access token needed.",
+        "when": "ruoste.actions.hasRepo && !ruoste.actions.signedIn"
+      }
+    ],
+    "commands": [
+      {
+        "command": "ruoste.installFont",
+        "title": "Install Geist Mono",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.useFontSetting",
+        "title": "Use Geist Mono as the editor font",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.actions.refresh",
+        "title": "Refresh",
+        "category": "RUOSTE",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "ruoste.actions.signIn",
+        "title": "Sign in to GitHub",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.actions.focus",
+        "title": "Show GitHub Actions",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.actions.open",
+        "title": "Open on GitHub",
+        "category": "RUOSTE",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "ruoste.actions.copyUrl",
+        "title": "Copy Run URL",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.actions.rerun",
+        "title": "Re-run Workflow",
+        "category": "RUOSTE",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "ruoste.actions.cancel",
+        "title": "Cancel Run",
+        "category": "RUOSTE",
+        "icon": "$(stop-circle)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "ruoste.actions.refresh",
+          "when": "view == ruoste.actions",
+          "group": "navigation@1"
+        },
+        {
+          "command": "ruoste.actions.open",
+          "when": "view == ruoste.actions",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "ruoste.actions.open",
+          "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.(run|job)/",
+          "group": "inline@1"
+        },
+        {
+          "command": "ruoste.actions.rerun",
+          "when": "view == ruoste.actions && viewItem == ruoste.run.done",
+          "group": "inline@2"
+        },
+        {
+          "command": "ruoste.actions.cancel",
+          "when": "view == ruoste.actions && viewItem == ruoste.run.live",
+          "group": "inline@2"
+        },
+        {
+          "command": "ruoste.actions.copyUrl",
+          "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.(run|job)/",
+          "group": "1_copy"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "ruoste.actions.open",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.actions.copyUrl",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.actions.rerun",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.actions.cancel",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "RUOSTE",
+      "properties": {
+        "ruoste.actions.autoRefresh": {
+          "type": "boolean",
+          "default": true,
+          "description": "Poll GitHub for new workflow runs automatically."
+        },
+        "ruoste.actions.refreshInterval": {
+          "type": "number",
+          "default": 60,
+          "minimum": 15,
+          "markdownDescription": "Seconds between polls when nothing is running."
+        },
+        "ruoste.actions.liveRefreshInterval": {
+          "type": "number",
+          "default": 10,
+          "minimum": 5,
+          "markdownDescription": "Seconds between polls while a run is queued or in progress."
+        },
+        "ruoste.actions.runCount": {
+          "type": "number",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "How many recent runs to list."
+        },
+        "ruoste.actions.currentBranchOnly": {
+          "type": "boolean",
+          "default": false,
+          "description": "Only show runs for the branch currently checked out."
+        },
+        "ruoste.actions.statusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the latest run's status in the status bar."
+        }
+      }
+    }
+  },
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "scripts": {
+    "build": "python3 build/emit_themes.py && python3 build/emit_icons.py && node build/build_font.mjs 0",
+    "check": "tsc -p jsconfig.json && node --test test/util.test.js && python3 build/check_package.py",
+    "verify": "node preview/audit.mjs && node preview/spot.mjs && node preview/icons_e2e.mjs",
+    "preview": "node preview/render.mjs",
+    "package": "vsce package --allow-missing-repository --no-dependencies --baseImagesUrl https://x.invalid/ && node build/fix-readme.mjs",
+    "all": "npm run build && npm run check && npm run package"
+  },
+  "devDependencies": {
+    "@phosphor-icons/core": "^2.1.1",
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "geist": "^1.3.1",
+    "playwright": "^1.47.0",
+    "shiki": "^1.22.0",
+    "svg2ttf": "^6.0.3",
+    "svgicons2svgfont": "^15.0.0",
+    "ttf2woff2": "^8.0.0",
+    "typescript": "^5.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JohnBrandt00/ruoste.git"
+  }
+}

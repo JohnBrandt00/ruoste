@@ -1,0 +1,4067 @@
+{
+  "$schema": "vscode://schemas/icon-theme",
+  "hidesExplorerArrows": false,
+  "showLanguageModeIcons": true,
+  "iconDefinitions": {
+    "_f_cs_d": {
+      "iconPath": "../icons/f_cs_d.svg"
+    },
+    "_f_cs_l": {
+      "iconPath": "../icons/f_cs_l.svg"
+    },
+    "_f_cs_c": {
+      "iconPath": "../icons/f_cs_c.svg"
+    },
+    "_f_razor_d": {
+      "iconPath": "../icons/f_razor_d.svg"
+    },
+    "_f_razor_l": {
+      "iconPath": "../icons/f_razor_l.svg"
+    },
+    "_f_razor_c": {
+      "iconPath": "../icons/f_razor_c.svg"
+    },
+    "_f_csproj_d": {
+      "iconPath": "../icons/f_csproj_d.svg"
+    },
+    "_f_csproj_l": {
+      "iconPath": "../icons/f_csproj_l.svg"
+    },
+    "_f_csproj_c": {
+      "iconPath": "../icons/f_csproj_c.svg"
+    },
+    "_f_sln_d": {
+      "iconPath": "../icons/f_sln_d.svg"
+    },
+    "_f_sln_l": {
+      "iconPath": "../icons/f_sln_l.svg"
+    },
+    "_f_sln_c": {
+      "iconPath": "../icons/f_sln_c.svg"
+    },
+    "_f_nuget_d": {
+      "iconPath": "../icons/f_nuget_d.svg"
+    },
+    "_f_nuget_l": {
+      "iconPath": "../icons/f_nuget_l.svg"
+    },
+    "_f_nuget_c": {
+      "iconPath": "../icons/f_nuget_c.svg"
+    },
+    "_f_resx_d": {
+      "iconPath": "../icons/f_resx_d.svg"
+    },
+    "_f_resx_l": {
+      "iconPath": "../icons/f_resx_l.svg"
+    },
+    "_f_resx_c": {
+      "iconPath": "../icons/f_resx_c.svg"
+    },
+    "_f_xaml_d": {
+      "iconPath": "../icons/f_xaml_d.svg"
+    },
+    "_f_xaml_l": {
+      "iconPath": "../icons/f_xaml_l.svg"
+    },
+    "_f_xaml_c": {
+      "iconPath": "../icons/f_xaml_c.svg"
+    },
+    "_f_fsharp_d": {
+      "iconPath": "../icons/f_fsharp_d.svg"
+    },
+    "_f_fsharp_l": {
+      "iconPath": "../icons/f_fsharp_l.svg"
+    },
+    "_f_fsharp_c": {
+      "iconPath": "../icons/f_fsharp_c.svg"
+    },
+    "_f_vb_d": {
+      "iconPath": "../icons/f_vb_d.svg"
+    },
+    "_f_vb_l": {
+      "iconPath": "../icons/f_vb_l.svg"
+    },
+    "_f_vb_c": {
+      "iconPath": "../icons/f_vb_c.svg"
+    },
+    "_f_dotnetcfg_d": {
+      "iconPath": "../icons/f_dotnetcfg_d.svg"
+    },
+    "_f_dotnetcfg_l": {
+      "iconPath": "../icons/f_dotnetcfg_l.svg"
+    },
+    "_f_dotnetcfg_c": {
+      "iconPath": "../icons/f_dotnetcfg_c.svg"
+    },
+    "_f_ts_d": {
+      "iconPath": "../icons/f_ts_d.svg"
+    },
+    "_f_ts_l": {
+      "iconPath": "../icons/f_ts_l.svg"
+    },
+    "_f_ts_c": {
+      "iconPath": "../icons/f_ts_c.svg"
+    },
+    "_f_tsdef_d": {
+      "iconPath": "../icons/f_tsdef_d.svg"
+    },
+    "_f_tsdef_l": {
+      "iconPath": "../icons/f_tsdef_l.svg"
+    },
+    "_f_tsdef_c": {
+      "iconPath": "../icons/f_tsdef_c.svg"
+    },
+    "_f_tsx_d": {
+      "iconPath": "../icons/f_tsx_d.svg"
+    },
+    "_f_tsx_l": {
+      "iconPath": "../icons/f_tsx_l.svg"
+    },
+    "_f_tsx_c": {
+      "iconPath": "../icons/f_tsx_c.svg"
+    },
+    "_f_js_d": {
+      "iconPath": "../icons/f_js_d.svg"
+    },
+    "_f_js_l": {
+      "iconPath": "../icons/f_js_l.svg"
+    },
+    "_f_js_c": {
+      "iconPath": "../icons/f_js_c.svg"
+    },
+    "_f_jsx_d": {
+      "iconPath": "../icons/f_jsx_d.svg"
+    },
+    "_f_jsx_l": {
+      "iconPath": "../icons/f_jsx_l.svg"
+    },
+    "_f_jsx_c": {
+      "iconPath": "../icons/f_jsx_c.svg"
+    },
+    "_f_tsconfig_d": {
+      "iconPath": "../icons/f_tsconfig_d.svg"
+    },
+    "_f_tsconfig_l": {
+      "iconPath": "../icons/f_tsconfig_l.svg"
+    },
+    "_f_tsconfig_c": {
+      "iconPath": "../icons/f_tsconfig_c.svg"
+    },
+    "_f_npm_d": {
+      "iconPath": "../icons/f_npm_d.svg"
+    },
+    "_f_npm_l": {
+      "iconPath": "../icons/f_npm_l.svg"
+    },
+    "_f_npm_c": {
+      "iconPath": "../icons/f_npm_c.svg"
+    },
+    "_f_lock_d": {
+      "iconPath": "../icons/f_lock_d.svg"
+    },
+    "_f_lock_l": {
+      "iconPath": "../icons/f_lock_l.svg"
+    },
+    "_f_lock_c": {
+      "iconPath": "../icons/f_lock_c.svg"
+    },
+    "_f_vue_d": {
+      "iconPath": "../icons/f_vue_d.svg"
+    },
+    "_f_vue_l": {
+      "iconPath": "../icons/f_vue_l.svg"
+    },
+    "_f_vue_c": {
+      "iconPath": "../icons/f_vue_c.svg"
+    },
+    "_f_svelte_d": {
+      "iconPath": "../icons/f_svelte_d.svg"
+    },
+    "_f_svelte_l": {
+      "iconPath": "../icons/f_svelte_l.svg"
+    },
+    "_f_svelte_c": {
+      "iconPath": "../icons/f_svelte_c.svg"
+    },
+    "_f_astro_d": {
+      "iconPath": "../icons/f_astro_d.svg"
+    },
+    "_f_astro_l": {
+      "iconPath": "../icons/f_astro_l.svg"
+    },
+    "_f_astro_c": {
+      "iconPath": "../icons/f_astro_c.svg"
+    },
+    "_f_eslint_d": {
+      "iconPath": "../icons/f_eslint_d.svg"
+    },
+    "_f_eslint_l": {
+      "iconPath": "../icons/f_eslint_l.svg"
+    },
+    "_f_eslint_c": {
+      "iconPath": "../icons/f_eslint_c.svg"
+    },
+    "_f_prettier_d": {
+      "iconPath": "../icons/f_prettier_d.svg"
+    },
+    "_f_prettier_l": {
+      "iconPath": "../icons/f_prettier_l.svg"
+    },
+    "_f_prettier_c": {
+      "iconPath": "../icons/f_prettier_c.svg"
+    },
+    "_f_bundler_d": {
+      "iconPath": "../icons/f_bundler_d.svg"
+    },
+    "_f_bundler_l": {
+      "iconPath": "../icons/f_bundler_l.svg"
+    },
+    "_f_bundler_c": {
+      "iconPath": "../icons/f_bundler_c.svg"
+    },
+    "_f_test_d": {
+      "iconPath": "../icons/f_test_d.svg"
+    },
+    "_f_test_l": {
+      "iconPath": "../icons/f_test_l.svg"
+    },
+    "_f_test_c": {
+      "iconPath": "../icons/f_test_c.svg"
+    },
+    "_f_html_d": {
+      "iconPath": "../icons/f_html_d.svg"
+    },
+    "_f_html_l": {
+      "iconPath": "../icons/f_html_l.svg"
+    },
+    "_f_html_c": {
+      "iconPath": "../icons/f_html_c.svg"
+    },
+    "_f_css_d": {
+      "iconPath": "../icons/f_css_d.svg"
+    },
+    "_f_css_l": {
+      "iconPath": "../icons/f_css_l.svg"
+    },
+    "_f_css_c": {
+      "iconPath": "../icons/f_css_c.svg"
+    },
+    "_f_sass_d": {
+      "iconPath": "../icons/f_sass_d.svg"
+    },
+    "_f_sass_l": {
+      "iconPath": "../icons/f_sass_l.svg"
+    },
+    "_f_sass_c": {
+      "iconPath": "../icons/f_sass_c.svg"
+    },
+    "_f_tailwind_d": {
+      "iconPath": "../icons/f_tailwind_d.svg"
+    },
+    "_f_tailwind_l": {
+      "iconPath": "../icons/f_tailwind_l.svg"
+    },
+    "_f_tailwind_c": {
+      "iconPath": "../icons/f_tailwind_c.svg"
+    },
+    "_f_svg_d": {
+      "iconPath": "../icons/f_svg_d.svg"
+    },
+    "_f_svg_l": {
+      "iconPath": "../icons/f_svg_l.svg"
+    },
+    "_f_svg_c": {
+      "iconPath": "../icons/f_svg_c.svg"
+    },
+    "_f_json_d": {
+      "iconPath": "../icons/f_json_d.svg"
+    },
+    "_f_json_l": {
+      "iconPath": "../icons/f_json_l.svg"
+    },
+    "_f_json_c": {
+      "iconPath": "../icons/f_json_c.svg"
+    },
+    "_f_yaml_d": {
+      "iconPath": "../icons/f_yaml_d.svg"
+    },
+    "_f_yaml_l": {
+      "iconPath": "../icons/f_yaml_l.svg"
+    },
+    "_f_yaml_c": {
+      "iconPath": "../icons/f_yaml_c.svg"
+    },
+    "_f_toml_d": {
+      "iconPath": "../icons/f_toml_d.svg"
+    },
+    "_f_toml_l": {
+      "iconPath": "../icons/f_toml_l.svg"
+    },
+    "_f_toml_c": {
+      "iconPath": "../icons/f_toml_c.svg"
+    },
+    "_f_ini_d": {
+      "iconPath": "../icons/f_ini_d.svg"
+    },
+    "_f_ini_l": {
+      "iconPath": "../icons/f_ini_l.svg"
+    },
+    "_f_ini_c": {
+      "iconPath": "../icons/f_ini_c.svg"
+    },
+    "_f_xml_d": {
+      "iconPath": "../icons/f_xml_d.svg"
+    },
+    "_f_xml_l": {
+      "iconPath": "../icons/f_xml_l.svg"
+    },
+    "_f_xml_c": {
+      "iconPath": "../icons/f_xml_c.svg"
+    },
+    "_f_env_d": {
+      "iconPath": "../icons/f_env_d.svg"
+    },
+    "_f_env_l": {
+      "iconPath": "../icons/f_env_l.svg"
+    },
+    "_f_env_c": {
+      "iconPath": "../icons/f_env_c.svg"
+    },
+    "_f_csv_d": {
+      "iconPath": "../icons/f_csv_d.svg"
+    },
+    "_f_csv_l": {
+      "iconPath": "../icons/f_csv_l.svg"
+    },
+    "_f_csv_c": {
+      "iconPath": "../icons/f_csv_c.svg"
+    },
+    "_f_sql_d": {
+      "iconPath": "../icons/f_sql_d.svg"
+    },
+    "_f_sql_l": {
+      "iconPath": "../icons/f_sql_l.svg"
+    },
+    "_f_sql_c": {
+      "iconPath": "../icons/f_sql_c.svg"
+    },
+    "_f_db_d": {
+      "iconPath": "../icons/f_db_d.svg"
+    },
+    "_f_db_l": {
+      "iconPath": "../icons/f_db_l.svg"
+    },
+    "_f_db_c": {
+      "iconPath": "../icons/f_db_c.svg"
+    },
+    "_f_graphql_d": {
+      "iconPath": "../icons/f_graphql_d.svg"
+    },
+    "_f_graphql_l": {
+      "iconPath": "../icons/f_graphql_l.svg"
+    },
+    "_f_graphql_c": {
+      "iconPath": "../icons/f_graphql_c.svg"
+    },
+    "_f_proto_d": {
+      "iconPath": "../icons/f_proto_d.svg"
+    },
+    "_f_proto_l": {
+      "iconPath": "../icons/f_proto_l.svg"
+    },
+    "_f_proto_c": {
+      "iconPath": "../icons/f_proto_c.svg"
+    },
+    "_f_http_d": {
+      "iconPath": "../icons/f_http_d.svg"
+    },
+    "_f_http_l": {
+      "iconPath": "../icons/f_http_l.svg"
+    },
+    "_f_http_c": {
+      "iconPath": "../icons/f_http_c.svg"
+    },
+    "_f_md_d": {
+      "iconPath": "../icons/f_md_d.svg"
+    },
+    "_f_md_l": {
+      "iconPath": "../icons/f_md_l.svg"
+    },
+    "_f_md_c": {
+      "iconPath": "../icons/f_md_c.svg"
+    },
+    "_f_readme_d": {
+      "iconPath": "../icons/f_readme_d.svg"
+    },
+    "_f_readme_l": {
+      "iconPath": "../icons/f_readme_l.svg"
+    },
+    "_f_readme_c": {
+      "iconPath": "../icons/f_readme_c.svg"
+    },
+    "_f_changelog_d": {
+      "iconPath": "../icons/f_changelog_d.svg"
+    },
+    "_f_changelog_l": {
+      "iconPath": "../icons/f_changelog_l.svg"
+    },
+    "_f_changelog_c": {
+      "iconPath": "../icons/f_changelog_c.svg"
+    },
+    "_f_license_d": {
+      "iconPath": "../icons/f_license_d.svg"
+    },
+    "_f_license_l": {
+      "iconPath": "../icons/f_license_l.svg"
+    },
+    "_f_license_c": {
+      "iconPath": "../icons/f_license_c.svg"
+    },
+    "_f_contrib_d": {
+      "iconPath": "../icons/f_contrib_d.svg"
+    },
+    "_f_contrib_l": {
+      "iconPath": "../icons/f_contrib_l.svg"
+    },
+    "_f_contrib_c": {
+      "iconPath": "../icons/f_contrib_c.svg"
+    },
+    "_f_txt_d": {
+      "iconPath": "../icons/f_txt_d.svg"
+    },
+    "_f_txt_l": {
+      "iconPath": "../icons/f_txt_l.svg"
+    },
+    "_f_txt_c": {
+      "iconPath": "../icons/f_txt_c.svg"
+    },
+    "_f_pdf_d": {
+      "iconPath": "../icons/f_pdf_d.svg"
+    },
+    "_f_pdf_l": {
+      "iconPath": "../icons/f_pdf_l.svg"
+    },
+    "_f_pdf_c": {
+      "iconPath": "../icons/f_pdf_c.svg"
+    },
+    "_f_doc_d": {
+      "iconPath": "../icons/f_doc_d.svg"
+    },
+    "_f_doc_l": {
+      "iconPath": "../icons/f_doc_l.svg"
+    },
+    "_f_doc_c": {
+      "iconPath": "../icons/f_doc_c.svg"
+    },
+    "_f_xls_d": {
+      "iconPath": "../icons/f_xls_d.svg"
+    },
+    "_f_xls_l": {
+      "iconPath": "../icons/f_xls_l.svg"
+    },
+    "_f_xls_c": {
+      "iconPath": "../icons/f_xls_c.svg"
+    },
+    "_f_ppt_d": {
+      "iconPath": "../icons/f_ppt_d.svg"
+    },
+    "_f_ppt_l": {
+      "iconPath": "../icons/f_ppt_l.svg"
+    },
+    "_f_ppt_c": {
+      "iconPath": "../icons/f_ppt_c.svg"
+    },
+    "_f_image_d": {
+      "iconPath": "../icons/f_image_d.svg"
+    },
+    "_f_image_l": {
+      "iconPath": "../icons/f_image_l.svg"
+    },
+    "_f_image_c": {
+      "iconPath": "../icons/f_image_c.svg"
+    },
+    "_f_video_d": {
+      "iconPath": "../icons/f_video_d.svg"
+    },
+    "_f_video_l": {
+      "iconPath": "../icons/f_video_l.svg"
+    },
+    "_f_video_c": {
+      "iconPath": "../icons/f_video_c.svg"
+    },
+    "_f_audio_d": {
+      "iconPath": "../icons/f_audio_d.svg"
+    },
+    "_f_audio_l": {
+      "iconPath": "../icons/f_audio_l.svg"
+    },
+    "_f_audio_c": {
+      "iconPath": "../icons/f_audio_c.svg"
+    },
+    "_f_font_d": {
+      "iconPath": "../icons/f_font_d.svg"
+    },
+    "_f_font_l": {
+      "iconPath": "../icons/f_font_l.svg"
+    },
+    "_f_font_c": {
+      "iconPath": "../icons/f_font_c.svg"
+    },
+    "_f_model3d_d": {
+      "iconPath": "../icons/f_model3d_d.svg"
+    },
+    "_f_model3d_l": {
+      "iconPath": "../icons/f_model3d_l.svg"
+    },
+    "_f_model3d_c": {
+      "iconPath": "../icons/f_model3d_c.svg"
+    },
+    "_f_archive_d": {
+      "iconPath": "../icons/f_archive_d.svg"
+    },
+    "_f_archive_l": {
+      "iconPath": "../icons/f_archive_l.svg"
+    },
+    "_f_archive_c": {
+      "iconPath": "../icons/f_archive_c.svg"
+    },
+    "_f_binary_d": {
+      "iconPath": "../icons/f_binary_d.svg"
+    },
+    "_f_binary_l": {
+      "iconPath": "../icons/f_binary_l.svg"
+    },
+    "_f_binary_c": {
+      "iconPath": "../icons/f_binary_c.svg"
+    },
+    "_f_shell_d": {
+      "iconPath": "../icons/f_shell_d.svg"
+    },
+    "_f_shell_l": {
+      "iconPath": "../icons/f_shell_l.svg"
+    },
+    "_f_shell_c": {
+      "iconPath": "../icons/f_shell_c.svg"
+    },
+    "_f_make_d": {
+      "iconPath": "../icons/f_make_d.svg"
+    },
+    "_f_make_l": {
+      "iconPath": "../icons/f_make_l.svg"
+    },
+    "_f_make_c": {
+      "iconPath": "../icons/f_make_c.svg"
+    },
+    "_f_docker_d": {
+      "iconPath": "../icons/f_docker_d.svg"
+    },
+    "_f_docker_l": {
+      "iconPath": "../icons/f_docker_l.svg"
+    },
+    "_f_docker_c": {
+      "iconPath": "../icons/f_docker_c.svg"
+    },
+    "_f_terraform_d": {
+      "iconPath": "../icons/f_terraform_d.svg"
+    },
+    "_f_terraform_l": {
+      "iconPath": "../icons/f_terraform_l.svg"
+    },
+    "_f_terraform_c": {
+      "iconPath": "../icons/f_terraform_c.svg"
+    },
+    "_f_k8s_d": {
+      "iconPath": "../icons/f_k8s_d.svg"
+    },
+    "_f_k8s_l": {
+      "iconPath": "../icons/f_k8s_l.svg"
+    },
+    "_f_k8s_c": {
+      "iconPath": "../icons/f_k8s_c.svg"
+    },
+    "_f_git_d": {
+      "iconPath": "../icons/f_git_d.svg"
+    },
+    "_f_git_l": {
+      "iconPath": "../icons/f_git_l.svg"
+    },
+    "_f_git_c": {
+      "iconPath": "../icons/f_git_c.svg"
+    },
+    "_f_ci_d": {
+      "iconPath": "../icons/f_ci_d.svg"
+    },
+    "_f_ci_l": {
+      "iconPath": "../icons/f_ci_l.svg"
+    },
+    "_f_ci_c": {
+      "iconPath": "../icons/f_ci_c.svg"
+    },
+    "_f_vscode_d": {
+      "iconPath": "../icons/f_vscode_d.svg"
+    },
+    "_f_vscode_l": {
+      "iconPath": "../icons/f_vscode_l.svg"
+    },
+    "_f_vscode_c": {
+      "iconPath": "../icons/f_vscode_c.svg"
+    },
+    "_f_py_d": {
+      "iconPath": "../icons/f_py_d.svg"
+    },
+    "_f_py_l": {
+      "iconPath": "../icons/f_py_l.svg"
+    },
+    "_f_py_c": {
+      "iconPath": "../icons/f_py_c.svg"
+    },
+    "_f_rs_d": {
+      "iconPath": "../icons/f_rs_d.svg"
+    },
+    "_f_rs_l": {
+      "iconPath": "../icons/f_rs_l.svg"
+    },
+    "_f_rs_c": {
+      "iconPath": "../icons/f_rs_c.svg"
+    },
+    "_f_go_d": {
+      "iconPath": "../icons/f_go_d.svg"
+    },
+    "_f_go_l": {
+      "iconPath": "../icons/f_go_l.svg"
+    },
+    "_f_go_c": {
+      "iconPath": "../icons/f_go_c.svg"
+    },
+    "_f_rb_d": {
+      "iconPath": "../icons/f_rb_d.svg"
+    },
+    "_f_rb_l": {
+      "iconPath": "../icons/f_rb_l.svg"
+    },
+    "_f_rb_c": {
+      "iconPath": "../icons/f_rb_c.svg"
+    },
+    "_f_java_d": {
+      "iconPath": "../icons/f_java_d.svg"
+    },
+    "_f_java_l": {
+      "iconPath": "../icons/f_java_l.svg"
+    },
+    "_f_java_c": {
+      "iconPath": "../icons/f_java_c.svg"
+    },
+    "_f_php_d": {
+      "iconPath": "../icons/f_php_d.svg"
+    },
+    "_f_php_l": {
+      "iconPath": "../icons/f_php_l.svg"
+    },
+    "_f_php_c": {
+      "iconPath": "../icons/f_php_c.svg"
+    },
+    "_f_c_d": {
+      "iconPath": "../icons/f_c_d.svg"
+    },
+    "_f_c_l": {
+      "iconPath": "../icons/f_c_l.svg"
+    },
+    "_f_c_c": {
+      "iconPath": "../icons/f_c_c.svg"
+    },
+    "_f_cpp_d": {
+      "iconPath": "../icons/f_cpp_d.svg"
+    },
+    "_f_cpp_l": {
+      "iconPath": "../icons/f_cpp_l.svg"
+    },
+    "_f_cpp_c": {
+      "iconPath": "../icons/f_cpp_c.svg"
+    },
+    "_f_swift_d": {
+      "iconPath": "../icons/f_swift_d.svg"
+    },
+    "_f_swift_l": {
+      "iconPath": "../icons/f_swift_l.svg"
+    },
+    "_f_swift_c": {
+      "iconPath": "../icons/f_swift_c.svg"
+    },
+    "_f_dart_d": {
+      "iconPath": "../icons/f_dart_d.svg"
+    },
+    "_f_dart_l": {
+      "iconPath": "../icons/f_dart_l.svg"
+    },
+    "_f_dart_c": {
+      "iconPath": "../icons/f_dart_c.svg"
+    },
+    "_f_lua_d": {
+      "iconPath": "../icons/f_lua_d.svg"
+    },
+    "_f_lua_l": {
+      "iconPath": "../icons/f_lua_l.svg"
+    },
+    "_f_lua_c": {
+      "iconPath": "../icons/f_lua_c.svg"
+    },
+    "_f_r_d": {
+      "iconPath": "../icons/f_r_d.svg"
+    },
+    "_f_r_l": {
+      "iconPath": "../icons/f_r_l.svg"
+    },
+    "_f_r_c": {
+      "iconPath": "../icons/f_r_c.svg"
+    },
+    "_f_elixir_d": {
+      "iconPath": "../icons/f_elixir_d.svg"
+    },
+    "_f_elixir_l": {
+      "iconPath": "../icons/f_elixir_l.svg"
+    },
+    "_f_elixir_c": {
+      "iconPath": "../icons/f_elixir_c.svg"
+    },
+    "_f_haskell_d": {
+      "iconPath": "../icons/f_haskell_d.svg"
+    },
+    "_f_haskell_l": {
+      "iconPath": "../icons/f_haskell_l.svg"
+    },
+    "_f_haskell_c": {
+      "iconPath": "../icons/f_haskell_c.svg"
+    },
+    "_f_zig_d": {
+      "iconPath": "../icons/f_zig_d.svg"
+    },
+    "_f_zig_l": {
+      "iconPath": "../icons/f_zig_l.svg"
+    },
+    "_f_zig_c": {
+      "iconPath": "../icons/f_zig_c.svg"
+    },
+    "_f_nix_d": {
+      "iconPath": "../icons/f_nix_d.svg"
+    },
+    "_f_nix_l": {
+      "iconPath": "../icons/f_nix_l.svg"
+    },
+    "_f_nix_c": {
+      "iconPath": "../icons/f_nix_c.svg"
+    },
+    "_f_diff_d": {
+      "iconPath": "../icons/f_diff_d.svg"
+    },
+    "_f_diff_l": {
+      "iconPath": "../icons/f_diff_l.svg"
+    },
+    "_f_diff_c": {
+      "iconPath": "../icons/f_diff_c.svg"
+    },
+    "_f_key_d": {
+      "iconPath": "../icons/f_key_d.svg"
+    },
+    "_f_key_l": {
+      "iconPath": "../icons/f_key_l.svg"
+    },
+    "_f_key_c": {
+      "iconPath": "../icons/f_key_c.svg"
+    },
+    "_o_src_d": {
+      "iconPath": "../icons/o_src_d.svg"
+    },
+    "_o_src_l": {
+      "iconPath": "../icons/o_src_l.svg"
+    },
+    "_o_src_c": {
+      "iconPath": "../icons/o_src_c.svg"
+    },
+    "_o_src_x_d": {
+      "iconPath": "../icons/o_src_x_d.svg"
+    },
+    "_o_src_x_l": {
+      "iconPath": "../icons/o_src_x_l.svg"
+    },
+    "_o_src_x_c": {
+      "iconPath": "../icons/o_src_x_c.svg"
+    },
+    "_o_test_d": {
+      "iconPath": "../icons/o_test_d.svg"
+    },
+    "_o_test_l": {
+      "iconPath": "../icons/o_test_l.svg"
+    },
+    "_o_test_c": {
+      "iconPath": "../icons/o_test_c.svg"
+    },
+    "_o_test_x_d": {
+      "iconPath": "../icons/o_test_x_d.svg"
+    },
+    "_o_test_x_l": {
+      "iconPath": "../icons/o_test_x_l.svg"
+    },
+    "_o_test_x_c": {
+      "iconPath": "../icons/o_test_x_c.svg"
+    },
+    "_o_node_d": {
+      "iconPath": "../icons/o_node_d.svg"
+    },
+    "_o_node_l": {
+      "iconPath": "../icons/o_node_l.svg"
+    },
+    "_o_node_c": {
+      "iconPath": "../icons/o_node_c.svg"
+    },
+    "_o_node_x_d": {
+      "iconPath": "../icons/o_node_x_d.svg"
+    },
+    "_o_node_x_l": {
+      "iconPath": "../icons/o_node_x_l.svg"
+    },
+    "_o_node_x_c": {
+      "iconPath": "../icons/o_node_x_c.svg"
+    },
+    "_o_dist_d": {
+      "iconPath": "../icons/o_dist_d.svg"
+    },
+    "_o_dist_l": {
+      "iconPath": "../icons/o_dist_l.svg"
+    },
+    "_o_dist_c": {
+      "iconPath": "../icons/o_dist_c.svg"
+    },
+    "_o_dist_x_d": {
+      "iconPath": "../icons/o_dist_x_d.svg"
+    },
+    "_o_dist_x_l": {
+      "iconPath": "../icons/o_dist_x_l.svg"
+    },
+    "_o_dist_x_c": {
+      "iconPath": "../icons/o_dist_x_c.svg"
+    },
+    "_o_git_d": {
+      "iconPath": "../icons/o_git_d.svg"
+    },
+    "_o_git_l": {
+      "iconPath": "../icons/o_git_l.svg"
+    },
+    "_o_git_c": {
+      "iconPath": "../icons/o_git_c.svg"
+    },
+    "_o_git_x_d": {
+      "iconPath": "../icons/o_git_x_d.svg"
+    },
+    "_o_git_x_l": {
+      "iconPath": "../icons/o_git_x_l.svg"
+    },
+    "_o_git_x_c": {
+      "iconPath": "../icons/o_git_x_c.svg"
+    },
+    "_o_github_d": {
+      "iconPath": "../icons/o_github_d.svg"
+    },
+    "_o_github_l": {
+      "iconPath": "../icons/o_github_l.svg"
+    },
+    "_o_github_c": {
+      "iconPath": "../icons/o_github_c.svg"
+    },
+    "_o_github_x_d": {
+      "iconPath": "../icons/o_github_x_d.svg"
+    },
+    "_o_github_x_l": {
+      "iconPath": "../icons/o_github_x_l.svg"
+    },
+    "_o_github_x_c": {
+      "iconPath": "../icons/o_github_x_c.svg"
+    },
+    "_o_config_d": {
+      "iconPath": "../icons/o_config_d.svg"
+    },
+    "_o_config_l": {
+      "iconPath": "../icons/o_config_l.svg"
+    },
+    "_o_config_c": {
+      "iconPath": "../icons/o_config_c.svg"
+    },
+    "_o_config_x_d": {
+      "iconPath": "../icons/o_config_x_d.svg"
+    },
+    "_o_config_x_l": {
+      "iconPath": "../icons/o_config_x_l.svg"
+    },
+    "_o_config_x_c": {
+      "iconPath": "../icons/o_config_x_c.svg"
+    },
+    "_o_assets_d": {
+      "iconPath": "../icons/o_assets_d.svg"
+    },
+    "_o_assets_l": {
+      "iconPath": "../icons/o_assets_l.svg"
+    },
+    "_o_assets_c": {
+      "iconPath": "../icons/o_assets_c.svg"
+    },
+    "_o_assets_x_d": {
+      "iconPath": "../icons/o_assets_x_d.svg"
+    },
+    "_o_assets_x_l": {
+      "iconPath": "../icons/o_assets_x_l.svg"
+    },
+    "_o_assets_x_c": {
+      "iconPath": "../icons/o_assets_x_c.svg"
+    },
+    "_o_docs_d": {
+      "iconPath": "../icons/o_docs_d.svg"
+    },
+    "_o_docs_l": {
+      "iconPath": "../icons/o_docs_l.svg"
+    },
+    "_o_docs_c": {
+      "iconPath": "../icons/o_docs_c.svg"
+    },
+    "_o_docs_x_d": {
+      "iconPath": "../icons/o_docs_x_d.svg"
+    },
+    "_o_docs_x_l": {
+      "iconPath": "../icons/o_docs_x_l.svg"
+    },
+    "_o_docs_x_c": {
+      "iconPath": "../icons/o_docs_x_c.svg"
+    },
+    "_o_styles_d": {
+      "iconPath": "../icons/o_styles_d.svg"
+    },
+    "_o_styles_l": {
+      "iconPath": "../icons/o_styles_l.svg"
+    },
+    "_o_styles_c": {
+      "iconPath": "../icons/o_styles_c.svg"
+    },
+    "_o_styles_x_d": {
+      "iconPath": "../icons/o_styles_x_d.svg"
+    },
+    "_o_styles_x_l": {
+      "iconPath": "../icons/o_styles_x_l.svg"
+    },
+    "_o_styles_x_c": {
+      "iconPath": "../icons/o_styles_x_c.svg"
+    },
+    "_o_scripts_d": {
+      "iconPath": "../icons/o_scripts_d.svg"
+    },
+    "_o_scripts_l": {
+      "iconPath": "../icons/o_scripts_l.svg"
+    },
+    "_o_scripts_c": {
+      "iconPath": "../icons/o_scripts_c.svg"
+    },
+    "_o_scripts_x_d": {
+      "iconPath": "../icons/o_scripts_x_d.svg"
+    },
+    "_o_scripts_x_l": {
+      "iconPath": "../icons/o_scripts_x_l.svg"
+    },
+    "_o_scripts_x_c": {
+      "iconPath": "../icons/o_scripts_x_c.svg"
+    },
+    "_o_components_d": {
+      "iconPath": "../icons/o_components_d.svg"
+    },
+    "_o_components_l": {
+      "iconPath": "../icons/o_components_l.svg"
+    },
+    "_o_components_c": {
+      "iconPath": "../icons/o_components_c.svg"
+    },
+    "_o_components_x_d": {
+      "iconPath": "../icons/o_components_x_d.svg"
+    },
+    "_o_components_x_l": {
+      "iconPath": "../icons/o_components_x_l.svg"
+    },
+    "_o_components_x_c": {
+      "iconPath": "../icons/o_components_x_c.svg"
+    },
+    "_o_hooks_d": {
+      "iconPath": "../icons/o_hooks_d.svg"
+    },
+    "_o_hooks_l": {
+      "iconPath": "../icons/o_hooks_l.svg"
+    },
+    "_o_hooks_c": {
+      "iconPath": "../icons/o_hooks_c.svg"
+    },
+    "_o_hooks_x_d": {
+      "iconPath": "../icons/o_hooks_x_d.svg"
+    },
+    "_o_hooks_x_l": {
+      "iconPath": "../icons/o_hooks_x_l.svg"
+    },
+    "_o_hooks_x_c": {
+      "iconPath": "../icons/o_hooks_x_c.svg"
+    },
+    "_o_types_d": {
+      "iconPath": "../icons/o_types_d.svg"
+    },
+    "_o_types_l": {
+      "iconPath": "../icons/o_types_l.svg"
+    },
+    "_o_types_c": {
+      "iconPath": "../icons/o_types_c.svg"
+    },
+    "_o_types_x_d": {
+      "iconPath": "../icons/o_types_x_d.svg"
+    },
+    "_o_types_x_l": {
+      "iconPath": "../icons/o_types_x_l.svg"
+    },
+    "_o_types_x_c": {
+      "iconPath": "../icons/o_types_x_c.svg"
+    },
+    "_o_api_d": {
+      "iconPath": "../icons/o_api_d.svg"
+    },
+    "_o_api_l": {
+      "iconPath": "../icons/o_api_l.svg"
+    },
+    "_o_api_c": {
+      "iconPath": "../icons/o_api_c.svg"
+    },
+    "_o_api_x_d": {
+      "iconPath": "../icons/o_api_x_d.svg"
+    },
+    "_o_api_x_l": {
+      "iconPath": "../icons/o_api_x_l.svg"
+    },
+    "_o_api_x_c": {
+      "iconPath": "../icons/o_api_x_c.svg"
+    },
+    "_o_db_d": {
+      "iconPath": "../icons/o_db_d.svg"
+    },
+    "_o_db_l": {
+      "iconPath": "../icons/o_db_l.svg"
+    },
+    "_o_db_c": {
+      "iconPath": "../icons/o_db_c.svg"
+    },
+    "_o_db_x_d": {
+      "iconPath": "../icons/o_db_x_d.svg"
+    },
+    "_o_db_x_l": {
+      "iconPath": "../icons/o_db_x_l.svg"
+    },
+    "_o_db_x_c": {
+      "iconPath": "../icons/o_db_x_c.svg"
+    },
+    "_o_services_d": {
+      "iconPath": "../icons/o_services_d.svg"
+    },
+    "_o_services_l": {
+      "iconPath": "../icons/o_services_l.svg"
+    },
+    "_o_services_c": {
+      "iconPath": "../icons/o_services_c.svg"
+    },
+    "_o_services_x_d": {
+      "iconPath": "../icons/o_services_x_d.svg"
+    },
+    "_o_services_x_l": {
+      "iconPath": "../icons/o_services_x_l.svg"
+    },
+    "_o_services_x_c": {
+      "iconPath": "../icons/o_services_x_c.svg"
+    },
+    "_o_deploy_d": {
+      "iconPath": "../icons/o_deploy_d.svg"
+    },
+    "_o_deploy_l": {
+      "iconPath": "../icons/o_deploy_l.svg"
+    },
+    "_o_deploy_c": {
+      "iconPath": "../icons/o_deploy_c.svg"
+    },
+    "_o_deploy_x_d": {
+      "iconPath": "../icons/o_deploy_x_d.svg"
+    },
+    "_o_deploy_x_l": {
+      "iconPath": "../icons/o_deploy_x_l.svg"
+    },
+    "_o_deploy_x_c": {
+      "iconPath": "../icons/o_deploy_x_c.svg"
+    },
+    "_o_utils_d": {
+      "iconPath": "../icons/o_utils_d.svg"
+    },
+    "_o_utils_l": {
+      "iconPath": "../icons/o_utils_l.svg"
+    },
+    "_o_utils_c": {
+      "iconPath": "../icons/o_utils_c.svg"
+    },
+    "_o_utils_x_d": {
+      "iconPath": "../icons/o_utils_x_d.svg"
+    },
+    "_o_utils_x_l": {
+      "iconPath": "../icons/o_utils_x_l.svg"
+    },
+    "_o_utils_x_c": {
+      "iconPath": "../icons/o_utils_x_c.svg"
+    },
+    "_o_public_d": {
+      "iconPath": "../icons/o_public_d.svg"
+    },
+    "_o_public_l": {
+      "iconPath": "../icons/o_public_l.svg"
+    },
+    "_o_public_c": {
+      "iconPath": "../icons/o_public_c.svg"
+    },
+    "_o_public_x_d": {
+      "iconPath": "../icons/o_public_x_d.svg"
+    },
+    "_o_public_x_l": {
+      "iconPath": "../icons/o_public_x_l.svg"
+    },
+    "_o_public_x_c": {
+      "iconPath": "../icons/o_public_x_c.svg"
+    },
+    "_o_i18n_d": {
+      "iconPath": "../icons/o_i18n_d.svg"
+    },
+    "_o_i18n_l": {
+      "iconPath": "../icons/o_i18n_l.svg"
+    },
+    "_o_i18n_c": {
+      "iconPath": "../icons/o_i18n_c.svg"
+    },
+    "_o_i18n_x_d": {
+      "iconPath": "../icons/o_i18n_x_d.svg"
+    },
+    "_o_i18n_x_l": {
+      "iconPath": "../icons/o_i18n_x_l.svg"
+    },
+    "_o_i18n_x_c": {
+      "iconPath": "../icons/o_i18n_x_c.svg"
+    },
+    "_o_security_d": {
+      "iconPath": "../icons/o_security_d.svg"
+    },
+    "_o_security_l": {
+      "iconPath": "../icons/o_security_l.svg"
+    },
+    "_o_security_c": {
+      "iconPath": "../icons/o_security_c.svg"
+    },
+    "_o_security_x_d": {
+      "iconPath": "../icons/o_security_x_d.svg"
+    },
+    "_o_security_x_l": {
+      "iconPath": "../icons/o_security_x_l.svg"
+    },
+    "_o_security_x_c": {
+      "iconPath": "../icons/o_security_x_c.svg"
+    },
+    "_o_logs_d": {
+      "iconPath": "../icons/o_logs_d.svg"
+    },
+    "_o_logs_l": {
+      "iconPath": "../icons/o_logs_l.svg"
+    },
+    "_o_logs_c": {
+      "iconPath": "../icons/o_logs_c.svg"
+    },
+    "_o_logs_x_d": {
+      "iconPath": "../icons/o_logs_x_d.svg"
+    },
+    "_o_logs_x_l": {
+      "iconPath": "../icons/o_logs_x_l.svg"
+    },
+    "_o_logs_x_c": {
+      "iconPath": "../icons/o_logs_x_c.svg"
+    },
+    "_o_state_d": {
+      "iconPath": "../icons/o_state_d.svg"
+    },
+    "_o_state_l": {
+      "iconPath": "../icons/o_state_l.svg"
+    },
+    "_o_state_c": {
+      "iconPath": "../icons/o_state_c.svg"
+    },
+    "_o_state_x_d": {
+      "iconPath": "../icons/o_state_x_d.svg"
+    },
+    "_o_state_x_l": {
+      "iconPath": "../icons/o_state_x_l.svg"
+    },
+    "_o_state_x_c": {
+      "iconPath": "../icons/o_state_x_c.svg"
+    },
+    "_o_tests_e2e_d": {
+      "iconPath": "../icons/o_tests_e2e_d.svg"
+    },
+    "_o_tests_e2e_l": {
+      "iconPath": "../icons/o_tests_e2e_l.svg"
+    },
+    "_o_tests_e2e_c": {
+      "iconPath": "../icons/o_tests_e2e_c.svg"
+    },
+    "_o_tests_e2e_x_d": {
+      "iconPath": "../icons/o_tests_e2e_x_d.svg"
+    },
+    "_o_tests_e2e_x_l": {
+      "iconPath": "../icons/o_tests_e2e_x_l.svg"
+    },
+    "_o_tests_e2e_x_c": {
+      "iconPath": "../icons/o_tests_e2e_x_c.svg"
+    },
+    "_o_examples_d": {
+      "iconPath": "../icons/o_examples_d.svg"
+    },
+    "_o_examples_l": {
+      "iconPath": "../icons/o_examples_l.svg"
+    },
+    "_o_examples_c": {
+      "iconPath": "../icons/o_examples_c.svg"
+    },
+    "_o_examples_x_d": {
+      "iconPath": "../icons/o_examples_x_d.svg"
+    },
+    "_o_examples_x_l": {
+      "iconPath": "../icons/o_examples_x_l.svg"
+    },
+    "_o_examples_x_c": {
+      "iconPath": "../icons/o_examples_x_c.svg"
+    },
+    "_f_default_d": {
+      "iconPath": "../icons/f_default_d.svg"
+    },
+    "_f_default_l": {
+      "iconPath": "../icons/f_default_l.svg"
+    },
+    "_f_default_c": {
+      "iconPath": "../icons/f_default_c.svg"
+    },
+    "_o_default_d": {
+      "iconPath": "../icons/o_default_d.svg"
+    },
+    "_o_default_l": {
+      "iconPath": "../icons/o_default_l.svg"
+    },
+    "_o_default_c": {
+      "iconPath": "../icons/o_default_c.svg"
+    },
+    "_o_default_x_d": {
+      "iconPath": "../icons/o_default_x_d.svg"
+    },
+    "_o_default_x_l": {
+      "iconPath": "../icons/o_default_x_l.svg"
+    },
+    "_o_default_x_c": {
+      "iconPath": "../icons/o_default_x_c.svg"
+    },
+    "_o_root_d": {
+      "iconPath": "../icons/o_root_d.svg"
+    },
+    "_o_root_l": {
+      "iconPath": "../icons/o_root_l.svg"
+    },
+    "_o_root_c": {
+      "iconPath": "../icons/o_root_c.svg"
+    },
+    "_o_root_x_d": {
+      "iconPath": "../icons/o_root_x_d.svg"
+    },
+    "_o_root_x_l": {
+      "iconPath": "../icons/o_root_x_l.svg"
+    },
+    "_o_root_x_c": {
+      "iconPath": "../icons/o_root_x_c.svg"
+    }
+  },
+  "file": "_f_default_d",
+  "folder": "_o_default_d",
+  "folderExpanded": "_o_default_x_d",
+  "rootFolder": "_o_root_d",
+  "rootFolderExpanded": "_o_root_x_d",
+  "fileExtensions": {
+    "cs": "_f_cs_d",
+    "csx": "_f_cs_d",
+    "razor": "_f_razor_d",
+    "cshtml": "_f_razor_d",
+    "vbhtml": "_f_razor_d",
+    "csproj": "_f_csproj_d",
+    "fsproj": "_f_csproj_d",
+    "vbproj": "_f_csproj_d",
+    "props": "_f_csproj_d",
+    "targets": "_f_csproj_d",
+    "proj": "_f_csproj_d",
+    "sln": "_f_sln_d",
+    "slnx": "_f_sln_d",
+    "slnf": "_f_sln_d",
+    "nuspec": "_f_nuget_d",
+    "nupkg": "_f_nuget_d",
+    "snupkg": "_f_nuget_d",
+    "resx": "_f_resx_d",
+    "resw": "_f_resx_d",
+    "xaml": "_f_xaml_d",
+    "axaml": "_f_xaml_d",
+    "fs": "_f_fsharp_d",
+    "fsi": "_f_fsharp_d",
+    "fsx": "_f_fsharp_d",
+    "fsscript": "_f_fsharp_d",
+    "vb": "_f_vb_d",
+    "vbs": "_f_vb_d",
+    "ts": "_f_ts_d",
+    "mts": "_f_ts_d",
+    "cts": "_f_ts_d",
+    "d.ts": "_f_tsdef_d",
+    "d.mts": "_f_tsdef_d",
+    "d.cts": "_f_tsdef_d",
+    "tsx": "_f_tsx_d",
+    "js": "_f_js_d",
+    "mjs": "_f_js_d",
+    "cjs": "_f_js_d",
+    "jsx": "_f_jsx_d",
+    "lock": "_f_lock_d",
+    "vue": "_f_vue_d",
+    "svelte": "_f_svelte_d",
+    "astro": "_f_astro_d",
+    "test.ts": "_f_test_d",
+    "spec.ts": "_f_test_d",
+    "test.tsx": "_f_test_d",
+    "spec.tsx": "_f_test_d",
+    "test.js": "_f_test_d",
+    "spec.js": "_f_test_d",
+    "Tests.cs": "_f_test_d",
+    "test.jsx": "_f_test_d",
+    "spec.jsx": "_f_test_d",
+    "html": "_f_html_d",
+    "htm": "_f_html_d",
+    "xhtml": "_f_html_d",
+    "css": "_f_css_d",
+    "scss": "_f_sass_d",
+    "sass": "_f_sass_d",
+    "less": "_f_sass_d",
+    "styl": "_f_sass_d",
+    "svg": "_f_svg_d",
+    "json": "_f_json_d",
+    "jsonc": "_f_json_d",
+    "json5": "_f_json_d",
+    "jsonl": "_f_json_d",
+    "ndjson": "_f_json_d",
+    "yaml": "_f_yaml_d",
+    "yml": "_f_yaml_d",
+    "toml": "_f_toml_d",
+    "ini": "_f_ini_d",
+    "cfg": "_f_ini_d",
+    "conf": "_f_ini_d",
+    "properties": "_f_ini_d",
+    "editorconfig": "_f_ini_d",
+    "xml": "_f_xml_d",
+    "xsd": "_f_xml_d",
+    "xsl": "_f_xml_d",
+    "xslt": "_f_xml_d",
+    "plist": "_f_xml_d",
+    "config": "_f_xml_d",
+    "env": "_f_env_d",
+    "csv": "_f_csv_d",
+    "tsv": "_f_csv_d",
+    "psv": "_f_csv_d",
+    "sql": "_f_sql_d",
+    "ddl": "_f_sql_d",
+    "dml": "_f_sql_d",
+    "db": "_f_db_d",
+    "sqlite": "_f_db_d",
+    "sqlite3": "_f_db_d",
+    "mdb": "_f_db_d",
+    "accdb": "_f_db_d",
+    "dbf": "_f_db_d",
+    "graphql": "_f_graphql_d",
+    "gql": "_f_graphql_d",
+    "proto": "_f_proto_d",
+    "http": "_f_http_d",
+    "rest": "_f_http_d",
+    "md": "_f_md_d",
+    "mdx": "_f_md_d",
+    "markdown": "_f_md_d",
+    "mdown": "_f_md_d",
+    "txt": "_f_txt_d",
+    "text": "_f_txt_d",
+    "log": "_f_txt_d",
+    "out": "_f_txt_d",
+    "pdf": "_f_pdf_d",
+    "doc": "_f_doc_d",
+    "docx": "_f_doc_d",
+    "odt": "_f_doc_d",
+    "rtf": "_f_doc_d",
+    "xls": "_f_xls_d",
+    "xlsx": "_f_xls_d",
+    "ods": "_f_xls_d",
+    "xlsm": "_f_xls_d",
+    "ppt": "_f_ppt_d",
+    "pptx": "_f_ppt_d",
+    "odp": "_f_ppt_d",
+    "png": "_f_image_d",
+    "jpg": "_f_image_d",
+    "jpeg": "_f_image_d",
+    "gif": "_f_image_d",
+    "webp": "_f_image_d",
+    "bmp": "_f_image_d",
+    "ico": "_f_image_d",
+    "icns": "_f_image_d",
+    "avif": "_f_image_d",
+    "tiff": "_f_image_d",
+    "tif": "_f_image_d",
+    "heic": "_f_image_d",
+    "psd": "_f_image_d",
+    "ai": "_f_image_d",
+    "xcf": "_f_image_d",
+    "mp4": "_f_video_d",
+    "mov": "_f_video_d",
+    "webm": "_f_video_d",
+    "avi": "_f_video_d",
+    "mkv": "_f_video_d",
+    "flv": "_f_video_d",
+    "wmv": "_f_video_d",
+    "m4v": "_f_video_d",
+    "mpg": "_f_video_d",
+    "mp3": "_f_audio_d",
+    "wav": "_f_audio_d",
+    "flac": "_f_audio_d",
+    "ogg": "_f_audio_d",
+    "aac": "_f_audio_d",
+    "m4a": "_f_audio_d",
+    "wma": "_f_audio_d",
+    "aiff": "_f_audio_d",
+    "opus": "_f_audio_d",
+    "ttf": "_f_font_d",
+    "otf": "_f_font_d",
+    "woff": "_f_font_d",
+    "woff2": "_f_font_d",
+    "eot": "_f_font_d",
+    "fon": "_f_font_d",
+    "obj": "_f_binary_d",
+    "fbx": "_f_model3d_d",
+    "gltf": "_f_model3d_d",
+    "glb": "_f_model3d_d",
+    "blend": "_f_model3d_d",
+    "stl": "_f_model3d_d",
+    "dae": "_f_model3d_d",
+    "zip": "_f_archive_d",
+    "tar": "_f_archive_d",
+    "gz": "_f_archive_d",
+    "tgz": "_f_archive_d",
+    "bz2": "_f_archive_d",
+    "xz": "_f_archive_d",
+    "rar": "_f_archive_d",
+    "7z": "_f_archive_d",
+    "zst": "_f_archive_d",
+    "exe": "_f_binary_d",
+    "dll": "_f_binary_d",
+    "so": "_f_binary_d",
+    "dylib": "_f_binary_d",
+    "bin": "_f_binary_d",
+    "o": "_f_binary_d",
+    "a": "_f_binary_d",
+    "lib": "_f_binary_d",
+    "pdb": "_f_binary_d",
+    "wasm": "_f_binary_d",
+    "class": "_f_binary_d",
+    "jar": "_f_binary_d",
+    "pyc": "_f_binary_d",
+    "msi": "_f_binary_d",
+    "dmg": "_f_binary_d",
+    "deb": "_f_binary_d",
+    "rpm": "_f_binary_d",
+    "apk": "_f_binary_d",
+    "sh": "_f_shell_d",
+    "bash": "_f_shell_d",
+    "zsh": "_f_shell_d",
+    "fish": "_f_shell_d",
+    "ps1": "_f_shell_d",
+    "psm1": "_f_shell_d",
+    "psd1": "_f_shell_d",
+    "bat": "_f_shell_d",
+    "cmd": "_f_shell_d",
+    "nu": "_f_shell_d",
+    "mk": "_f_make_d",
+    "mak": "_f_make_d",
+    "dockerfile": "_f_docker_d",
+    "containerfile": "_f_docker_d",
+    "tf": "_f_terraform_d",
+    "tfvars": "_f_terraform_d",
+    "tfstate": "_f_terraform_d",
+    "hcl": "_f_terraform_d",
+    "gitignore": "_f_git_d",
+    "gitattributes": "_f_git_d",
+    "gitmodules": "_f_git_d",
+    "gitkeep": "_f_git_d",
+    "vsix": "_f_vscode_d",
+    "code-workspace": "_f_vscode_d",
+    "py": "_f_py_d",
+    "pyw": "_f_py_d",
+    "pyi": "_f_py_d",
+    "ipynb": "_f_py_d",
+    "rs": "_f_rs_d",
+    "go": "_f_go_d",
+    "rb": "_f_rb_d",
+    "erb": "_f_rb_d",
+    "gemspec": "_f_rb_d",
+    "java": "_f_java_d",
+    "kt": "_f_java_d",
+    "kts": "_f_java_d",
+    "gradle": "_f_java_d",
+    "groovy": "_f_java_d",
+    "scala": "_f_java_d",
+    "sbt": "_f_java_d",
+    "php": "_f_php_d",
+    "phtml": "_f_php_d",
+    "c": "_f_c_d",
+    "h": "_f_c_d",
+    "cpp": "_f_cpp_d",
+    "cc": "_f_cpp_d",
+    "cxx": "_f_cpp_d",
+    "hpp": "_f_cpp_d",
+    "hh": "_f_cpp_d",
+    "hxx": "_f_cpp_d",
+    "ino": "_f_cpp_d",
+    "swift": "_f_swift_d",
+    "dart": "_f_dart_d",
+    "lua": "_f_lua_d",
+    "r": "_f_r_d",
+    "rmd": "_f_r_d",
+    "ex": "_f_elixir_d",
+    "exs": "_f_elixir_d",
+    "erl": "_f_elixir_d",
+    "hrl": "_f_elixir_d",
+    "hs": "_f_haskell_d",
+    "lhs": "_f_haskell_d",
+    "zig": "_f_zig_d",
+    "nix": "_f_nix_d",
+    "diff": "_f_diff_d",
+    "patch": "_f_diff_d",
+    "pem": "_f_key_d",
+    "key": "_f_key_d",
+    "crt": "_f_key_d",
+    "cer": "_f_key_d",
+    "pfx": "_f_key_d",
+    "p12": "_f_key_d",
+    "pub": "_f_key_d",
+    "asc": "_f_key_d",
+    "gpg": "_f_key_d"
+  },
+  "fileNames": {
+    "Directory.Build.props": "_f_csproj_d",
+    "Directory.Build.targets": "_f_csproj_d",
+    "Directory.Packages.props": "_f_csproj_d",
+    "nuget.config": "_f_dotnetcfg_d",
+    "NuGet.Config": "_f_nuget_d",
+    "packages.config": "_f_nuget_d",
+    "global.json": "_f_dotnetcfg_d",
+    "dotnet-tools.json": "_f_dotnetcfg_d",
+    "appsettings.json": "_f_dotnetcfg_d",
+    "appsettings.Development.json": "_f_dotnetcfg_d",
+    "appsettings.Production.json": "_f_dotnetcfg_d",
+    "launchSettings.json": "_f_dotnetcfg_d",
+    "omnisharp.json": "_f_dotnetcfg_d",
+    "tsconfig.json": "_f_tsconfig_d",
+    "tsconfig.base.json": "_f_tsconfig_d",
+    "tsconfig.build.json": "_f_tsconfig_d",
+    "tsconfig.node.json": "_f_tsconfig_d",
+    "tsconfig.app.json": "_f_tsconfig_d",
+    "tsconfig.spec.json": "_f_tsconfig_d",
+    "jsconfig.json": "_f_tsconfig_d",
+    "package.json": "_f_npm_d",
+    "package-lock.json": "_f_lock_d",
+    "yarn.lock": "_f_lock_d",
+    "pnpm-lock.yaml": "_f_lock_d",
+    "bun.lockb": "_f_lock_d",
+    "bun.lock": "_f_lock_d",
+    "deno.lock": "_f_lock_d",
+    "composer.lock": "_f_lock_d",
+    "Cargo.lock": "_f_lock_d",
+    "poetry.lock": "_f_lock_d",
+    "eslint.config.js": "_f_eslint_d",
+    "eslint.config.mjs": "_f_eslint_d",
+    "eslint.config.ts": "_f_eslint_d",
+    ".eslintrc": "_f_eslint_d",
+    ".eslintrc.js": "_f_eslint_d",
+    ".eslintrc.json": "_f_eslint_d",
+    ".eslintrc.cjs": "_f_eslint_d",
+    ".eslintrc.yml": "_f_eslint_d",
+    ".eslintignore": "_f_eslint_d",
+    ".prettierrc": "_f_prettier_d",
+    ".prettierrc.json": "_f_prettier_d",
+    ".prettierrc.js": "_f_prettier_d",
+    ".prettierrc.yml": "_f_prettier_d",
+    "prettier.config.js": "_f_prettier_d",
+    "prettier.config.mjs": "_f_prettier_d",
+    ".prettierignore": "_f_prettier_d",
+    "vite.config.ts": "_f_bundler_d",
+    "vite.config.js": "_f_bundler_d",
+    "vite.config.mts": "_f_bundler_d",
+    "webpack.config.js": "_f_bundler_d",
+    "webpack.config.ts": "_f_bundler_d",
+    "rollup.config.js": "_f_bundler_d",
+    "rollup.config.mjs": "_f_bundler_d",
+    "esbuild.config.js": "_f_bundler_d",
+    "tsup.config.ts": "_f_bundler_d",
+    "next.config.js": "_f_bundler_d",
+    "next.config.mjs": "_f_bundler_d",
+    "next.config.ts": "_f_bundler_d",
+    "turbo.json": "_f_bundler_d",
+    "nx.json": "_f_bundler_d",
+    "rspack.config.js": "_f_bundler_d",
+    "vitest.config.ts": "_f_test_d",
+    "jest.config.js": "_f_test_d",
+    "jest.config.ts": "_f_test_d",
+    "playwright.config.ts": "_f_test_d",
+    "karma.conf.js": "_f_test_d",
+    "cypress.config.ts": "_f_test_d",
+    "tailwind.config.js": "_f_tailwind_d",
+    "tailwind.config.ts": "_f_tailwind_d",
+    "tailwind.config.cjs": "_f_tailwind_d",
+    "postcss.config.js": "_f_tailwind_d",
+    "postcss.config.mjs": "_f_tailwind_d",
+    ".editorconfig": "_f_ini_d",
+    ".env": "_f_env_d",
+    ".env.local": "_f_env_d",
+    ".env.development": "_f_env_d",
+    ".env.production": "_f_env_d",
+    ".env.test": "_f_env_d",
+    ".env.example": "_f_env_d",
+    ".env.sample": "_f_env_d",
+    "README.md": "_f_readme_d",
+    "readme.md": "_f_readme_d",
+    "README": "_f_readme_d",
+    "README.txt": "_f_readme_d",
+    "README.rst": "_f_readme_d",
+    "readme.markdown": "_f_readme_d",
+    "CHANGELOG.md": "_f_changelog_d",
+    "changelog.md": "_f_changelog_d",
+    "CHANGELOG": "_f_changelog_d",
+    "HISTORY.md": "_f_changelog_d",
+    "RELEASES.md": "_f_changelog_d",
+    "LICENSE": "_f_license_d",
+    "LICENSE.md": "_f_license_d",
+    "LICENSE.txt": "_f_license_d",
+    "LICENCE": "_f_license_d",
+    "COPYING": "_f_license_d",
+    "NOTICE": "_f_license_d",
+    "UNLICENSE": "_f_license_d",
+    "CONTRIBUTING.md": "_f_contrib_d",
+    "CODE_OF_CONDUCT.md": "_f_contrib_d",
+    "AUTHORS": "_f_contrib_d",
+    "CODEOWNERS": "_f_contrib_d",
+    "SECURITY.md": "_f_contrib_d",
+    "Makefile": "_f_make_d",
+    "makefile": "_f_make_d",
+    "GNUmakefile": "_f_make_d",
+    "Rakefile": "_f_make_d",
+    "justfile": "_f_make_d",
+    "Justfile": "_f_make_d",
+    "Taskfile.yml": "_f_make_d",
+    "Dockerfile": "_f_docker_d",
+    "dockerfile": "_f_docker_d",
+    "Containerfile": "_f_docker_d",
+    ".dockerignore": "_f_docker_d",
+    "docker-compose.yml": "_f_docker_d",
+    "docker-compose.yaml": "_f_docker_d",
+    "compose.yml": "_f_docker_d",
+    "compose.yaml": "_f_docker_d",
+    "docker-compose.override.yml": "_f_docker_d",
+    "kustomization.yaml": "_f_k8s_d",
+    "skaffold.yaml": "_f_k8s_d",
+    "Chart.yaml": "_f_k8s_d",
+    "values.yaml": "_f_k8s_d",
+    ".gitignore": "_f_git_d",
+    ".gitattributes": "_f_git_d",
+    ".gitmodules": "_f_git_d",
+    ".gitkeep": "_f_git_d",
+    ".mailmap": "_f_git_d",
+    ".git-blame-ignore-revs": "_f_git_d",
+    ".travis.yml": "_f_ci_d",
+    "azure-pipelines.yml": "_f_ci_d",
+    "Jenkinsfile": "_f_ci_d",
+    ".gitlab-ci.yml": "_f_ci_d",
+    "appveyor.yml": "_f_ci_d",
+    "cloudbuild.yaml": "_f_ci_d",
+    "buildkite.yml": "_f_ci_d",
+    "settings.json": "_f_vscode_d",
+    "launch.json": "_f_vscode_d",
+    "tasks.json": "_f_vscode_d",
+    "extensions.json": "_f_vscode_d",
+    "keybindings.json": "_f_vscode_d",
+    "argv.json": "_f_vscode_d",
+    "requirements.txt": "_f_py_d",
+    "pyproject.toml": "_f_py_d",
+    "setup.py": "_f_py_d",
+    "setup.cfg": "_f_py_d",
+    "Pipfile": "_f_py_d",
+    "tox.ini": "_f_py_d",
+    "Cargo.toml": "_f_rs_d",
+    "go.mod": "_f_go_d",
+    "go.sum": "_f_go_d",
+    "go.work": "_f_go_d",
+    "Gemfile": "_f_rb_d",
+    "Gemfile.lock": "_f_rb_d",
+    "build.gradle": "_f_java_d",
+    "settings.gradle": "_f_java_d",
+    "pom.xml": "_f_java_d",
+    "composer.json": "_f_php_d",
+    "Package.swift": "_f_swift_d",
+    "pubspec.yaml": "_f_dart_d",
+    "mix.exs": "_f_elixir_d",
+    "build.zig": "_f_zig_d",
+    "flake.nix": "_f_nix_d",
+    "flake.lock": "_f_nix_d"
+  },
+  "languageIds": {
+    "csharp": "_f_cs_d",
+    "razor": "_f_razor_d",
+    "aspnetcorerazor": "_f_razor_d",
+    "xaml": "_f_xaml_d",
+    "fsharp": "_f_fsharp_d",
+    "vb": "_f_vb_d",
+    "typescript": "_f_ts_d",
+    "typescriptreact": "_f_tsx_d",
+    "javascript": "_f_js_d",
+    "javascriptreact": "_f_jsx_d",
+    "vue": "_f_vue_d",
+    "svelte": "_f_svelte_d",
+    "astro": "_f_astro_d",
+    "html": "_f_html_d",
+    "css": "_f_css_d",
+    "scss": "_f_sass_d",
+    "less": "_f_sass_d",
+    "json": "_f_json_d",
+    "jsonc": "_f_json_d",
+    "yaml": "_f_yaml_d",
+    "toml": "_f_toml_d",
+    "ini": "_f_ini_d",
+    "properties": "_f_ini_d",
+    "xml": "_f_xml_d",
+    "dotenv": "_f_env_d",
+    "sql": "_f_sql_d",
+    "graphql": "_f_graphql_d",
+    "proto3": "_f_proto_d",
+    "http": "_f_http_d",
+    "markdown": "_f_md_d",
+    "plaintext": "_f_txt_d",
+    "log": "_f_txt_d",
+    "shellscript": "_f_shell_d",
+    "powershell": "_f_shell_d",
+    "bat": "_f_shell_d",
+    "makefile": "_f_make_d",
+    "dockerfile": "_f_docker_d",
+    "dockercompose": "_f_docker_d",
+    "terraform": "_f_terraform_d",
+    "python": "_f_py_d",
+    "jupyter": "_f_py_d",
+    "rust": "_f_rs_d",
+    "go": "_f_go_d",
+    "ruby": "_f_rb_d",
+    "java": "_f_java_d",
+    "kotlin": "_f_java_d",
+    "groovy": "_f_java_d",
+    "scala": "_f_java_d",
+    "php": "_f_php_d",
+    "c": "_f_c_d",
+    "cpp": "_f_cpp_d",
+    "swift": "_f_swift_d",
+    "dart": "_f_dart_d",
+    "lua": "_f_lua_d",
+    "r": "_f_r_d",
+    "elixir": "_f_elixir_d",
+    "haskell": "_f_haskell_d",
+    "zig": "_f_zig_d",
+    "nix": "_f_nix_d",
+    "diff": "_f_diff_d"
+  },
+  "folderNames": {
+    "src": "_o_src_d",
+    "source": "_o_src_d",
+    "sources": "_o_src_d",
+    "app": "_o_src_d",
+    "apps": "_o_src_d",
+    "lib": "_o_src_d",
+    "libs": "_o_src_d",
+    "core": "_o_src_d",
+    "packages": "_o_src_d",
+    "modules": "_o_src_d",
+    "test": "_o_test_d",
+    "tests": "_o_test_d",
+    "__tests__": "_o_test_d",
+    "spec": "_o_test_d",
+    "specs": "_o_test_d",
+    "e2e": "_o_test_d",
+    "testing": "_o_test_d",
+    "unittest": "_o_test_d",
+    "integration": "_o_test_d",
+    "node_modules": "_o_node_d",
+    "bower_components": "_o_node_d",
+    "vendor": "_o_node_d",
+    "third_party": "_o_node_d",
+    "externals": "_o_node_d",
+    "dist": "_o_dist_d",
+    "build": "_o_dist_d",
+    "out": "_o_dist_d",
+    "output": "_o_dist_d",
+    "bin": "_o_dist_d",
+    "obj": "_o_dist_d",
+    "target": "_o_dist_d",
+    "release": "_o_dist_d",
+    "debug": "_o_dist_d",
+    "artifacts": "_o_dist_d",
+    "publish": "_o_dist_d",
+    ".git": "_o_git_d",
+    ".husky": "_o_git_d",
+    ".github": "_o_github_d",
+    ".gitlab": "_o_github_d",
+    ".circleci": "_o_github_d",
+    ".azuredevops": "_o_github_d",
+    "config": "_o_config_d",
+    "configs": "_o_config_d",
+    "configuration": "_o_config_d",
+    ".config": "_o_config_d",
+    "settings": "_o_config_d",
+    "conf": "_o_config_d",
+    ".vscode": "_o_config_d",
+    ".idea": "_o_config_d",
+    ".vs": "_o_config_d",
+    ".cursor": "_o_config_d",
+    ".claude": "_o_config_d",
+    ".devcontainer": "_o_config_d",
+    ".editorconfig.d": "_o_config_d",
+    "assets": "_o_assets_d",
+    "images": "_o_assets_d",
+    "img": "_o_assets_d",
+    "icons": "_o_assets_d",
+    "media": "_o_assets_d",
+    "static": "_o_assets_d",
+    "pictures": "_o_assets_d",
+    "photos": "_o_assets_d",
+    "graphics": "_o_assets_d",
+    "logos": "_o_assets_d",
+    "docs": "_o_docs_d",
+    "doc": "_o_docs_d",
+    "documentation": "_o_docs_d",
+    "wiki": "_o_docs_d",
+    "manual": "_o_docs_d",
+    "guides": "_o_docs_d",
+    "styles": "_o_styles_d",
+    "style": "_o_styles_d",
+    "css": "_o_styles_d",
+    "scss": "_o_styles_d",
+    "sass": "_o_styles_d",
+    "themes": "_o_styles_d",
+    "theme": "_o_styles_d",
+    "scripts": "_o_scripts_d",
+    "script": "_o_scripts_d",
+    "tools": "_o_scripts_d",
+    "tooling": "_o_scripts_d",
+    "bin_scripts": "_o_scripts_d",
+    "automation": "_o_scripts_d",
+    "cli": "_o_scripts_d",
+    "components": "_o_components_d",
+    "component": "_o_components_d",
+    "widgets": "_o_components_d",
+    "ui": "_o_components_d",
+    "controls": "_o_components_d",
+    "views": "_o_components_d",
+    "pages": "_o_components_d",
+    "screens": "_o_components_d",
+    "partials": "_o_components_d",
+    "layouts": "_o_components_d",
+    "hooks": "_o_hooks_d",
+    "middleware": "_o_hooks_d",
+    "interceptors": "_o_hooks_d",
+    "plugins": "_o_hooks_d",
+    "extensions": "_o_hooks_d",
+    "filters": "_o_hooks_d",
+    "types": "_o_types_d",
+    "typings": "_o_types_d",
+    "@types": "_o_types_d",
+    "interfaces": "_o_types_d",
+    "contracts": "_o_types_d",
+    "models": "_o_types_d",
+    "dto": "_o_types_d",
+    "dtos": "_o_types_d",
+    "entities": "_o_types_d",
+    "schemas": "_o_types_d",
+    "schema": "_o_types_d",
+    "api": "_o_api_d",
+    "apis": "_o_api_d",
+    "endpoints": "_o_api_d",
+    "routes": "_o_api_d",
+    "controllers": "_o_api_d",
+    "handlers": "_o_api_d",
+    "resolvers": "_o_api_d",
+    "graphql": "_o_api_d",
+    "server": "_o_api_d",
+    "db": "_o_db_d",
+    "database": "_o_db_d",
+    "migrations": "_o_db_d",
+    "migration": "_o_db_d",
+    "seeds": "_o_db_d",
+    "repositories": "_o_db_d",
+    "repository": "_o_db_d",
+    "data": "_o_db_d",
+    "persistence": "_o_db_d",
+    "services": "_o_services_d",
+    "service": "_o_services_d",
+    "providers": "_o_services_d",
+    "managers": "_o_services_d",
+    "clients": "_o_services_d",
+    "adapters": "_o_services_d",
+    "domain": "_o_services_d",
+    "application": "_o_services_d",
+    "deploy": "_o_deploy_d",
+    "deployment": "_o_deploy_d",
+    "deployments": "_o_deploy_d",
+    "k8s": "_o_deploy_d",
+    "kubernetes": "_o_deploy_d",
+    "helm": "_o_deploy_d",
+    "charts": "_o_deploy_d",
+    "chart": "_o_deploy_d",
+    "manifests": "_o_deploy_d",
+    "ansible": "_o_deploy_d",
+    "infra": "_o_deploy_d",
+    "infrastructure": "_o_deploy_d",
+    "terraform": "_o_deploy_d",
+    "ops": "_o_deploy_d",
+    "devops": "_o_deploy_d",
+    "provision": "_o_deploy_d",
+    "utils": "_o_utils_d",
+    "util": "_o_utils_d",
+    "helpers": "_o_utils_d",
+    "helper": "_o_utils_d",
+    "common": "_o_utils_d",
+    "shared": "_o_utils_d",
+    "lib_utils": "_o_utils_d",
+    "internal": "_o_utils_d",
+    "support": "_o_utils_d",
+    "public": "_o_public_d",
+    "www": "_o_public_d",
+    "web": "_o_public_d",
+    "wwwroot": "_o_public_d",
+    "site": "_o_public_d",
+    "dist_public": "_o_public_d",
+    "i18n": "_o_i18n_d",
+    "locales": "_o_i18n_d",
+    "locale": "_o_i18n_d",
+    "lang": "_o_i18n_d",
+    "languages": "_o_i18n_d",
+    "translations": "_o_i18n_d",
+    "resources": "_o_i18n_d",
+    "security": "_o_security_d",
+    "auth": "_o_security_d",
+    "authentication": "_o_security_d",
+    "authorization": "_o_security_d",
+    "certs": "_o_security_d",
+    "certificates": "_o_security_d",
+    "keys": "_o_security_d",
+    "secrets": "_o_security_d",
+    "logs": "_o_logs_d",
+    "log": "_o_logs_d",
+    "cache": "_o_logs_d",
+    ".cache": "_o_logs_d",
+    "tmp": "_o_logs_d",
+    "temp": "_o_logs_d",
+    ".tmp": "_o_logs_d",
+    "store": "_o_state_d",
+    "stores": "_o_state_d",
+    "state": "_o_state_d",
+    "redux": "_o_state_d",
+    "context": "_o_state_d",
+    "reducers": "_o_state_d",
+    "actions": "_o_state_d",
+    "slices": "_o_state_d",
+    "benchmarks": "_o_tests_e2e_d",
+    "bench": "_o_tests_e2e_d",
+    "perf": "_o_tests_e2e_d",
+    "performance": "_o_tests_e2e_d",
+    "profiling": "_o_tests_e2e_d",
+    "examples": "_o_examples_d",
+    "example": "_o_examples_d",
+    "samples": "_o_examples_d",
+    "sample": "_o_examples_d",
+    "demo": "_o_examples_d",
+    "demos": "_o_examples_d",
+    "playground": "_o_examples_d",
+    "sandbox": "_o_examples_d"
+  },
+  "folderNamesExpanded": {
+    "src": "_o_src_x_d",
+    "source": "_o_src_x_d",
+    "sources": "_o_src_x_d",
+    "app": "_o_src_x_d",
+    "apps": "_o_src_x_d",
+    "lib": "_o_src_x_d",
+    "libs": "_o_src_x_d",
+    "core": "_o_src_x_d",
+    "packages": "_o_src_x_d",
+    "modules": "_o_src_x_d",
+    "test": "_o_test_x_d",
+    "tests": "_o_test_x_d",
+    "__tests__": "_o_test_x_d",
+    "spec": "_o_test_x_d",
+    "specs": "_o_test_x_d",
+    "e2e": "_o_test_x_d",
+    "testing": "_o_test_x_d",
+    "unittest": "_o_test_x_d",
+    "integration": "_o_test_x_d",
+    "node_modules": "_o_node_x_d",
+    "bower_components": "_o_node_x_d",
+    "vendor": "_o_node_x_d",
+    "third_party": "_o_node_x_d",
+    "externals": "_o_node_x_d",
+    "dist": "_o_dist_x_d",
+    "build": "_o_dist_x_d",
+    "out": "_o_dist_x_d",
+    "output": "_o_dist_x_d",
+    "bin": "_o_dist_x_d",
+    "obj": "_o_dist_x_d",
+    "target": "_o_dist_x_d",
+    "release": "_o_dist_x_d",
+    "debug": "_o_dist_x_d",
+    "artifacts": "_o_dist_x_d",
+    "publish": "_o_dist_x_d",
+    ".git": "_o_git_x_d",
+    ".husky": "_o_git_x_d",
+    ".github": "_o_github_x_d",
+    ".gitlab": "_o_github_x_d",
+    ".circleci": "_o_github_x_d",
+    ".azuredevops": "_o_github_x_d",
+    "config": "_o_config_x_d",
+    "configs": "_o_config_x_d",
+    "configuration": "_o_config_x_d",
+    ".config": "_o_config_x_d",
+    "settings": "_o_config_x_d",
+    "conf": "_o_config_x_d",
+    ".vscode": "_o_config_x_d",
+    ".idea": "_o_config_x_d",
+    ".vs": "_o_config_x_d",
+    ".cursor": "_o_config_x_d",
+    ".claude": "_o_config_x_d",
+    ".devcontainer": "_o_config_x_d",
+    ".editorconfig.d": "_o_config_x_d",
+    "assets": "_o_assets_x_d",
+    "images": "_o_assets_x_d",
+    "img": "_o_assets_x_d",
+    "icons": "_o_assets_x_d",
+    "media": "_o_assets_x_d",
+    "static": "_o_assets_x_d",
+    "pictures": "_o_assets_x_d",
+    "photos": "_o_assets_x_d",
+    "graphics": "_o_assets_x_d",
+    "logos": "_o_assets_x_d",
+    "docs": "_o_docs_x_d",
+    "doc": "_o_docs_x_d",
+    "documentation": "_o_docs_x_d",
+    "wiki": "_o_docs_x_d",
+    "manual": "_o_docs_x_d",
+    "guides": "_o_docs_x_d",
+    "styles": "_o_styles_x_d",
+    "style": "_o_styles_x_d",
+    "css": "_o_styles_x_d",
+    "scss": "_o_styles_x_d",
+    "sass": "_o_styles_x_d",
+    "themes": "_o_styles_x_d",
+    "theme": "_o_styles_x_d",
+    "scripts": "_o_scripts_x_d",
+    "script": "_o_scripts_x_d",
+    "tools": "_o_scripts_x_d",
+    "tooling": "_o_scripts_x_d",
+    "bin_scripts": "_o_scripts_x_d",
+    "automation": "_o_scripts_x_d",
+    "cli": "_o_scripts_x_d",
+    "components": "_o_components_x_d",
+    "component": "_o_components_x_d",
+    "widgets": "_o_components_x_d",
+    "ui": "_o_components_x_d",
+    "controls": "_o_components_x_d",
+    "views": "_o_components_x_d",
+    "pages": "_o_components_x_d",
+    "screens": "_o_components_x_d",
+    "partials": "_o_components_x_d",
+    "layouts": "_o_components_x_d",
+    "hooks": "_o_hooks_x_d",
+    "middleware": "_o_hooks_x_d",
+    "interceptors": "_o_hooks_x_d",
+    "plugins": "_o_hooks_x_d",
+    "extensions": "_o_hooks_x_d",
+    "filters": "_o_hooks_x_d",
+    "types": "_o_types_x_d",
+    "typings": "_o_types_x_d",
+    "@types": "_o_types_x_d",
+    "interfaces": "_o_types_x_d",
+    "contracts": "_o_types_x_d",
+    "models": "_o_types_x_d",
+    "dto": "_o_types_x_d",
+    "dtos": "_o_types_x_d",
+    "entities": "_o_types_x_d",
+    "schemas": "_o_types_x_d",
+    "schema": "_o_types_x_d",
+    "api": "_o_api_x_d",
+    "apis": "_o_api_x_d",
+    "endpoints": "_o_api_x_d",
+    "routes": "_o_api_x_d",
+    "controllers": "_o_api_x_d",
+    "handlers": "_o_api_x_d",
+    "resolvers": "_o_api_x_d",
+    "graphql": "_o_api_x_d",
+    "server": "_o_api_x_d",
+    "db": "_o_db_x_d",
+    "database": "_o_db_x_d",
+    "migrations": "_o_db_x_d",
+    "migration": "_o_db_x_d",
+    "seeds": "_o_db_x_d",
+    "repositories": "_o_db_x_d",
+    "repository": "_o_db_x_d",
+    "data": "_o_db_x_d",
+    "persistence": "_o_db_x_d",
+    "services": "_o_services_x_d",
+    "service": "_o_services_x_d",
+    "providers": "_o_services_x_d",
+    "managers": "_o_services_x_d",
+    "clients": "_o_services_x_d",
+    "adapters": "_o_services_x_d",
+    "domain": "_o_services_x_d",
+    "application": "_o_services_x_d",
+    "deploy": "_o_deploy_x_d",
+    "deployment": "_o_deploy_x_d",
+    "deployments": "_o_deploy_x_d",
+    "k8s": "_o_deploy_x_d",
+    "kubernetes": "_o_deploy_x_d",
+    "helm": "_o_deploy_x_d",
+    "charts": "_o_deploy_x_d",
+    "chart": "_o_deploy_x_d",
+    "manifests": "_o_deploy_x_d",
+    "ansible": "_o_deploy_x_d",
+    "infra": "_o_deploy_x_d",
+    "infrastructure": "_o_deploy_x_d",
+    "terraform": "_o_deploy_x_d",
+    "ops": "_o_deploy_x_d",
+    "devops": "_o_deploy_x_d",
+    "provision": "_o_deploy_x_d",
+    "utils": "_o_utils_x_d",
+    "util": "_o_utils_x_d",
+    "helpers": "_o_utils_x_d",
+    "helper": "_o_utils_x_d",
+    "common": "_o_utils_x_d",
+    "shared": "_o_utils_x_d",
+    "lib_utils": "_o_utils_x_d",
+    "internal": "_o_utils_x_d",
+    "support": "_o_utils_x_d",
+    "public": "_o_public_x_d",
+    "www": "_o_public_x_d",
+    "web": "_o_public_x_d",
+    "wwwroot": "_o_public_x_d",
+    "site": "_o_public_x_d",
+    "dist_public": "_o_public_x_d",
+    "i18n": "_o_i18n_x_d",
+    "locales": "_o_i18n_x_d",
+    "locale": "_o_i18n_x_d",
+    "lang": "_o_i18n_x_d",
+    "languages": "_o_i18n_x_d",
+    "translations": "_o_i18n_x_d",
+    "resources": "_o_i18n_x_d",
+    "security": "_o_security_x_d",
+    "auth": "_o_security_x_d",
+    "authentication": "_o_security_x_d",
+    "authorization": "_o_security_x_d",
+    "certs": "_o_security_x_d",
+    "certificates": "_o_security_x_d",
+    "keys": "_o_security_x_d",
+    "secrets": "_o_security_x_d",
+    "logs": "_o_logs_x_d",
+    "log": "_o_logs_x_d",
+    "cache": "_o_logs_x_d",
+    ".cache": "_o_logs_x_d",
+    "tmp": "_o_logs_x_d",
+    "temp": "_o_logs_x_d",
+    ".tmp": "_o_logs_x_d",
+    "store": "_o_state_x_d",
+    "stores": "_o_state_x_d",
+    "state": "_o_state_x_d",
+    "redux": "_o_state_x_d",
+    "context": "_o_state_x_d",
+    "reducers": "_o_state_x_d",
+    "actions": "_o_state_x_d",
+    "slices": "_o_state_x_d",
+    "benchmarks": "_o_tests_e2e_x_d",
+    "bench": "_o_tests_e2e_x_d",
+    "perf": "_o_tests_e2e_x_d",
+    "performance": "_o_tests_e2e_x_d",
+    "profiling": "_o_tests_e2e_x_d",
+    "examples": "_o_examples_x_d",
+    "example": "_o_examples_x_d",
+    "samples": "_o_examples_x_d",
+    "sample": "_o_examples_x_d",
+    "demo": "_o_examples_x_d",
+    "demos": "_o_examples_x_d",
+    "playground": "_o_examples_x_d",
+    "sandbox": "_o_examples_x_d"
+  },
+  "light": {
+    "file": "_f_default_l",
+    "folder": "_o_default_l",
+    "folderExpanded": "_o_default_x_l",
+    "rootFolder": "_o_root_l",
+    "rootFolderExpanded": "_o_root_x_l",
+    "fileExtensions": {
+      "cs": "_f_cs_l",
+      "csx": "_f_cs_l",
+      "razor": "_f_razor_l",
+      "cshtml": "_f_razor_l",
+      "vbhtml": "_f_razor_l",
+      "csproj": "_f_csproj_l",
+      "fsproj": "_f_csproj_l",
+      "vbproj": "_f_csproj_l",
+      "props": "_f_csproj_l",
+      "targets": "_f_csproj_l",
+      "proj": "_f_csproj_l",
+      "sln": "_f_sln_l",
+      "slnx": "_f_sln_l",
+      "slnf": "_f_sln_l",
+      "nuspec": "_f_nuget_l",
+      "nupkg": "_f_nuget_l",
+      "snupkg": "_f_nuget_l",
+      "resx": "_f_resx_l",
+      "resw": "_f_resx_l",
+      "xaml": "_f_xaml_l",
+      "axaml": "_f_xaml_l",
+      "fs": "_f_fsharp_l",
+      "fsi": "_f_fsharp_l",
+      "fsx": "_f_fsharp_l",
+      "fsscript": "_f_fsharp_l",
+      "vb": "_f_vb_l",
+      "vbs": "_f_vb_l",
+      "ts": "_f_ts_l",
+      "mts": "_f_ts_l",
+      "cts": "_f_ts_l",
+      "d.ts": "_f_tsdef_l",
+      "d.mts": "_f_tsdef_l",
+      "d.cts": "_f_tsdef_l",
+      "tsx": "_f_tsx_l",
+      "js": "_f_js_l",
+      "mjs": "_f_js_l",
+      "cjs": "_f_js_l",
+      "jsx": "_f_jsx_l",
+      "lock": "_f_lock_l",
+      "vue": "_f_vue_l",
+      "svelte": "_f_svelte_l",
+      "astro": "_f_astro_l",
+      "test.ts": "_f_test_l",
+      "spec.ts": "_f_test_l",
+      "test.tsx": "_f_test_l",
+      "spec.tsx": "_f_test_l",
+      "test.js": "_f_test_l",
+      "spec.js": "_f_test_l",
+      "Tests.cs": "_f_test_l",
+      "test.jsx": "_f_test_l",
+      "spec.jsx": "_f_test_l",
+      "html": "_f_html_l",
+      "htm": "_f_html_l",
+      "xhtml": "_f_html_l",
+      "css": "_f_css_l",
+      "scss": "_f_sass_l",
+      "sass": "_f_sass_l",
+      "less": "_f_sass_l",
+      "styl": "_f_sass_l",
+      "svg": "_f_svg_l",
+      "json": "_f_json_l",
+      "jsonc": "_f_json_l",
+      "json5": "_f_json_l",
+      "jsonl": "_f_json_l",
+      "ndjson": "_f_json_l",
+      "yaml": "_f_yaml_l",
+      "yml": "_f_yaml_l",
+      "toml": "_f_toml_l",
+      "ini": "_f_ini_l",
+      "cfg": "_f_ini_l",
+      "conf": "_f_ini_l",
+      "properties": "_f_ini_l",
+      "editorconfig": "_f_ini_l",
+      "xml": "_f_xml_l",
+      "xsd": "_f_xml_l",
+      "xsl": "_f_xml_l",
+      "xslt": "_f_xml_l",
+      "plist": "_f_xml_l",
+      "config": "_f_xml_l",
+      "env": "_f_env_l",
+      "csv": "_f_csv_l",
+      "tsv": "_f_csv_l",
+      "psv": "_f_csv_l",
+      "sql": "_f_sql_l",
+      "ddl": "_f_sql_l",
+      "dml": "_f_sql_l",
+      "db": "_f_db_l",
+      "sqlite": "_f_db_l",
+      "sqlite3": "_f_db_l",
+      "mdb": "_f_db_l",
+      "accdb": "_f_db_l",
+      "dbf": "_f_db_l",
+      "graphql": "_f_graphql_l",
+      "gql": "_f_graphql_l",
+      "proto": "_f_proto_l",
+      "http": "_f_http_l",
+      "rest": "_f_http_l",
+      "md": "_f_md_l",
+      "mdx": "_f_md_l",
+      "markdown": "_f_md_l",
+      "mdown": "_f_md_l",
+      "txt": "_f_txt_l",
+      "text": "_f_txt_l",
+      "log": "_f_txt_l",
+      "out": "_f_txt_l",
+      "pdf": "_f_pdf_l",
+      "doc": "_f_doc_l",
+      "docx": "_f_doc_l",
+      "odt": "_f_doc_l",
+      "rtf": "_f_doc_l",
+      "xls": "_f_xls_l",
+      "xlsx": "_f_xls_l",
+      "ods": "_f_xls_l",
+      "xlsm": "_f_xls_l",
+      "ppt": "_f_ppt_l",
+      "pptx": "_f_ppt_l",
+      "odp": "_f_ppt_l",
+      "png": "_f_image_l",
+      "jpg": "_f_image_l",
+      "jpeg": "_f_image_l",
+      "gif": "_f_image_l",
+      "webp": "_f_image_l",
+      "bmp": "_f_image_l",
+      "ico": "_f_image_l",
+      "icns": "_f_image_l",
+      "avif": "_f_image_l",
+      "tiff": "_f_image_l",
+      "tif": "_f_image_l",
+      "heic": "_f_image_l",
+      "psd": "_f_image_l",
+      "ai": "_f_image_l",
+      "xcf": "_f_image_l",
+      "mp4": "_f_video_l",
+      "mov": "_f_video_l",
+      "webm": "_f_video_l",
+      "avi": "_f_video_l",
+      "mkv": "_f_video_l",
+      "flv": "_f_video_l",
+      "wmv": "_f_video_l",
+      "m4v": "_f_video_l",
+      "mpg": "_f_video_l",
+      "mp3": "_f_audio_l",
+      "wav": "_f_audio_l",
+      "flac": "_f_audio_l",
+      "ogg": "_f_audio_l",
+      "aac": "_f_audio_l",
+      "m4a": "_f_audio_l",
+      "wma": "_f_audio_l",
+      "aiff": "_f_audio_l",
+      "opus": "_f_audio_l",
+      "ttf": "_f_font_l",
+      "otf": "_f_font_l",
+      "woff": "_f_font_l",
+      "woff2": "_f_font_l",
+      "eot": "_f_font_l",
+      "fon": "_f_font_l",
+      "obj": "_f_binary_l",
+      "fbx": "_f_model3d_l",
+      "gltf": "_f_model3d_l",
+      "glb": "_f_model3d_l",
+      "blend": "_f_model3d_l",
+      "stl": "_f_model3d_l",
+      "dae": "_f_model3d_l",
+      "zip": "_f_archive_l",
+      "tar": "_f_archive_l",
+      "gz": "_f_archive_l",
+      "tgz": "_f_archive_l",
+      "bz2": "_f_archive_l",
+      "xz": "_f_archive_l",
+      "rar": "_f_archive_l",
+      "7z": "_f_archive_l",
+      "zst": "_f_archive_l",
+      "exe": "_f_binary_l",
+      "dll": "_f_binary_l",
+      "so": "_f_binary_l",
+      "dylib": "_f_binary_l",
+      "bin": "_f_binary_l",
+      "o": "_f_binary_l",
+      "a": "_f_binary_l",
+      "lib": "_f_binary_l",
+      "pdb": "_f_binary_l",
+      "wasm": "_f_binary_l",
+      "class": "_f_binary_l",
+      "jar": "_f_binary_l",
+      "pyc": "_f_binary_l",
+      "msi": "_f_binary_l",
+      "dmg": "_f_binary_l",
+      "deb": "_f_binary_l",
+      "rpm": "_f_binary_l",
+      "apk": "_f_binary_l",
+      "sh": "_f_shell_l",
+      "bash": "_f_shell_l",
+      "zsh": "_f_shell_l",
+      "fish": "_f_shell_l",
+      "ps1": "_f_shell_l",
+      "psm1": "_f_shell_l",
+      "psd1": "_f_shell_l",
+      "bat": "_f_shell_l",
+      "cmd": "_f_shell_l",
+      "nu": "_f_shell_l",
+      "mk": "_f_make_l",
+      "mak": "_f_make_l",
+      "dockerfile": "_f_docker_l",
+      "containerfile": "_f_docker_l",
+      "tf": "_f_terraform_l",
+      "tfvars": "_f_terraform_l",
+      "tfstate": "_f_terraform_l",
+      "hcl": "_f_terraform_l",
+      "gitignore": "_f_git_l",
+      "gitattributes": "_f_git_l",
+      "gitmodules": "_f_git_l",
+      "gitkeep": "_f_git_l",
+      "vsix": "_f_vscode_l",
+      "code-workspace": "_f_vscode_l",
+      "py": "_f_py_l",
+      "pyw": "_f_py_l",
+      "pyi": "_f_py_l",
+      "ipynb": "_f_py_l",
+      "rs": "_f_rs_l",
+      "go": "_f_go_l",
+      "rb": "_f_rb_l",
+      "erb": "_f_rb_l",
+      "gemspec": "_f_rb_l",
+      "java": "_f_java_l",
+      "kt": "_f_java_l",
+      "kts": "_f_java_l",
+      "gradle": "_f_java_l",
+      "groovy": "_f_java_l",
+      "scala": "_f_java_l",
+      "sbt": "_f_java_l",
+      "php": "_f_php_l",
+      "phtml": "_f_php_l",
+      "c": "_f_c_l",
+      "h": "_f_c_l",
+      "cpp": "_f_cpp_l",
+      "cc": "_f_cpp_l",
+      "cxx": "_f_cpp_l",
+      "hpp": "_f_cpp_l",
+      "hh": "_f_cpp_l",
+      "hxx": "_f_cpp_l",
+      "ino": "_f_cpp_l",
+      "swift": "_f_swift_l",
+      "dart": "_f_dart_l",
+      "lua": "_f_lua_l",
+      "r": "_f_r_l",
+      "rmd": "_f_r_l",
+      "ex": "_f_elixir_l",
+      "exs": "_f_elixir_l",
+      "erl": "_f_elixir_l",
+      "hrl": "_f_elixir_l",
+      "hs": "_f_haskell_l",
+      "lhs": "_f_haskell_l",
+      "zig": "_f_zig_l",
+      "nix": "_f_nix_l",
+      "diff": "_f_diff_l",
+      "patch": "_f_diff_l",
+      "pem": "_f_key_l",
+      "key": "_f_key_l",
+      "crt": "_f_key_l",
+      "cer": "_f_key_l",
+      "pfx": "_f_key_l",
+      "p12": "_f_key_l",
+      "pub": "_f_key_l",
+      "asc": "_f_key_l",
+      "gpg": "_f_key_l"
+    },
+    "fileNames": {
+      "Directory.Build.props": "_f_csproj_l",
+      "Directory.Build.targets": "_f_csproj_l",
+      "Directory.Packages.props": "_f_csproj_l",
+      "nuget.config": "_f_dotnetcfg_l",
+      "NuGet.Config": "_f_nuget_l",
+      "packages.config": "_f_nuget_l",
+      "global.json": "_f_dotnetcfg_l",
+      "dotnet-tools.json": "_f_dotnetcfg_l",
+      "appsettings.json": "_f_dotnetcfg_l",
+      "appsettings.Development.json": "_f_dotnetcfg_l",
+      "appsettings.Production.json": "_f_dotnetcfg_l",
+      "launchSettings.json": "_f_dotnetcfg_l",
+      "omnisharp.json": "_f_dotnetcfg_l",
+      "tsconfig.json": "_f_tsconfig_l",
+      "tsconfig.base.json": "_f_tsconfig_l",
+      "tsconfig.build.json": "_f_tsconfig_l",
+      "tsconfig.node.json": "_f_tsconfig_l",
+      "tsconfig.app.json": "_f_tsconfig_l",
+      "tsconfig.spec.json": "_f_tsconfig_l",
+      "jsconfig.json": "_f_tsconfig_l",
+      "package.json": "_f_npm_l",
+      "package-lock.json": "_f_lock_l",
+      "yarn.lock": "_f_lock_l",
+      "pnpm-lock.yaml": "_f_lock_l",
+      "bun.lockb": "_f_lock_l",
+      "bun.lock": "_f_lock_l",
+      "deno.lock": "_f_lock_l",
+      "composer.lock": "_f_lock_l",
+      "Cargo.lock": "_f_lock_l",
+      "poetry.lock": "_f_lock_l",
+      "eslint.config.js": "_f_eslint_l",
+      "eslint.config.mjs": "_f_eslint_l",
+      "eslint.config.ts": "_f_eslint_l",
+      ".eslintrc": "_f_eslint_l",
+      ".eslintrc.js": "_f_eslint_l",
+      ".eslintrc.json": "_f_eslint_l",
+      ".eslintrc.cjs": "_f_eslint_l",
+      ".eslintrc.yml": "_f_eslint_l",
+      ".eslintignore": "_f_eslint_l",
+      ".prettierrc": "_f_prettier_l",
+      ".prettierrc.json": "_f_prettier_l",
+      ".prettierrc.js": "_f_prettier_l",
+      ".prettierrc.yml": "_f_prettier_l",
+      "prettier.config.js": "_f_prettier_l",
+      "prettier.config.mjs": "_f_prettier_l",
+      ".prettierignore": "_f_prettier_l",
+      "vite.config.ts": "_f_bundler_l",
+      "vite.config.js": "_f_bundler_l",
+      "vite.config.mts": "_f_bundler_l",
+      "webpack.config.js": "_f_bundler_l",
+      "webpack.config.ts": "_f_bundler_l",
+      "rollup.config.js": "_f_bundler_l",
+      "rollup.config.mjs": "_f_bundler_l",
+      "esbuild.config.js": "_f_bundler_l",
+      "tsup.config.ts": "_f_bundler_l",
+      "next.config.js": "_f_bundler_l",
+      "next.config.mjs": "_f_bundler_l",
+      "next.config.ts": "_f_bundler_l",
+      "turbo.json": "_f_bundler_l",
+      "nx.json": "_f_bundler_l",
+      "rspack.config.js": "_f_bundler_l",
+      "vitest.config.ts": "_f_test_l",
+      "jest.config.js": "_f_test_l",
+      "jest.config.ts": "_f_test_l",
+      "playwright.config.ts": "_f_test_l",
+      "karma.conf.js": "_f_test_l",
+      "cypress.config.ts": "_f_test_l",
+      "tailwind.config.js": "_f_tailwind_l",
+      "tailwind.config.ts": "_f_tailwind_l",
+      "tailwind.config.cjs": "_f_tailwind_l",
+      "postcss.config.js": "_f_tailwind_l",
+      "postcss.config.mjs": "_f_tailwind_l",
+      ".editorconfig": "_f_ini_l",
+      ".env": "_f_env_l",
+      ".env.local": "_f_env_l",
+      ".env.development": "_f_env_l",
+      ".env.production": "_f_env_l",
+      ".env.test": "_f_env_l",
+      ".env.example": "_f_env_l",
+      ".env.sample": "_f_env_l",
+      "README.md": "_f_readme_l",
+      "readme.md": "_f_readme_l",
+      "README": "_f_readme_l",
+      "README.txt": "_f_readme_l",
+      "README.rst": "_f_readme_l",
+      "readme.markdown": "_f_readme_l",
+      "CHANGELOG.md": "_f_changelog_l",
+      "changelog.md": "_f_changelog_l",
+      "CHANGELOG": "_f_changelog_l",
+      "HISTORY.md": "_f_changelog_l",
+      "RELEASES.md": "_f_changelog_l",
+      "LICENSE": "_f_license_l",
+      "LICENSE.md": "_f_license_l",
+      "LICENSE.txt": "_f_license_l",
+      "LICENCE": "_f_license_l",
+      "COPYING": "_f_license_l",
+      "NOTICE": "_f_license_l",
+      "UNLICENSE": "_f_license_l",
+      "CONTRIBUTING.md": "_f_contrib_l",
+      "CODE_OF_CONDUCT.md": "_f_contrib_l",
+      "AUTHORS": "_f_contrib_l",
+      "CODEOWNERS": "_f_contrib_l",
+      "SECURITY.md": "_f_contrib_l",
+      "Makefile": "_f_make_l",
+      "makefile": "_f_make_l",
+      "GNUmakefile": "_f_make_l",
+      "Rakefile": "_f_make_l",
+      "justfile": "_f_make_l",
+      "Justfile": "_f_make_l",
+      "Taskfile.yml": "_f_make_l",
+      "Dockerfile": "_f_docker_l",
+      "dockerfile": "_f_docker_l",
+      "Containerfile": "_f_docker_l",
+      ".dockerignore": "_f_docker_l",
+      "docker-compose.yml": "_f_docker_l",
+      "docker-compose.yaml": "_f_docker_l",
+      "compose.yml": "_f_docker_l",
+      "compose.yaml": "_f_docker_l",
+      "docker-compose.override.yml": "_f_docker_l",
+      "kustomization.yaml": "_f_k8s_l",
+      "skaffold.yaml": "_f_k8s_l",
+      "Chart.yaml": "_f_k8s_l",
+      "values.yaml": "_f_k8s_l",
+      ".gitignore": "_f_git_l",
+      ".gitattributes": "_f_git_l",
+      ".gitmodules": "_f_git_l",
+      ".gitkeep": "_f_git_l",
+      ".mailmap": "_f_git_l",
+      ".git-blame-ignore-revs": "_f_git_l",
+      ".travis.yml": "_f_ci_l",
+      "azure-pipelines.yml": "_f_ci_l",
+      "Jenkinsfile": "_f_ci_l",
+      ".gitlab-ci.yml": "_f_ci_l",
+      "appveyor.yml": "_f_ci_l",
+      "cloudbuild.yaml": "_f_ci_l",
+      "buildkite.yml": "_f_ci_l",
+      "settings.json": "_f_vscode_l",
+      "launch.json": "_f_vscode_l",
+      "tasks.json": "_f_vscode_l",
+      "extensions.json": "_f_vscode_l",
+      "keybindings.json": "_f_vscode_l",
+      "argv.json": "_f_vscode_l",
+      "requirements.txt": "_f_py_l",
+      "pyproject.toml": "_f_py_l",
+      "setup.py": "_f_py_l",
+      "setup.cfg": "_f_py_l",
+      "Pipfile": "_f_py_l",
+      "tox.ini": "_f_py_l",
+      "Cargo.toml": "_f_rs_l",
+      "go.mod": "_f_go_l",
+      "go.sum": "_f_go_l",
+      "go.work": "_f_go_l",
+      "Gemfile": "_f_rb_l",
+      "Gemfile.lock": "_f_rb_l",
+      "build.gradle": "_f_java_l",
+      "settings.gradle": "_f_java_l",
+      "pom.xml": "_f_java_l",
+      "composer.json": "_f_php_l",
+      "Package.swift": "_f_swift_l",
+      "pubspec.yaml": "_f_dart_l",
+      "mix.exs": "_f_elixir_l",
+      "build.zig": "_f_zig_l",
+      "flake.nix": "_f_nix_l",
+      "flake.lock": "_f_nix_l"
+    },
+    "languageIds": {
+      "csharp": "_f_cs_l",
+      "razor": "_f_razor_l",
+      "aspnetcorerazor": "_f_razor_l",
+      "xaml": "_f_xaml_l",
+      "fsharp": "_f_fsharp_l",
+      "vb": "_f_vb_l",
+      "typescript": "_f_ts_l",
+      "typescriptreact": "_f_tsx_l",
+      "javascript": "_f_js_l",
+      "javascriptreact": "_f_jsx_l",
+      "vue": "_f_vue_l",
+      "svelte": "_f_svelte_l",
+      "astro": "_f_astro_l",
+      "html": "_f_html_l",
+      "css": "_f_css_l",
+      "scss": "_f_sass_l",
+      "less": "_f_sass_l",
+      "json": "_f_json_l",
+      "jsonc": "_f_json_l",
+      "yaml": "_f_yaml_l",
+      "toml": "_f_toml_l",
+      "ini": "_f_ini_l",
+      "properties": "_f_ini_l",
+      "xml": "_f_xml_l",
+      "dotenv": "_f_env_l",
+      "sql": "_f_sql_l",
+      "graphql": "_f_graphql_l",
+      "proto3": "_f_proto_l",
+      "http": "_f_http_l",
+      "markdown": "_f_md_l",
+      "plaintext": "_f_txt_l",
+      "log": "_f_txt_l",
+      "shellscript": "_f_shell_l",
+      "powershell": "_f_shell_l",
+      "bat": "_f_shell_l",
+      "makefile": "_f_make_l",
+      "dockerfile": "_f_docker_l",
+      "dockercompose": "_f_docker_l",
+      "terraform": "_f_terraform_l",
+      "python": "_f_py_l",
+      "jupyter": "_f_py_l",
+      "rust": "_f_rs_l",
+      "go": "_f_go_l",
+      "ruby": "_f_rb_l",
+      "java": "_f_java_l",
+      "kotlin": "_f_java_l",
+      "groovy": "_f_java_l",
+      "scala": "_f_java_l",
+      "php": "_f_php_l",
+      "c": "_f_c_l",
+      "cpp": "_f_cpp_l",
+      "swift": "_f_swift_l",
+      "dart": "_f_dart_l",
+      "lua": "_f_lua_l",
+      "r": "_f_r_l",
+      "elixir": "_f_elixir_l",
+      "haskell": "_f_haskell_l",
+      "zig": "_f_zig_l",
+      "nix": "_f_nix_l",
+      "diff": "_f_diff_l"
+    },
+    "folderNames": {
+      "src": "_o_src_l",
+      "source": "_o_src_l",
+      "sources": "_o_src_l",
+      "app": "_o_src_l",
+      "apps": "_o_src_l",
+      "lib": "_o_src_l",
+      "libs": "_o_src_l",
+      "core": "_o_src_l",
+      "packages": "_o_src_l",
+      "modules": "_o_src_l",
+      "test": "_o_test_l",
+      "tests": "_o_test_l",
+      "__tests__": "_o_test_l",
+      "spec": "_o_test_l",
+      "specs": "_o_test_l",
+      "e2e": "_o_test_l",
+      "testing": "_o_test_l",
+      "unittest": "_o_test_l",
+      "integration": "_o_test_l",
+      "node_modules": "_o_node_l",
+      "bower_components": "_o_node_l",
+      "vendor": "_o_node_l",
+      "third_party": "_o_node_l",
+      "externals": "_o_node_l",
+      "dist": "_o_dist_l",
+      "build": "_o_dist_l",
+      "out": "_o_dist_l",
+      "output": "_o_dist_l",
+      "bin": "_o_dist_l",
+      "obj": "_o_dist_l",
+      "target": "_o_dist_l",
+      "release": "_o_dist_l",
+      "debug": "_o_dist_l",
+      "artifacts": "_o_dist_l",
+      "publish": "_o_dist_l",
+      ".git": "_o_git_l",
+      ".husky": "_o_git_l",
+      ".github": "_o_github_l",
+      ".gitlab": "_o_github_l",
+      ".circleci": "_o_github_l",
+      ".azuredevops": "_o_github_l",
+      "config": "_o_config_l",
+      "configs": "_o_config_l",
+      "configuration": "_o_config_l",
+      ".config": "_o_config_l",
+      "settings": "_o_config_l",
+      "conf": "_o_config_l",
+      ".vscode": "_o_config_l",
+      ".idea": "_o_config_l",
+      ".vs": "_o_config_l",
+      ".cursor": "_o_config_l",
+      ".claude": "_o_config_l",
+      ".devcontainer": "_o_config_l",
+      ".editorconfig.d": "_o_config_l",
+      "assets": "_o_assets_l",
+      "images": "_o_assets_l",
+      "img": "_o_assets_l",
+      "icons": "_o_assets_l",
+      "media": "_o_assets_l",
+      "static": "_o_assets_l",
+      "pictures": "_o_assets_l",
+      "photos": "_o_assets_l",
+      "graphics": "_o_assets_l",
+      "logos": "_o_assets_l",
+      "docs": "_o_docs_l",
+      "doc": "_o_docs_l",
+      "documentation": "_o_docs_l",
+      "wiki": "_o_docs_l",
+      "manual": "_o_docs_l",
+      "guides": "_o_docs_l",
+      "styles": "_o_styles_l",
+      "style": "_o_styles_l",
+      "css": "_o_styles_l",
+      "scss": "_o_styles_l",
+      "sass": "_o_styles_l",
+      "themes": "_o_styles_l",
+      "theme": "_o_styles_l",
+      "scripts": "_o_scripts_l",
+      "script": "_o_scripts_l",
+      "tools": "_o_scripts_l",
+      "tooling": "_o_scripts_l",
+      "bin_scripts": "_o_scripts_l",
+      "automation": "_o_scripts_l",
+      "cli": "_o_scripts_l",
+      "components": "_o_components_l",
+      "component": "_o_components_l",
+      "widgets": "_o_components_l",
+      "ui": "_o_components_l",
+      "controls": "_o_components_l",
+      "views": "_o_components_l",
+      "pages": "_o_components_l",
+      "screens": "_o_components_l",
+      "partials": "_o_components_l",
+      "layouts": "_o_components_l",
+      "hooks": "_o_hooks_l",
+      "middleware": "_o_hooks_l",
+      "interceptors": "_o_hooks_l",
+      "plugins": "_o_hooks_l",
+      "extensions": "_o_hooks_l",
+      "filters": "_o_hooks_l",
+      "types": "_o_types_l",
+      "typings": "_o_types_l",
+      "@types": "_o_types_l",
+      "interfaces": "_o_types_l",
+      "contracts": "_o_types_l",
+      "models": "_o_types_l",
+      "dto": "_o_types_l",
+      "dtos": "_o_types_l",
+      "entities": "_o_types_l",
+      "schemas": "_o_types_l",
+      "schema": "_o_types_l",
+      "api": "_o_api_l",
+      "apis": "_o_api_l",
+      "endpoints": "_o_api_l",
+      "routes": "_o_api_l",
+      "controllers": "_o_api_l",
+      "handlers": "_o_api_l",
+      "resolvers": "_o_api_l",
+      "graphql": "_o_api_l",
+      "server": "_o_api_l",
+      "db": "_o_db_l",
+      "database": "_o_db_l",
+      "migrations": "_o_db_l",
+      "migration": "_o_db_l",
+      "seeds": "_o_db_l",
+      "repositories": "_o_db_l",
+      "repository": "_o_db_l",
+      "data": "_o_db_l",
+      "persistence": "_o_db_l",
+      "services": "_o_services_l",
+      "service": "_o_services_l",
+      "providers": "_o_services_l",
+      "managers": "_o_services_l",
+      "clients": "_o_services_l",
+      "adapters": "_o_services_l",
+      "domain": "_o_services_l",
+      "application": "_o_services_l",
+      "deploy": "_o_deploy_l",
+      "deployment": "_o_deploy_l",
+      "deployments": "_o_deploy_l",
+      "k8s": "_o_deploy_l",
+      "kubernetes": "_o_deploy_l",
+      "helm": "_o_deploy_l",
+      "charts": "_o_deploy_l",
+      "chart": "_o_deploy_l",
+      "manifests": "_o_deploy_l",
+      "ansible": "_o_deploy_l",
+      "infra": "_o_deploy_l",
+      "infrastructure": "_o_deploy_l",
+      "terraform": "_o_deploy_l",
+      "ops": "_o_deploy_l",
+      "devops": "_o_deploy_l",
+      "provision": "_o_deploy_l",
+      "utils": "_o_utils_l",
+      "util": "_o_utils_l",
+      "helpers": "_o_utils_l",
+      "helper": "_o_utils_l",
+      "common": "_o_utils_l",
+      "shared": "_o_utils_l",
+      "lib_utils": "_o_utils_l",
+      "internal": "_o_utils_l",
+      "support": "_o_utils_l",
+      "public": "_o_public_l",
+      "www": "_o_public_l",
+      "web": "_o_public_l",
+      "wwwroot": "_o_public_l",
+      "site": "_o_public_l",
+      "dist_public": "_o_public_l",
+      "i18n": "_o_i18n_l",
+      "locales": "_o_i18n_l",
+      "locale": "_o_i18n_l",
+      "lang": "_o_i18n_l",
+      "languages": "_o_i18n_l",
+      "translations": "_o_i18n_l",
+      "resources": "_o_i18n_l",
+      "security": "_o_security_l",
+      "auth": "_o_security_l",
+      "authentication": "_o_security_l",
+      "authorization": "_o_security_l",
+      "certs": "_o_security_l",
+      "certificates": "_o_security_l",
+      "keys": "_o_security_l",
+      "secrets": "_o_security_l",
+      "logs": "_o_logs_l",
+      "log": "_o_logs_l",
+      "cache": "_o_logs_l",
+      ".cache": "_o_logs_l",
+      "tmp": "_o_logs_l",
+      "temp": "_o_logs_l",
+      ".tmp": "_o_logs_l",
+      "store": "_o_state_l",
+      "stores": "_o_state_l",
+      "state": "_o_state_l",
+      "redux": "_o_state_l",
+      "context": "_o_state_l",
+      "reducers": "_o_state_l",
+      "actions": "_o_state_l",
+      "slices": "_o_state_l",
+      "benchmarks": "_o_tests_e2e_l",
+      "bench": "_o_tests_e2e_l",
+      "perf": "_o_tests_e2e_l",
+      "performance": "_o_tests_e2e_l",
+      "profiling": "_o_tests_e2e_l",
+      "examples": "_o_examples_l",
+      "example": "_o_examples_l",
+      "samples": "_o_examples_l",
+      "sample": "_o_examples_l",
+      "demo": "_o_examples_l",
+      "demos": "_o_examples_l",
+      "playground": "_o_examples_l",
+      "sandbox": "_o_examples_l"
+    },
+    "folderNamesExpanded": {
+      "src": "_o_src_x_l",
+      "source": "_o_src_x_l",
+      "sources": "_o_src_x_l",
+      "app": "_o_src_x_l",
+      "apps": "_o_src_x_l",
+      "lib": "_o_src_x_l",
+      "libs": "_o_src_x_l",
+      "core": "_o_src_x_l",
+      "packages": "_o_src_x_l",
+      "modules": "_o_src_x_l",
+      "test": "_o_test_x_l",
+      "tests": "_o_test_x_l",
+      "__tests__": "_o_test_x_l",
+      "spec": "_o_test_x_l",
+      "specs": "_o_test_x_l",
+      "e2e": "_o_test_x_l",
+      "testing": "_o_test_x_l",
+      "unittest": "_o_test_x_l",
+      "integration": "_o_test_x_l",
+      "node_modules": "_o_node_x_l",
+      "bower_components": "_o_node_x_l",
+      "vendor": "_o_node_x_l",
+      "third_party": "_o_node_x_l",
+      "externals": "_o_node_x_l",
+      "dist": "_o_dist_x_l",
+      "build": "_o_dist_x_l",
+      "out": "_o_dist_x_l",
+      "output": "_o_dist_x_l",
+      "bin": "_o_dist_x_l",
+      "obj": "_o_dist_x_l",
+      "target": "_o_dist_x_l",
+      "release": "_o_dist_x_l",
+      "debug": "_o_dist_x_l",
+      "artifacts": "_o_dist_x_l",
+      "publish": "_o_dist_x_l",
+      ".git": "_o_git_x_l",
+      ".husky": "_o_git_x_l",
+      ".github": "_o_github_x_l",
+      ".gitlab": "_o_github_x_l",
+      ".circleci": "_o_github_x_l",
+      ".azuredevops": "_o_github_x_l",
+      "config": "_o_config_x_l",
+      "configs": "_o_config_x_l",
+      "configuration": "_o_config_x_l",
+      ".config": "_o_config_x_l",
+      "settings": "_o_config_x_l",
+      "conf": "_o_config_x_l",
+      ".vscode": "_o_config_x_l",
+      ".idea": "_o_config_x_l",
+      ".vs": "_o_config_x_l",
+      ".cursor": "_o_config_x_l",
+      ".claude": "_o_config_x_l",
+      ".devcontainer": "_o_config_x_l",
+      ".editorconfig.d": "_o_config_x_l",
+      "assets": "_o_assets_x_l",
+      "images": "_o_assets_x_l",
+      "img": "_o_assets_x_l",
+      "icons": "_o_assets_x_l",
+      "media": "_o_assets_x_l",
+      "static": "_o_assets_x_l",
+      "pictures": "_o_assets_x_l",
+      "photos": "_o_assets_x_l",
+      "graphics": "_o_assets_x_l",
+      "logos": "_o_assets_x_l",
+      "docs": "_o_docs_x_l",
+      "doc": "_o_docs_x_l",
+      "documentation": "_o_docs_x_l",
+      "wiki": "_o_docs_x_l",
+      "manual": "_o_docs_x_l",
+      "guides": "_o_docs_x_l",
+      "styles": "_o_styles_x_l",
+      "style": "_o_styles_x_l",
+      "css": "_o_styles_x_l",
+      "scss": "_o_styles_x_l",
+      "sass": "_o_styles_x_l",
+      "themes": "_o_styles_x_l",
+      "theme": "_o_styles_x_l",
+      "scripts": "_o_scripts_x_l",
+      "script": "_o_scripts_x_l",
+      "tools": "_o_scripts_x_l",
+      "tooling": "_o_scripts_x_l",
+      "bin_scripts": "_o_scripts_x_l",
+      "automation": "_o_scripts_x_l",
+      "cli": "_o_scripts_x_l",
+      "components": "_o_components_x_l",
+      "component": "_o_components_x_l",
+      "widgets": "_o_components_x_l",
+      "ui": "_o_components_x_l",
+      "controls": "_o_components_x_l",
+      "views": "_o_components_x_l",
+      "pages": "_o_components_x_l",
+      "screens": "_o_components_x_l",
+      "partials": "_o_components_x_l",
+      "layouts": "_o_components_x_l",
+      "hooks": "_o_hooks_x_l",
+      "middleware": "_o_hooks_x_l",
+      "interceptors": "_o_hooks_x_l",
+      "plugins": "_o_hooks_x_l",
+      "extensions": "_o_hooks_x_l",
+      "filters": "_o_hooks_x_l",
+      "types": "_o_types_x_l",
+      "typings": "_o_types_x_l",
+      "@types": "_o_types_x_l",
+      "interfaces": "_o_types_x_l",
+      "contracts": "_o_types_x_l",
+      "models": "_o_types_x_l",
+      "dto": "_o_types_x_l",
+      "dtos": "_o_types_x_l",
+      "entities": "_o_types_x_l",
+      "schemas": "_o_types_x_l",
+      "schema": "_o_types_x_l",
+      "api": "_o_api_x_l",
+      "apis": "_o_api_x_l",
+      "endpoints": "_o_api_x_l",
+      "routes": "_o_api_x_l",
+      "controllers": "_o_api_x_l",
+      "handlers": "_o_api_x_l",
+      "resolvers": "_o_api_x_l",
+      "graphql": "_o_api_x_l",
+      "server": "_o_api_x_l",
+      "db": "_o_db_x_l",
+      "database": "_o_db_x_l",
+      "migrations": "_o_db_x_l",
+      "migration": "_o_db_x_l",
+      "seeds": "_o_db_x_l",
+      "repositories": "_o_db_x_l",
+      "repository": "_o_db_x_l",
+      "data": "_o_db_x_l",
+      "persistence": "_o_db_x_l",
+      "services": "_o_services_x_l",
+      "service": "_o_services_x_l",
+      "providers": "_o_services_x_l",
+      "managers": "_o_services_x_l",
+      "clients": "_o_services_x_l",
+      "adapters": "_o_services_x_l",
+      "domain": "_o_services_x_l",
+      "application": "_o_services_x_l",
+      "deploy": "_o_deploy_x_l",
+      "deployment": "_o_deploy_x_l",
+      "deployments": "_o_deploy_x_l",
+      "k8s": "_o_deploy_x_l",
+      "kubernetes": "_o_deploy_x_l",
+      "helm": "_o_deploy_x_l",
+      "charts": "_o_deploy_x_l",
+      "chart": "_o_deploy_x_l",
+      "manifests": "_o_deploy_x_l",
+      "ansible": "_o_deploy_x_l",
+      "infra": "_o_deploy_x_l",
+      "infrastructure": "_o_deploy_x_l",
+      "terraform": "_o_deploy_x_l",
+      "ops": "_o_deploy_x_l",
+      "devops": "_o_deploy_x_l",
+      "provision": "_o_deploy_x_l",
+      "utils": "_o_utils_x_l",
+      "util": "_o_utils_x_l",
+      "helpers": "_o_utils_x_l",
+      "helper": "_o_utils_x_l",
+      "common": "_o_utils_x_l",
+      "shared": "_o_utils_x_l",
+      "lib_utils": "_o_utils_x_l",
+      "internal": "_o_utils_x_l",
+      "support": "_o_utils_x_l",
+      "public": "_o_public_x_l",
+      "www": "_o_public_x_l",
+      "web": "_o_public_x_l",
+      "wwwroot": "_o_public_x_l",
+      "site": "_o_public_x_l",
+      "dist_public": "_o_public_x_l",
+      "i18n": "_o_i18n_x_l",
+      "locales": "_o_i18n_x_l",
+      "locale": "_o_i18n_x_l",
+      "lang": "_o_i18n_x_l",
+      "languages": "_o_i18n_x_l",
+      "translations": "_o_i18n_x_l",
+      "resources": "_o_i18n_x_l",
+      "security": "_o_security_x_l",
+      "auth": "_o_security_x_l",
+      "authentication": "_o_security_x_l",
+      "authorization": "_o_security_x_l",
+      "certs": "_o_security_x_l",
+      "certificates": "_o_security_x_l",
+      "keys": "_o_security_x_l",
+      "secrets": "_o_security_x_l",
+      "logs": "_o_logs_x_l",
+      "log": "_o_logs_x_l",
+      "cache": "_o_logs_x_l",
+      ".cache": "_o_logs_x_l",
+      "tmp": "_o_logs_x_l",
+      "temp": "_o_logs_x_l",
+      ".tmp": "_o_logs_x_l",
+      "store": "_o_state_x_l",
+      "stores": "_o_state_x_l",
+      "state": "_o_state_x_l",
+      "redux": "_o_state_x_l",
+      "context": "_o_state_x_l",
+      "reducers": "_o_state_x_l",
+      "actions": "_o_state_x_l",
+      "slices": "_o_state_x_l",
+      "benchmarks": "_o_tests_e2e_x_l",
+      "bench": "_o_tests_e2e_x_l",
+      "perf": "_o_tests_e2e_x_l",
+      "performance": "_o_tests_e2e_x_l",
+      "profiling": "_o_tests_e2e_x_l",
+      "examples": "_o_examples_x_l",
+      "example": "_o_examples_x_l",
+      "samples": "_o_examples_x_l",
+      "sample": "_o_examples_x_l",
+      "demo": "_o_examples_x_l",
+      "demos": "_o_examples_x_l",
+      "playground": "_o_examples_x_l",
+      "sandbox": "_o_examples_x_l"
+    }
+  },
+  "highContrast": {
+    "file": "_f_default_c",
+    "folder": "_o_default_c",
+    "folderExpanded": "_o_default_x_c",
+    "rootFolder": "_o_root_c",
+    "rootFolderExpanded": "_o_root_x_c",
+    "fileExtensions": {
+      "cs": "_f_cs_c",
+      "csx": "_f_cs_c",
+      "razor": "_f_razor_c",
+      "cshtml": "_f_razor_c",
+      "vbhtml": "_f_razor_c",
+      "csproj": "_f_csproj_c",
+      "fsproj": "_f_csproj_c",
+      "vbproj": "_f_csproj_c",
+      "props": "_f_csproj_c",
+      "targets": "_f_csproj_c",
+      "proj": "_f_csproj_c",
+      "sln": "_f_sln_c",
+      "slnx": "_f_sln_c",
+      "slnf": "_f_sln_c",
+      "nuspec": "_f_nuget_c",
+      "nupkg": "_f_nuget_c",
+      "snupkg": "_f_nuget_c",
+      "resx": "_f_resx_c",
+      "resw": "_f_resx_c",
+      "xaml": "_f_xaml_c",
+      "axaml": "_f_xaml_c",
+      "fs": "_f_fsharp_c",
+      "fsi": "_f_fsharp_c",
+      "fsx": "_f_fsharp_c",
+      "fsscript": "_f_fsharp_c",
+      "vb": "_f_vb_c",
+      "vbs": "_f_vb_c",
+      "ts": "_f_ts_c",
+      "mts": "_f_ts_c",
+      "cts": "_f_ts_c",
+      "d.ts": "_f_tsdef_c",
+      "d.mts": "_f_tsdef_c",
+      "d.cts": "_f_tsdef_c",
+      "tsx": "_f_tsx_c",
+      "js": "_f_js_c",
+      "mjs": "_f_js_c",
+      "cjs": "_f_js_c",
+      "jsx": "_f_jsx_c",
+      "lock": "_f_lock_c",
+      "vue": "_f_vue_c",
+      "svelte": "_f_svelte_c",
+      "astro": "_f_astro_c",
+      "test.ts": "_f_test_c",
+      "spec.ts": "_f_test_c",
+      "test.tsx": "_f_test_c",
+      "spec.tsx": "_f_test_c",
+      "test.js": "_f_test_c",
+      "spec.js": "_f_test_c",
+      "Tests.cs": "_f_test_c",
+      "test.jsx": "_f_test_c",
+      "spec.jsx": "_f_test_c",
+      "html": "_f_html_c",
+      "htm": "_f_html_c",
+      "xhtml": "_f_html_c",
+      "css": "_f_css_c",
+      "scss": "_f_sass_c",
+      "sass": "_f_sass_c",
+      "less": "_f_sass_c",
+      "styl": "_f_sass_c",
+      "svg": "_f_svg_c",
+      "json": "_f_json_c",
+      "jsonc": "_f_json_c",
+      "json5": "_f_json_c",
+      "jsonl": "_f_json_c",
+      "ndjson": "_f_json_c",
+      "yaml": "_f_yaml_c",
+      "yml": "_f_yaml_c",
+      "toml": "_f_toml_c",
+      "ini": "_f_ini_c",
+      "cfg": "_f_ini_c",
+      "conf": "_f_ini_c",
+      "properties": "_f_ini_c",
+      "editorconfig": "_f_ini_c",
+      "xml": "_f_xml_c",
+      "xsd": "_f_xml_c",
+      "xsl": "_f_xml_c",
+      "xslt": "_f_xml_c",
+      "plist": "_f_xml_c",
+      "config": "_f_xml_c",
+      "env": "_f_env_c",
+      "csv": "_f_csv_c",
+      "tsv": "_f_csv_c",
+      "psv": "_f_csv_c",
+      "sql": "_f_sql_c",
+      "ddl": "_f_sql_c",
+      "dml": "_f_sql_c",
+      "db": "_f_db_c",
+      "sqlite": "_f_db_c",
+      "sqlite3": "_f_db_c",
+      "mdb": "_f_db_c",
+      "accdb": "_f_db_c",
+      "dbf": "_f_db_c",
+      "graphql": "_f_graphql_c",
+      "gql": "_f_graphql_c",
+      "proto": "_f_proto_c",
+      "http": "_f_http_c",
+      "rest": "_f_http_c",
+      "md": "_f_md_c",
+      "mdx": "_f_md_c",
+      "markdown": "_f_md_c",
+      "mdown": "_f_md_c",
+      "txt": "_f_txt_c",
+      "text": "_f_txt_c",
+      "log": "_f_txt_c",
+      "out": "_f_txt_c",
+      "pdf": "_f_pdf_c",
+      "doc": "_f_doc_c",
+      "docx": "_f_doc_c",
+      "odt": "_f_doc_c",
+      "rtf": "_f_doc_c",
+      "xls": "_f_xls_c",
+      "xlsx": "_f_xls_c",
+      "ods": "_f_xls_c",
+      "xlsm": "_f_xls_c",
+      "ppt": "_f_ppt_c",
+      "pptx": "_f_ppt_c",
+      "odp": "_f_ppt_c",
+      "png": "_f_image_c",
+      "jpg": "_f_image_c",
+      "jpeg": "_f_image_c",
+      "gif": "_f_image_c",
+      "webp": "_f_image_c",
+      "bmp": "_f_image_c",
+      "ico": "_f_image_c",
+      "icns": "_f_image_c",
+      "avif": "_f_image_c",
+      "tiff": "_f_image_c",
+      "tif": "_f_image_c",
+      "heic": "_f_image_c",
+      "psd": "_f_image_c",
+      "ai": "_f_image_c",
+      "xcf": "_f_image_c",
+      "mp4": "_f_video_c",
+      "mov": "_f_video_c",
+      "webm": "_f_video_c",
+      "avi": "_f_video_c",
+      "mkv": "_f_video_c",
+      "flv": "_f_video_c",
+      "wmv": "_f_video_c",
+      "m4v": "_f_video_c",
+      "mpg": "_f_video_c",
+      "mp3": "_f_audio_c",
+      "wav": "_f_audio_c",
+      "flac": "_f_audio_c",
+      "ogg": "_f_audio_c",
+      "aac": "_f_audio_c",
+      "m4a": "_f_audio_c",
+      "wma": "_f_audio_c",
+      "aiff": "_f_audio_c",
+      "opus": "_f_audio_c",
+      "ttf": "_f_font_c",
+      "otf": "_f_font_c",
+      "woff": "_f_font_c",
+      "woff2": "_f_font_c",
+      "eot": "_f_font_c",
+      "fon": "_f_font_c",
+      "obj": "_f_binary_c",
+      "fbx": "_f_model3d_c",
+      "gltf": "_f_model3d_c",
+      "glb": "_f_model3d_c",
+      "blend": "_f_model3d_c",
+      "stl": "_f_model3d_c",
+      "dae": "_f_model3d_c",
+      "zip": "_f_archive_c",
+      "tar": "_f_archive_c",
+      "gz": "_f_archive_c",
+      "tgz": "_f_archive_c",
+      "bz2": "_f_archive_c",
+      "xz": "_f_archive_c",
+      "rar": "_f_archive_c",
+      "7z": "_f_archive_c",
+      "zst": "_f_archive_c",
+      "exe": "_f_binary_c",
+      "dll": "_f_binary_c",
+      "so": "_f_binary_c",
+      "dylib": "_f_binary_c",
+      "bin": "_f_binary_c",
+      "o": "_f_binary_c",
+      "a": "_f_binary_c",
+      "lib": "_f_binary_c",
+      "pdb": "_f_binary_c",
+      "wasm": "_f_binary_c",
+      "class": "_f_binary_c",
+      "jar": "_f_binary_c",
+      "pyc": "_f_binary_c",
+      "msi": "_f_binary_c",
+      "dmg": "_f_binary_c",
+      "deb": "_f_binary_c",
+      "rpm": "_f_binary_c",
+      "apk": "_f_binary_c",
+      "sh": "_f_shell_c",
+      "bash": "_f_shell_c",
+      "zsh": "_f_shell_c",
+      "fish": "_f_shell_c",
+      "ps1": "_f_shell_c",
+      "psm1": "_f_shell_c",
+      "psd1": "_f_shell_c",
+      "bat": "_f_shell_c",
+      "cmd": "_f_shell_c",
+      "nu": "_f_shell_c",
+      "mk": "_f_make_c",
+      "mak": "_f_make_c",
+      "dockerfile": "_f_docker_c",
+      "containerfile": "_f_docker_c",
+      "tf": "_f_terraform_c",
+      "tfvars": "_f_terraform_c",
+      "tfstate": "_f_terraform_c",
+      "hcl": "_f_terraform_c",
+      "gitignore": "_f_git_c",
+      "gitattributes": "_f_git_c",
+      "gitmodules": "_f_git_c",
+      "gitkeep": "_f_git_c",
+      "vsix": "_f_vscode_c",
+      "code-workspace": "_f_vscode_c",
+      "py": "_f_py_c",
+      "pyw": "_f_py_c",
+      "pyi": "_f_py_c",
+      "ipynb": "_f_py_c",
+      "rs": "_f_rs_c",
+      "go": "_f_go_c",
+      "rb": "_f_rb_c",
+      "erb": "_f_rb_c",
+      "gemspec": "_f_rb_c",
+      "java": "_f_java_c",
+      "kt": "_f_java_c",
+      "kts": "_f_java_c",
+      "gradle": "_f_java_c",
+      "groovy": "_f_java_c",
+      "scala": "_f_java_c",
+      "sbt": "_f_java_c",
+      "php": "_f_php_c",
+      "phtml": "_f_php_c",
+      "c": "_f_c_c",
+      "h": "_f_c_c",
+      "cpp": "_f_cpp_c",
+      "cc": "_f_cpp_c",
+      "cxx": "_f_cpp_c",
+      "hpp": "_f_cpp_c",
+      "hh": "_f_cpp_c",
+      "hxx": "_f_cpp_c",
+      "ino": "_f_cpp_c",
+      "swift": "_f_swift_c",
+      "dart": "_f_dart_c",
+      "lua": "_f_lua_c",
+      "r": "_f_r_c",
+      "rmd": "_f_r_c",
+      "ex": "_f_elixir_c",
+      "exs": "_f_elixir_c",
+      "erl": "_f_elixir_c",
+      "hrl": "_f_elixir_c",
+      "hs": "_f_haskell_c",
+      "lhs": "_f_haskell_c",
+      "zig": "_f_zig_c",
+      "nix": "_f_nix_c",
+      "diff": "_f_diff_c",
+      "patch": "_f_diff_c",
+      "pem": "_f_key_c",
+      "key": "_f_key_c",
+      "crt": "_f_key_c",
+      "cer": "_f_key_c",
+      "pfx": "_f_key_c",
+      "p12": "_f_key_c",
+      "pub": "_f_key_c",
+      "asc": "_f_key_c",
+      "gpg": "_f_key_c"
+    },
+    "fileNames": {
+      "Directory.Build.props": "_f_csproj_c",
+      "Directory.Build.targets": "_f_csproj_c",
+      "Directory.Packages.props": "_f_csproj_c",
+      "nuget.config": "_f_dotnetcfg_c",
+      "NuGet.Config": "_f_nuget_c",
+      "packages.config": "_f_nuget_c",
+      "global.json": "_f_dotnetcfg_c",
+      "dotnet-tools.json": "_f_dotnetcfg_c",
+      "appsettings.json": "_f_dotnetcfg_c",
+      "appsettings.Development.json": "_f_dotnetcfg_c",
+      "appsettings.Production.json": "_f_dotnetcfg_c",
+      "launchSettings.json": "_f_dotnetcfg_c",
+      "omnisharp.json": "_f_dotnetcfg_c",
+      "tsconfig.json": "_f_tsconfig_c",
+      "tsconfig.base.json": "_f_tsconfig_c",
+      "tsconfig.build.json": "_f_tsconfig_c",
+      "tsconfig.node.json": "_f_tsconfig_c",
+      "tsconfig.app.json": "_f_tsconfig_c",
+      "tsconfig.spec.json": "_f_tsconfig_c",
+      "jsconfig.json": "_f_tsconfig_c",
+      "package.json": "_f_npm_c",
+      "package-lock.json": "_f_lock_c",
+      "yarn.lock": "_f_lock_c",
+      "pnpm-lock.yaml": "_f_lock_c",
+      "bun.lockb": "_f_lock_c",
+      "bun.lock": "_f_lock_c",
+      "deno.lock": "_f_lock_c",
+      "composer.lock": "_f_lock_c",
+      "Cargo.lock": "_f_lock_c",
+      "poetry.lock": "_f_lock_c",
+      "eslint.config.js": "_f_eslint_c",
+      "eslint.config.mjs": "_f_eslint_c",
+      "eslint.config.ts": "_f_eslint_c",
+      ".eslintrc": "_f_eslint_c",
+      ".eslintrc.js": "_f_eslint_c",
+      ".eslintrc.json": "_f_eslint_c",
+      ".eslintrc.cjs": "_f_eslint_c",
+      ".eslintrc.yml": "_f_eslint_c",
+      ".eslintignore": "_f_eslint_c",
+      ".prettierrc": "_f_prettier_c",
+      ".prettierrc.json": "_f_prettier_c",
+      ".prettierrc.js": "_f_prettier_c",
+      ".prettierrc.yml": "_f_prettier_c",
+      "prettier.config.js": "_f_prettier_c",
+      "prettier.config.mjs": "_f_prettier_c",
+      ".prettierignore": "_f_prettier_c",
+      "vite.config.ts": "_f_bundler_c",
+      "vite.config.js": "_f_bundler_c",
+      "vite.config.mts": "_f_bundler_c",
+      "webpack.config.js": "_f_bundler_c",
+      "webpack.config.ts": "_f_bundler_c",
+      "rollup.config.js": "_f_bundler_c",
+      "rollup.config.mjs": "_f_bundler_c",
+      "esbuild.config.js": "_f_bundler_c",
+      "tsup.config.ts": "_f_bundler_c",
+      "next.config.js": "_f_bundler_c",
+      "next.config.mjs": "_f_bundler_c",
+      "next.config.ts": "_f_bundler_c",
+      "turbo.json": "_f_bundler_c",
+      "nx.json": "_f_bundler_c",
+      "rspack.config.js": "_f_bundler_c",
+      "vitest.config.ts": "_f_test_c",
+      "jest.config.js": "_f_test_c",
+      "jest.config.ts": "_f_test_c",
+      "playwright.config.ts": "_f_test_c",
+      "karma.conf.js": "_f_test_c",
+      "cypress.config.ts": "_f_test_c",
+      "tailwind.config.js": "_f_tailwind_c",
+      "tailwind.config.ts": "_f_tailwind_c",
+      "tailwind.config.cjs": "_f_tailwind_c",
+      "postcss.config.js": "_f_tailwind_c",
+      "postcss.config.mjs": "_f_tailwind_c",
+      ".editorconfig": "_f_ini_c",
+      ".env": "_f_env_c",
+      ".env.local": "_f_env_c",
+      ".env.development": "_f_env_c",
+      ".env.production": "_f_env_c",
+      ".env.test": "_f_env_c",
+      ".env.example": "_f_env_c",
+      ".env.sample": "_f_env_c",
+      "README.md": "_f_readme_c",
+      "readme.md": "_f_readme_c",
+      "README": "_f_readme_c",
+      "README.txt": "_f_readme_c",
+      "README.rst": "_f_readme_c",
+      "readme.markdown": "_f_readme_c",
+      "CHANGELOG.md": "_f_changelog_c",
+      "changelog.md": "_f_changelog_c",
+      "CHANGELOG": "_f_changelog_c",
+      "HISTORY.md": "_f_changelog_c",
+      "RELEASES.md": "_f_changelog_c",
+      "LICENSE": "_f_license_c",
+      "LICENSE.md": "_f_license_c",
+      "LICENSE.txt": "_f_license_c",
+      "LICENCE": "_f_license_c",
+      "COPYING": "_f_license_c",
+      "NOTICE": "_f_license_c",
+      "UNLICENSE": "_f_license_c",
+      "CONTRIBUTING.md": "_f_contrib_c",
+      "CODE_OF_CONDUCT.md": "_f_contrib_c",
+      "AUTHORS": "_f_contrib_c",
+      "CODEOWNERS": "_f_contrib_c",
+      "SECURITY.md": "_f_contrib_c",
+      "Makefile": "_f_make_c",
+      "makefile": "_f_make_c",
+      "GNUmakefile": "_f_make_c",
+      "Rakefile": "_f_make_c",
+      "justfile": "_f_make_c",
+      "Justfile": "_f_make_c",
+      "Taskfile.yml": "_f_make_c",
+      "Dockerfile": "_f_docker_c",
+      "dockerfile": "_f_docker_c",
+      "Containerfile": "_f_docker_c",
+      ".dockerignore": "_f_docker_c",
+      "docker-compose.yml": "_f_docker_c",
+      "docker-compose.yaml": "_f_docker_c",
+      "compose.yml": "_f_docker_c",
+      "compose.yaml": "_f_docker_c",
+      "docker-compose.override.yml": "_f_docker_c",
+      "kustomization.yaml": "_f_k8s_c",
+      "skaffold.yaml": "_f_k8s_c",
+      "Chart.yaml": "_f_k8s_c",
+      "values.yaml": "_f_k8s_c",
+      ".gitignore": "_f_git_c",
+      ".gitattributes": "_f_git_c",
+      ".gitmodules": "_f_git_c",
+      ".gitkeep": "_f_git_c",
+      ".mailmap": "_f_git_c",
+      ".git-blame-ignore-revs": "_f_git_c",
+      ".travis.yml": "_f_ci_c",
+      "azure-pipelines.yml": "_f_ci_c",
+      "Jenkinsfile": "_f_ci_c",
+      ".gitlab-ci.yml": "_f_ci_c",
+      "appveyor.yml": "_f_ci_c",
+      "cloudbuild.yaml": "_f_ci_c",
+      "buildkite.yml": "_f_ci_c",
+      "settings.json": "_f_vscode_c",
+      "launch.json": "_f_vscode_c",
+      "tasks.json": "_f_vscode_c",
+      "extensions.json": "_f_vscode_c",
+      "keybindings.json": "_f_vscode_c",
+      "argv.json": "_f_vscode_c",
+      "requirements.txt": "_f_py_c",
+      "pyproject.toml": "_f_py_c",
+      "setup.py": "_f_py_c",
+      "setup.cfg": "_f_py_c",
+      "Pipfile": "_f_py_c",
+      "tox.ini": "_f_py_c",
+      "Cargo.toml": "_f_rs_c",
+      "go.mod": "_f_go_c",
+      "go.sum": "_f_go_c",
+      "go.work": "_f_go_c",
+      "Gemfile": "_f_rb_c",
+      "Gemfile.lock": "_f_rb_c",
+      "build.gradle": "_f_java_c",
+      "settings.gradle": "_f_java_c",
+      "pom.xml": "_f_java_c",
+      "composer.json": "_f_php_c",
+      "Package.swift": "_f_swift_c",
+      "pubspec.yaml": "_f_dart_c",
+      "mix.exs": "_f_elixir_c",
+      "build.zig": "_f_zig_c",
+      "flake.nix": "_f_nix_c",
+      "flake.lock": "_f_nix_c"
+    },
+    "languageIds": {
+      "csharp": "_f_cs_c",
+      "razor": "_f_razor_c",
+      "aspnetcorerazor": "_f_razor_c",
+      "xaml": "_f_xaml_c",
+      "fsharp": "_f_fsharp_c",
+      "vb": "_f_vb_c",
+      "typescript": "_f_ts_c",
+      "typescriptreact": "_f_tsx_c",
+      "javascript": "_f_js_c",
+      "javascriptreact": "_f_jsx_c",
+      "vue": "_f_vue_c",
+      "svelte": "_f_svelte_c",
+      "astro": "_f_astro_c",
+      "html": "_f_html_c",
+      "css": "_f_css_c",
+      "scss": "_f_sass_c",
+      "less": "_f_sass_c",
+      "json": "_f_json_c",
+      "jsonc": "_f_json_c",
+      "yaml": "_f_yaml_c",
+      "toml": "_f_toml_c",
+      "ini": "_f_ini_c",
+      "properties": "_f_ini_c",
+      "xml": "_f_xml_c",
+      "dotenv": "_f_env_c",
+      "sql": "_f_sql_c",
+      "graphql": "_f_graphql_c",
+      "proto3": "_f_proto_c",
+      "http": "_f_http_c",
+      "markdown": "_f_md_c",
+      "plaintext": "_f_txt_c",
+      "log": "_f_txt_c",
+      "shellscript": "_f_shell_c",
+      "powershell": "_f_shell_c",
+      "bat": "_f_shell_c",
+      "makefile": "_f_make_c",
+      "dockerfile": "_f_docker_c",
+      "dockercompose": "_f_docker_c",
+      "terraform": "_f_terraform_c",
+      "python": "_f_py_c",
+      "jupyter": "_f_py_c",
+      "rust": "_f_rs_c",
+      "go": "_f_go_c",
+      "ruby": "_f_rb_c",
+      "java": "_f_java_c",
+      "kotlin": "_f_java_c",
+      "groovy": "_f_java_c",
+      "scala": "_f_java_c",
+      "php": "_f_php_c",
+      "c": "_f_c_c",
+      "cpp": "_f_cpp_c",
+      "swift": "_f_swift_c",
+      "dart": "_f_dart_c",
+      "lua": "_f_lua_c",
+      "r": "_f_r_c",
+      "elixir": "_f_elixir_c",
+      "haskell": "_f_haskell_c",
+      "zig": "_f_zig_c",
+      "nix": "_f_nix_c",
+      "diff": "_f_diff_c"
+    },
+    "folderNames": {
+      "src": "_o_src_c",
+      "source": "_o_src_c",
+      "sources": "_o_src_c",
+      "app": "_o_src_c",
+      "apps": "_o_src_c",
+      "lib": "_o_src_c",
+      "libs": "_o_src_c",
+      "core": "_o_src_c",
+      "packages": "_o_src_c",
+      "modules": "_o_src_c",
+      "test": "_o_test_c",
+      "tests": "_o_test_c",
+      "__tests__": "_o_test_c",
+      "spec": "_o_test_c",
+      "specs": "_o_test_c",
+      "e2e": "_o_test_c",
+      "testing": "_o_test_c",
+      "unittest": "_o_test_c",
+      "integration": "_o_test_c",
+      "node_modules": "_o_node_c",
+      "bower_components": "_o_node_c",
+      "vendor": "_o_node_c",
+      "third_party": "_o_node_c",
+      "externals": "_o_node_c",
+      "dist": "_o_dist_c",
+      "build": "_o_dist_c",
+      "out": "_o_dist_c",
+      "output": "_o_dist_c",
+      "bin": "_o_dist_c",
+      "obj": "_o_dist_c",
+      "target": "_o_dist_c",
+      "release": "_o_dist_c",
+      "debug": "_o_dist_c",
+      "artifacts": "_o_dist_c",
+      "publish": "_o_dist_c",
+      ".git": "_o_git_c",
+      ".husky": "_o_git_c",
+      ".github": "_o_github_c",
+      ".gitlab": "_o_github_c",
+      ".circleci": "_o_github_c",
+      ".azuredevops": "_o_github_c",
+      "config": "_o_config_c",
+      "configs": "_o_config_c",
+      "configuration": "_o_config_c",
+      ".config": "_o_config_c",
+      "settings": "_o_config_c",
+      "conf": "_o_config_c",
+      ".vscode": "_o_config_c",
+      ".idea": "_o_config_c",
+      ".vs": "_o_config_c",
+      ".cursor": "_o_config_c",
+      ".claude": "_o_config_c",
+      ".devcontainer": "_o_config_c",
+      ".editorconfig.d": "_o_config_c",
+      "assets": "_o_assets_c",
+      "images": "_o_assets_c",
+      "img": "_o_assets_c",
+      "icons": "_o_assets_c",
+      "media": "_o_assets_c",
+      "static": "_o_assets_c",
+      "pictures": "_o_assets_c",
+      "photos": "_o_assets_c",
+      "graphics": "_o_assets_c",
+      "logos": "_o_assets_c",
+      "docs": "_o_docs_c",
+      "doc": "_o_docs_c",
+      "documentation": "_o_docs_c",
+      "wiki": "_o_docs_c",
+      "manual": "_o_docs_c",
+      "guides": "_o_docs_c",
+      "styles": "_o_styles_c",
+      "style": "_o_styles_c",
+      "css": "_o_styles_c",
+      "scss": "_o_styles_c",
+      "sass": "_o_styles_c",
+      "themes": "_o_styles_c",
+      "theme": "_o_styles_c",
+      "scripts": "_o_scripts_c",
+      "script": "_o_scripts_c",
+      "tools": "_o_scripts_c",
+      "tooling": "_o_scripts_c",
+      "bin_scripts": "_o_scripts_c",
+      "automation": "_o_scripts_c",
+      "cli": "_o_scripts_c",
+      "components": "_o_components_c",
+      "component": "_o_components_c",
+      "widgets": "_o_components_c",
+      "ui": "_o_components_c",
+      "controls": "_o_components_c",
+      "views": "_o_components_c",
+      "pages": "_o_components_c",
+      "screens": "_o_components_c",
+      "partials": "_o_components_c",
+      "layouts": "_o_components_c",
+      "hooks": "_o_hooks_c",
+      "middleware": "_o_hooks_c",
+      "interceptors": "_o_hooks_c",
+      "plugins": "_o_hooks_c",
+      "extensions": "_o_hooks_c",
+      "filters": "_o_hooks_c",
+      "types": "_o_types_c",
+      "typings": "_o_types_c",
+      "@types": "_o_types_c",
+      "interfaces": "_o_types_c",
+      "contracts": "_o_types_c",
+      "models": "_o_types_c",
+      "dto": "_o_types_c",
+      "dtos": "_o_types_c",
+      "entities": "_o_types_c",
+      "schemas": "_o_types_c",
+      "schema": "_o_types_c",
+      "api": "_o_api_c",
+      "apis": "_o_api_c",
+      "endpoints": "_o_api_c",
+      "routes": "_o_api_c",
+      "controllers": "_o_api_c",
+      "handlers": "_o_api_c",
+      "resolvers": "_o_api_c",
+      "graphql": "_o_api_c",
+      "server": "_o_api_c",
+      "db": "_o_db_c",
+      "database": "_o_db_c",
+      "migrations": "_o_db_c",
+      "migration": "_o_db_c",
+      "seeds": "_o_db_c",
+      "repositories": "_o_db_c",
+      "repository": "_o_db_c",
+      "data": "_o_db_c",
+      "persistence": "_o_db_c",
+      "services": "_o_services_c",
+      "service": "_o_services_c",
+      "providers": "_o_services_c",
+      "managers": "_o_services_c",
+      "clients": "_o_services_c",
+      "adapters": "_o_services_c",
+      "domain": "_o_services_c",
+      "application": "_o_services_c",
+      "deploy": "_o_deploy_c",
+      "deployment": "_o_deploy_c",
+      "deployments": "_o_deploy_c",
+      "k8s": "_o_deploy_c",
+      "kubernetes": "_o_deploy_c",
+      "helm": "_o_deploy_c",
+      "charts": "_o_deploy_c",
+      "chart": "_o_deploy_c",
+      "manifests": "_o_deploy_c",
+      "ansible": "_o_deploy_c",
+      "infra": "_o_deploy_c",
+      "infrastructure": "_o_deploy_c",
+      "terraform": "_o_deploy_c",
+      "ops": "_o_deploy_c",
+      "devops": "_o_deploy_c",
+      "provision": "_o_deploy_c",
+      "utils": "_o_utils_c",
+      "util": "_o_utils_c",
+      "helpers": "_o_utils_c",
+      "helper": "_o_utils_c",
+      "common": "_o_utils_c",
+      "shared": "_o_utils_c",
+      "lib_utils": "_o_utils_c",
+      "internal": "_o_utils_c",
+      "support": "_o_utils_c",
+      "public": "_o_public_c",
+      "www": "_o_public_c",
+      "web": "_o_public_c",
+      "wwwroot": "_o_public_c",
+      "site": "_o_public_c",
+      "dist_public": "_o_public_c",
+      "i18n": "_o_i18n_c",
+      "locales": "_o_i18n_c",
+      "locale": "_o_i18n_c",
+      "lang": "_o_i18n_c",
+      "languages": "_o_i18n_c",
+      "translations": "_o_i18n_c",
+      "resources": "_o_i18n_c",
+      "security": "_o_security_c",
+      "auth": "_o_security_c",
+      "authentication": "_o_security_c",
+      "authorization": "_o_security_c",
+      "certs": "_o_security_c",
+      "certificates": "_o_security_c",
+      "keys": "_o_security_c",
+      "secrets": "_o_security_c",
+      "logs": "_o_logs_c",
+      "log": "_o_logs_c",
+      "cache": "_o_logs_c",
+      ".cache": "_o_logs_c",
+      "tmp": "_o_logs_c",
+      "temp": "_o_logs_c",
+      ".tmp": "_o_logs_c",
+      "store": "_o_state_c",
+      "stores": "_o_state_c",
+      "state": "_o_state_c",
+      "redux": "_o_state_c",
+      "context": "_o_state_c",
+      "reducers": "_o_state_c",
+      "actions": "_o_state_c",
+      "slices": "_o_state_c",
+      "benchmarks": "_o_tests_e2e_c",
+      "bench": "_o_tests_e2e_c",
+      "perf": "_o_tests_e2e_c",
+      "performance": "_o_tests_e2e_c",
+      "profiling": "_o_tests_e2e_c",
+      "examples": "_o_examples_c",
+      "example": "_o_examples_c",
+      "samples": "_o_examples_c",
+      "sample": "_o_examples_c",
+      "demo": "_o_examples_c",
+      "demos": "_o_examples_c",
+      "playground": "_o_examples_c",
+      "sandbox": "_o_examples_c"
+    },
+    "folderNamesExpanded": {
+      "src": "_o_src_x_c",
+      "source": "_o_src_x_c",
+      "sources": "_o_src_x_c",
+      "app": "_o_src_x_c",
+      "apps": "_o_src_x_c",
+      "lib": "_o_src_x_c",
+      "libs": "_o_src_x_c",
+      "core": "_o_src_x_c",
+      "packages": "_o_src_x_c",
+      "modules": "_o_src_x_c",
+      "test": "_o_test_x_c",
+      "tests": "_o_test_x_c",
+      "__tests__": "_o_test_x_c",
+      "spec": "_o_test_x_c",
+      "specs": "_o_test_x_c",
+      "e2e": "_o_test_x_c",
+      "testing": "_o_test_x_c",
+      "unittest": "_o_test_x_c",
+      "integration": "_o_test_x_c",
+      "node_modules": "_o_node_x_c",
+      "bower_components": "_o_node_x_c",
+      "vendor": "_o_node_x_c",
+      "third_party": "_o_node_x_c",
+      "externals": "_o_node_x_c",
+      "dist": "_o_dist_x_c",
+      "build": "_o_dist_x_c",
+      "out": "_o_dist_x_c",
+      "output": "_o_dist_x_c",
+      "bin": "_o_dist_x_c",
+      "obj": "_o_dist_x_c",
+      "target": "_o_dist_x_c",
+      "release": "_o_dist_x_c",
+      "debug": "_o_dist_x_c",
+      "artifacts": "_o_dist_x_c",
+      "publish": "_o_dist_x_c",
+      ".git": "_o_git_x_c",
+      ".husky": "_o_git_x_c",
+      ".github": "_o_github_x_c",
+      ".gitlab": "_o_github_x_c",
+      ".circleci": "_o_github_x_c",
+      ".azuredevops": "_o_github_x_c",
+      "config": "_o_config_x_c",
+      "configs": "_o_config_x_c",
+      "configuration": "_o_config_x_c",
+      ".config": "_o_config_x_c",
+      "settings": "_o_config_x_c",
+      "conf": "_o_config_x_c",
+      ".vscode": "_o_config_x_c",
+      ".idea": "_o_config_x_c",
+      ".vs": "_o_config_x_c",
+      ".cursor": "_o_config_x_c",
+      ".claude": "_o_config_x_c",
+      ".devcontainer": "_o_config_x_c",
+      ".editorconfig.d": "_o_config_x_c",
+      "assets": "_o_assets_x_c",
+      "images": "_o_assets_x_c",
+      "img": "_o_assets_x_c",
+      "icons": "_o_assets_x_c",
+      "media": "_o_assets_x_c",
+      "static": "_o_assets_x_c",
+      "pictures": "_o_assets_x_c",
+      "photos": "_o_assets_x_c",
+      "graphics": "_o_assets_x_c",
+      "logos": "_o_assets_x_c",
+      "docs": "_o_docs_x_c",
+      "doc": "_o_docs_x_c",
+      "documentation": "_o_docs_x_c",
+      "wiki": "_o_docs_x_c",
+      "manual": "_o_docs_x_c",
+      "guides": "_o_docs_x_c",
+      "styles": "_o_styles_x_c",
+      "style": "_o_styles_x_c",
+      "css": "_o_styles_x_c",
+      "scss": "_o_styles_x_c",
+      "sass": "_o_styles_x_c",
+      "themes": "_o_styles_x_c",
+      "theme": "_o_styles_x_c",
+      "scripts": "_o_scripts_x_c",
+      "script": "_o_scripts_x_c",
+      "tools": "_o_scripts_x_c",
+      "tooling": "_o_scripts_x_c",
+      "bin_scripts": "_o_scripts_x_c",
+      "automation": "_o_scripts_x_c",
+      "cli": "_o_scripts_x_c",
+      "components": "_o_components_x_c",
+      "component": "_o_components_x_c",
+      "widgets": "_o_components_x_c",
+      "ui": "_o_components_x_c",
+      "controls": "_o_components_x_c",
+      "views": "_o_components_x_c",
+      "pages": "_o_components_x_c",
+      "screens": "_o_components_x_c",
+      "partials": "_o_components_x_c",
+      "layouts": "_o_components_x_c",
+      "hooks": "_o_hooks_x_c",
+      "middleware": "_o_hooks_x_c",
+      "interceptors": "_o_hooks_x_c",
+      "plugins": "_o_hooks_x_c",
+      "extensions": "_o_hooks_x_c",
+      "filters": "_o_hooks_x_c",
+      "types": "_o_types_x_c",
+      "typings": "_o_types_x_c",
+      "@types": "_o_types_x_c",
+      "interfaces": "_o_types_x_c",
+      "contracts": "_o_types_x_c",
+      "models": "_o_types_x_c",
+      "dto": "_o_types_x_c",
+      "dtos": "_o_types_x_c",
+      "entities": "_o_types_x_c",
+      "schemas": "_o_types_x_c",
+      "schema": "_o_types_x_c",
+      "api": "_o_api_x_c",
+      "apis": "_o_api_x_c",
+      "endpoints": "_o_api_x_c",
+      "routes": "_o_api_x_c",
+      "controllers": "_o_api_x_c",
+      "handlers": "_o_api_x_c",
+      "resolvers": "_o_api_x_c",
+      "graphql": "_o_api_x_c",
+      "server": "_o_api_x_c",
+      "db": "_o_db_x_c",
+      "database": "_o_db_x_c",
+      "migrations": "_o_db_x_c",
+      "migration": "_o_db_x_c",
+      "seeds": "_o_db_x_c",
+      "repositories": "_o_db_x_c",
+      "repository": "_o_db_x_c",
+      "data": "_o_db_x_c",
+      "persistence": "_o_db_x_c",
+      "services": "_o_services_x_c",
+      "service": "_o_services_x_c",
+      "providers": "_o_services_x_c",
+      "managers": "_o_services_x_c",
+      "clients": "_o_services_x_c",
+      "adapters": "_o_services_x_c",
+      "domain": "_o_services_x_c",
+      "application": "_o_services_x_c",
+      "deploy": "_o_deploy_x_c",
+      "deployment": "_o_deploy_x_c",
+      "deployments": "_o_deploy_x_c",
+      "k8s": "_o_deploy_x_c",
+      "kubernetes": "_o_deploy_x_c",
+      "helm": "_o_deploy_x_c",
+      "charts": "_o_deploy_x_c",
+      "chart": "_o_deploy_x_c",
+      "manifests": "_o_deploy_x_c",
+      "ansible": "_o_deploy_x_c",
+      "infra": "_o_deploy_x_c",
+      "infrastructure": "_o_deploy_x_c",
+      "terraform": "_o_deploy_x_c",
+      "ops": "_o_deploy_x_c",
+      "devops": "_o_deploy_x_c",
+      "provision": "_o_deploy_x_c",
+      "utils": "_o_utils_x_c",
+      "util": "_o_utils_x_c",
+      "helpers": "_o_utils_x_c",
+      "helper": "_o_utils_x_c",
+      "common": "_o_utils_x_c",
+      "shared": "_o_utils_x_c",
+      "lib_utils": "_o_utils_x_c",
+      "internal": "_o_utils_x_c",
+      "support": "_o_utils_x_c",
+      "public": "_o_public_x_c",
+      "www": "_o_public_x_c",
+      "web": "_o_public_x_c",
+      "wwwroot": "_o_public_x_c",
+      "site": "_o_public_x_c",
+      "dist_public": "_o_public_x_c",
+      "i18n": "_o_i18n_x_c",
+      "locales": "_o_i18n_x_c",
+      "locale": "_o_i18n_x_c",
+      "lang": "_o_i18n_x_c",
+      "languages": "_o_i18n_x_c",
+      "translations": "_o_i18n_x_c",
+      "resources": "_o_i18n_x_c",
+      "security": "_o_security_x_c",
+      "auth": "_o_security_x_c",
+      "authentication": "_o_security_x_c",
+      "authorization": "_o_security_x_c",
+      "certs": "_o_security_x_c",
+      "certificates": "_o_security_x_c",
+      "keys": "_o_security_x_c",
+      "secrets": "_o_security_x_c",
+      "logs": "_o_logs_x_c",
+      "log": "_o_logs_x_c",
+      "cache": "_o_logs_x_c",
+      ".cache": "_o_logs_x_c",
+      "tmp": "_o_logs_x_c",
+      "temp": "_o_logs_x_c",
+      ".tmp": "_o_logs_x_c",
+      "store": "_o_state_x_c",
+      "stores": "_o_state_x_c",
+      "state": "_o_state_x_c",
+      "redux": "_o_state_x_c",
+      "context": "_o_state_x_c",
+      "reducers": "_o_state_x_c",
+      "actions": "_o_state_x_c",
+      "slices": "_o_state_x_c",
+      "benchmarks": "_o_tests_e2e_x_c",
+      "bench": "_o_tests_e2e_x_c",
+      "perf": "_o_tests_e2e_x_c",
+      "performance": "_o_tests_e2e_x_c",
+      "profiling": "_o_tests_e2e_x_c",
+      "examples": "_o_examples_x_c",
+      "example": "_o_examples_x_c",
+      "samples": "_o_examples_x_c",
+      "sample": "_o_examples_x_c",
+      "demo": "_o_examples_x_c",
+      "demos": "_o_examples_x_c",
+      "playground": "_o_examples_x_c",
+      "sandbox": "_o_examples_x_c"
+    }
+  }
+}

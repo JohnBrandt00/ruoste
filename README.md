@@ -1,0 +1,188 @@
+# RUOSTE
+
+*Finnish: **rust** — the oxide, not the language.*
+
+Swiss industrial brutalism for VS Code. Paper, ink and oxide rust; hairline rules
+instead of shadows; one accent doing all the work.
+
+Three colour themes, a Phosphor **duotone file icon** set, a Phosphor **product
+icon** set that replaces the whole UI chrome, and **Geist Mono in the box**.
+Tuned first for **C#** and **TypeScript**.
+
+![RUOSTE — C#](media/preview-dark-csharp.png)
+
+![RUOSTE Paperi — TypeScript](media/preview-light-typescript.png)
+
+---
+
+## Install
+
+```
+code --install-extension ruoste-2.0.0.vsix
+```
+
+> Upgrading from **RADIOHUB Oxide**? Uninstall it first — the rename makes this a
+> separate extension, so both would sit in your list.
+
+Then pick your pieces:
+
+| | |
+|---|---|
+| **Colour theme** | ⌘K ⌘T — *RUOSTE*, *RUOSTE Paperi*, or *RUOSTE Kontrasti* |
+| **File icons** | ⌘⇧P → *Preferences: File Icon Theme* → *RUOSTE (Phosphor Duotone)* |
+| **UI icons** | ⌘⇧P → *Preferences: Product Icon Theme* → *RUOSTE (Phosphor)* |
+
+## The font
+
+**Geist Mono is bundled, and RUOSTE can install it for you.**
+
+> ⌘⇧P → **RUOSTE: Install Geist Mono** → Reload Window
+
+VS Code has no API for installing an OS font, so an extension normally can only
+tell you to do it by hand. RUOSTE ships the files and runs the copy itself:
+`~/Library/Fonts` on macOS, `~/.local/share/fonts` plus `fc-cache` on Linux, and
+`%LOCALAPPDATA%\Microsoft\Windows\Fonts` plus the per-user registry entries on
+Windows. It offers this once, the first time it activates.
+
+It also checks whether **your own `settings.json` is overriding the font** — user
+settings beat extension defaults, which is the usual reason a theme's font looks
+like it did nothing — and offers to fix it.
+
+<details><summary>Doing it by hand instead</summary>
+
+```bash
+# find the folder
+cd ~/.vscode/extensions/gapashu.ruoste-2.0.0/fonts
+
+# macOS
+cp *.ttf ~/Library/Fonts/
+
+# Linux
+mkdir -p ~/.local/share/fonts && cp *.ttf ~/.local/share/fonts/ && fc-cache -f
+
+# Windows (PowerShell, from that folder)
+Get-ChildItem *.ttf | ForEach-Object { Copy-Item $_ "$env:LOCALAPPDATA\Microsoft\Windows\Fonts" }
+```
+
+Restart VS Code afterwards.
+</details>
+
+Nine weights ship: Regular through Bold, matching italics, plus the variable font.
+The font is applied in **nine** settings, not just the editor — terminal, debug
+console, notebook output, chat, inlay hints, CodeLens and the SCM commit box — so
+the whole workbench matches rather than just the code pane.
+
+## Recommended settings
+
+```jsonc
+{
+  "editor.fontSize": 13,
+  "editor.lineHeight": 1.6,
+  "editor.letterSpacing": 0.2,
+  "editor.cursorBlinking": "solid",
+  "editor.renderLineHighlight": "all",
+  "editor.guides.bracketPairs": "active",
+  "editor.stickyScroll.enabled": true,
+  "editor.minimap.renderCharacters": false,
+  "workbench.tree.indent": 14,
+  "workbench.editor.tabSizing": "shrink",
+  "terminal.integrated.fontSize": 12
+}
+```
+
+## The palette
+
+Nine tones, sampled from a photograph and held to a mineral range — nothing above
+55 % saturation in the standard themes. Every syntax colour clears **WCAG AA
+(4.5:1)** against its own ground; the Kontrasti variant clears **AAA (7:1)**.
+
+| Role | RUOSTE | Paperi | Kontrasti | Used for |
+|---|---|---|---|---|
+| Ground | `#14120E` | `#F2F0EA` | `#0A0907` | editor background |
+| Body | `#E4DFD3` | `#1A1712` | `#F6F2E8` | variables, fields, properties |
+| Oxide rust | `#C57749` | `#985934` | `#E59661` | keywords, control flow, storage, decorators |
+| Brass ochre | `#C7A560` | `#886220` | `#E7C474` | functions, methods, constructors |
+| Verdigris | `#51A499` | `#25655E` | `#64CEC0` | types, classes, interfaces, generics |
+| Blueprint | `#7496B4` | `#38618A` | `#89B8DC` | numbers, constants, enum members |
+| Moss | `#8DA668` | `#4E6732` | `#ABCA7D` | strings |
+| Madder | `#C76067` | `#A72F37` | `#E87D84` | errors, deletions, invalid |
+| Graphite | `#887E6D` | `#72685A` | `#AEA28F` | comments *(italic)* |
+
+## What's covered
+
+**C#** — Roslyn semantic tokens including `recordClass`, `recordStruct`,
+`extensionMethod`, `operatorOverloaded`, `controlKeyword`, `preprocessorKeyword`,
+`excludedCode`, the nine `regex*` tokens inside string literals, and the full
+`xmlDocComment*` family. LINQ query keywords, verbatim and interpolated strings,
+nullable annotations and generic constraints all read distinctly.
+
+**TypeScript** — `class`, `interface`, `enum`, `enumMember`, `typeParameter`,
+`type`, `namespace`, `function`, `member`, `property`, `parameter`, each with
+`declaration`, `readonly`, `static`, `async`, `defaultLibrary` and `local`
+modifiers. Decorators are rust italic, generics teal italic, JSX components typed
+apart from intrinsic tags.
+
+Also themed: JSON, YAML, TOML, XML, Razor, Markdown, HTML, CSS/SCSS, SQL, shell,
+Python, Go, Rust, Ruby, Java/Kotlin, PHP, C/C++, diffs and merge conflicts — plus
+every notebook, testing, debug, chat, SCM-graph and terminal surface.
+
+## Icons
+
+**File icons** — 426 duotone SVGs from [Phosphor](https://phosphoricons.com),
+recoloured per palette, covering 265 extensions, 164 exact filenames, 60 language
+IDs and 211 folder names, in matched dark / light / high-contrast sets. Named
+folders are composites: the Phosphor folder shell with a bold glyph inset, with
+separate geometry for the open state so the glyph sits inside the front panel
+rather than across the fold.
+
+The .NET ecosystem is first-class — `.cs`, `.csproj`, `.sln`, `.razor`, `.cshtml`,
+`.resx`, `.xaml`, `.nuspec`, `Directory.Build.props`, `global.json`,
+`appsettings.json` — as is the TS toolchain: `tsconfig`, Vite/Webpack/Rollup/
+Next/Turbo, ESLint, Prettier, Tailwind, Vitest, Jest, Playwright, every lockfile.
+
+**Product icons** — a 20 KB WOFF2 built from 206 Phosphor glyphs, mapped onto 367
+codicon ids: activity bar, tree twisties, tabs, toolbars, diagnostics, source
+control, the debug toolbar, and all 40 IntelliSense symbol icons. Anything
+unmapped falls back to the stock codicon, so there are no holes.
+
+## GitHub Actions panel
+
+A **RUOSTE** container in the activity bar with a live view of the current repo's
+workflow runs — runs, their jobs, and each job's steps, with status colours drawn
+from the active theme so it never looks bolted on.
+
+- Signs in with **VS Code's built-in GitHub account**. No personal access token.
+- Finds the repo through the git extension, falling back to reading `.git/config`.
+  GitHub Enterprise hosts work — the API base switches to `/api/v3`.
+- Polls every 60 s when idle and every 10 s while something is queued or running,
+  and stops entirely when the view is hidden.
+- Re-run, cancel, open on GitHub, and copy run URL from the item menu.
+- Status bar shows the latest run for the current branch; it turns red on failure.
+
+| Setting | Default | |
+|---|---|---|
+| `ruoste.actions.autoRefresh` | `true` | poll automatically |
+| `ruoste.actions.refreshInterval` | `60` | seconds between idle polls |
+| `ruoste.actions.liveRefreshInterval` | `10` | seconds while a run is live |
+| `ruoste.actions.runCount` | `20` | how many runs to list |
+| `ruoste.actions.currentBranchOnly` | `false` | limit to the checked-out branch |
+| `ruoste.actions.statusBar` | `true` | show the status bar item |
+
+## Building from source
+
+```bash
+npm install
+npm run build     # regenerate themes, icons and the product icon font
+npm run check     # typecheck against @types/vscode, unit tests, package validation
+npm run verify    # tokenize real C#/TS through the actual grammars
+npm run package   # -> ruoste-x.y.z.vsix
+```
+
+`BUILD.md` has the details, including two path rules that have already caused one
+bug each.
+
+## Credits
+
+Icons © [Phosphor Icons](https://github.com/phosphor-icons/core), MIT.
+Geist Mono © Vercel / basement.studio, SIL Open Font License 1.1 — redistributed
+under its terms; see `fonts/OFL.txt`.

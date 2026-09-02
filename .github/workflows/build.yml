@@ -1,0 +1,46 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install
+        run: |
+          npm ci
+          pip install fonttools
+
+      - name: Regenerate themes, icons and the product icon font
+        run: npm run build
+
+      - name: Fail if generated output drifted from what is committed
+        run: |
+          git diff --stat --exit-code themes icons \
+            || { echo "::error::Generated files are stale. Run 'npm run build' and commit."; exit 1; }
+
+      - name: Typecheck, unit test, validate the package
+        run: npm run check
+
+      - name: Package
+        run: npx vsce package --allow-missing-repository --no-dependencies --baseImagesUrl https://x.invalid/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ruoste-vsix
+          path: '*.vsix'
