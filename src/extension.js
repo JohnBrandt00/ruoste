@@ -36,6 +36,34 @@ function activate(ctx) {
   const actions = safely('GitHub Actions', () => activateActions(ctx));
   const spotify = safely('Spotify', () => activateSpotify(ctx));
 
+  // One command that builds the whole utilities column: the pipelines dashboard
+  // with the player stacked beneath it, in an editor group beside your work.
+  ctx.subscriptions.push(vscode.commands.registerCommand('ruoste.openLayout', async () => {
+    const share = Math.min(0.8, Math.max(0.15, Number(
+      vscode.workspace.getConfiguration('ruoste.layout').get('playerShare', 0.4))));
+    try {
+      await vscode.commands.executeCommand('ruoste.actions.openDashboard');
+      await new Promise((r) => setTimeout(r, 150));
+      await vscode.commands.executeCommand('ruoste.spotify.openPanel');
+      await new Promise((r) => setTimeout(r, 150));
+      // put the player below the dashboard rather than beside it
+      await vscode.commands.executeCommand('workbench.action.moveEditorToBelowGroup');
+      await new Promise((r) => setTimeout(r, 100));
+      await vscode.commands.executeCommand('vscode.setEditorLayout', {
+        orientation: 0,                      // columns side by side…
+        groups: [
+          { size: 0.58 },                    // your work
+          { orientation: 1, size: 0.42,      // …utilities stacked vertically
+            groups: [{ size: 1 - share }, { size: share }] },
+        ],
+      });
+    } catch (err) {
+      vscode.window.showWarningMessage(
+        `RUOSTE: could not arrange the layout — ${err && err.message ? err.message : err}. ` +
+        `Both panels are open; drag one below the other to stack them.`);
+    }
+  }));
+
   ctx.subscriptions.push(registerDiagnostics(ctx, () => ({
     githubSignedIn: !!actions?.signedIn,
     repoCount: actions?.repos?.repos?.length,

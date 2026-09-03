@@ -2,7 +2,7 @@
   "name": "ruoste",
   "displayName": "RUOSTE",
   "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, a GitHub Actions panel and a full Spotify player. Tuned for C# and TypeScript.",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -98,11 +98,6 @@
           "id": "ruoste",
           "title": "RUOSTE",
           "icon": "media/activity-bar.svg"
-        },
-        {
-          "id": "ruoste-spotify",
-          "title": "RUOSTE Spotify",
-          "icon": "media/activity-bar-spotify.svg"
         }
       ]
     },
@@ -110,11 +105,9 @@
       "ruoste": [
         {
           "id": "ruoste.actions",
-          "name": "GitHub Actions",
-          "contextualTitle": "RUOSTE \u2014 GitHub Actions"
-        }
-      ],
-      "ruoste-spotify": [
+          "name": "Pipelines",
+          "contextualTitle": "RUOSTE \u2014 Pipelines"
+        },
         {
           "id": "ruoste.spotify.nowPlaying",
           "name": "Now Playing",
@@ -123,7 +116,7 @@
         },
         {
           "id": "ruoste.spotify.library",
-          "name": "Library",
+          "name": "Spotify Library",
           "contextualTitle": "RUOSTE \u2014 Spotify Library"
         }
       ]
@@ -362,6 +355,11 @@
       {
         "command": "ruoste.actions.rerunFailed",
         "title": "Re-run Failed Jobs",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.openLayout",
+        "title": "Open Utilities Layout (Pipelines + Player)",
         "category": "RUOSTE"
       }
     ],
@@ -779,6 +777,14 @@
           "default": false,
           "description": "Tighter rows and smaller type in the pipelines dashboard.",
           "order": 14
+        },
+        "ruoste.layout.playerShare": {
+          "type": "number",
+          "default": 0.4,
+          "minimum": 0.15,
+          "maximum": 0.8,
+          "markdownDescription": "Share of the utilities column given to the player when running **Open Utilities Layout**.",
+          "order": 30
         }
       }
     }

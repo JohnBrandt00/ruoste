@@ -95,7 +95,10 @@ chk(not (welcome - view_ids), "viewsWelcome only references declared views")
 # A view created during activate() must be registered unconditionally. A `when`
 # clause that is false at activation makes createTreeView throw, which aborts
 # activate() and takes every other feature down with it.
-eager = set(re.findall(r"(?:createTreeView|registerWebviewViewProvider)\(\s*['\"]([\w.]+)['\"]", blob))
+# safeTreeView wraps createTreeView — miss it and this check goes blind
+eager = set(re.findall(
+    r"(?:createTreeView|safeTreeView|registerWebviewViewProvider)\(\s*['\"]([\w.]+)['\"]", blob))
+chk(len(eager) >= 3, f"all {len(eager)} eagerly created views seen by this check")
 chk(not (eager - view_ids), f"eagerly created views are declared: {sorted(eager)}"
     + (f"  (undeclared: {sorted(eager - view_ids)})" if eager - view_ids else ""))
 gated = {v for v in eager if views.get(v, {}).get("when")}

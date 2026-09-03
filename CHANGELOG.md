@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.5.0
+
+**One container again.** 2.3.2 split Actions and Spotify into two activity bar
+containers while diagnosing a registration failure. That was a debugging move
+that outlived its purpose, and it made the obvious layout impossible: views only
+stack vertically when they share a container. Pipelines, Now Playing and Spotify
+Library are back in one **RUOSTE** container, stacked, each collapsible. Any of
+them can still be dragged to the secondary side bar or the panel.
+
+- **RUOSTE: Open Utilities Layout** builds the whole arrangement in one command:
+  the pipelines dashboard with the player stacked beneath it, in an editor column
+  beside your work. `ruoste.layout.playerShare` sets the split.
+- The README now documents the VS Code furniture this composes with — Move View,
+  Move Editor into New Window, terminal splitting, panel position and alignment.
+
+**Fixed a blind spot in the packaging checks.** The rule added in 2.3.1 — no
+eagerly created view may carry a `when` clause — matched only literal
+`createTreeView` calls. Wrapping those in `safeTreeView` (2.3.2) made the check
+silently stop seeing two of the three views. It now matches the wrapper too, and
+asserts it can see all three, so the check cannot go quiet again.
+
 ## 2.4.1
 
 **Fixed: the dashboard hid its own errors.** `snapshot()` carried `error` and

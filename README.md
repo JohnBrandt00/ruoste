@@ -72,6 +72,40 @@ The font is applied in **nine** settings, not just the editor — terminal, debu
 console, notebook output, chat, inlay hints, CodeLens and the SCM commit box — so
 the whole workbench matches rather than just the code pane.
 
+## Laying out the workspace
+
+The goal most people want: **chat open, a file open, and the utilities in their
+own column.**
+
+> ⌘⇧P → **RUOSTE: Open Utilities Layout**
+
+That opens the pipelines dashboard with the player stacked beneath it, in an
+editor column beside your work. `ruoste.layout.playerShare` sets how much of that
+column the player gets (0.4 by default).
+
+Everything is also arrangeable by hand, because all of it is ordinary VS Code
+furniture:
+
+| Want | How |
+|---|---|
+| Pipelines and Spotify stacked in one sidebar | they already are — the RUOSTE container holds all three views, and each collapses |
+| Any view somewhere else | right-click its title → **Move View**, or drag it. The secondary side bar and the bottom panel are both valid targets |
+| Utilities floating on another monitor | open them as editor tabs, then tab right-click → **Move Editor into New Window** |
+| Two terminals side by side | **⌘\** in the terminal, or *Terminal: Split Terminal* |
+| The panel beside the editor rather than below | *View: Toggle Panel Position*, or set `workbench.panel.defaultLocation` to `right` |
+| Panel views side by side | `workbench.panel.alignment` → `justify` |
+
+A layout worth trying, close to what the dashboard was designed around:
+
+```jsonc
+{
+  "workbench.panel.defaultLocation": "bottom",
+  "workbench.panel.alignment": "justify",
+  "workbench.editor.splitInGroupLayout": "vertical",
+  "workbench.secondarySideBar.defaultVisibility": "visible"
+}
+```
+
 ## Recommended settings
 
 ```jsonc
