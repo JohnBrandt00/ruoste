@@ -2,7 +2,7 @@
   "name": "ruoste",
   "displayName": "RUOSTE",
   "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, a GitHub Actions panel and a full Spotify player. Tuned for C# and TypeScript.",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -757,6 +757,28 @@
           "default": true,
           "description": "Show album artwork and its blurred backdrop.",
           "order": 18
+        },
+        "ruoste.actions.dashboardLayout": {
+          "type": "string",
+          "enum": [
+            "grid",
+            "list",
+            "split"
+          ],
+          "default": "grid",
+          "enumDescriptions": [
+            "Cards in an auto-fitting grid.",
+            "Dense rows \u2014 best when the panel is narrow.",
+            "Repositories on the left, the selected one's runs on the right."
+          ],
+          "description": "Layout of the pipelines dashboard.",
+          "order": 13
+        },
+        "ruoste.actions.dashboardCompact": {
+          "type": "boolean",
+          "default": false,
+          "description": "Tighter rows and smaller type in the pipelines dashboard.",
+          "order": 14
         }
       }
     }

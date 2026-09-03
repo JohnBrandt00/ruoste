@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.4.1
+
+**Fixed: the dashboard hid its own errors.** `snapshot()` carried `error` and
+`loading`, but the page never rendered either — so a partial repository
+discovery looked exactly like "you only have one repository". Repo discovery
+fails softly on purpose (a SAML-SSO-protected organisation should not blank the
+whole view), and that soft failure was invisible. There is now a banner, the
+header reports how many repositories are hidden, and the footer shows the active
+scope.
+
+### Dashboard layouts
+
+- **GRID** — cards in an auto-fitting grid, best in a wide pane.
+- **LIST** — dense rows, no card chrome, best in a narrow column.
+- **SPLIT** — repositories on the left, the selected one's runs on the right.
+- A compact toggle for tighter rows, and both choices persist.
+- **SCOPE** in the header opens the repository-scope picker directly.
+
 ## 2.4.0
 
 **Fixed: the queue did not reflect Spotify's queue.** Three compounding causes.

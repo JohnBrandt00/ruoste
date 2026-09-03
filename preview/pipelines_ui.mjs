@@ -18,7 +18,9 @@ const run = (name, state, branch, when, took, done, n) =>
      url: '#', actor: 'JohnBrandt00', event: 'push', done });
 
 const STATE = {
-  signedIn: true, loading: false, live: 2, failing: 1, repoCount: 38,
+  signedIn: true, loading: false, live: 2, failing: 1, repoCount: 38, hidden: 31,
+  scope: 'affiliated',
+  error: 'Some organisations need SAML SSO authorisation for your GitHub token.',
   budget: '4821/5000 · 74% cached',
   owners: [
     { owner: 'JohnBrandt00', repos: [
@@ -71,15 +73,26 @@ window.dispatchEvent(new MessageEvent('message',{data:{type:'state',state:${JSON
 }
 
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
-for (const [mode, file] of [['dark', 'ruoste-color-theme.json'], ['light', 'ruoste-paperi-color-theme.json']]) {
-  const pg = await browser.newPage({ viewport: { width: 1080, height: 720 }, deviceScaleFactor: 2 });
+const SHOTS = [
+  ['grid',  'ruoste-color-theme.json',        1080, 620, false],
+  ['list',  'ruoste-color-theme.json',         420, 620, true],
+  ['split', 'ruoste-color-theme.json',        1080, 620, false],
+  ['light', 'ruoste-paperi-color-theme.json', 1080, 620, false],
+];
+for (const [name, file, w, h, compact] of SHOTS) {
+  const pg = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 2 });
   await pg.setContent(page(file), { waitUntil: 'load' });
-  await pg.waitForTimeout(300);
-  await pg.screenshot({ path: `preview/pipelines-${mode}.png`, fullPage: true });
+  const layout = name === 'light' ? 'grid' : name;
+  await pg.evaluate(([l, c]) => window.dispatchEvent(
+    new MessageEvent('message', { data: { type: 'layout', layout: l, compact: c } })), [layout, compact]);
+  await pg.waitForTimeout(250);
+  await pg.screenshot({ path: `preview/pipelines-${name}.png` });
   const cards = await pg.$$eval('.repo', (n) => n.length);
-  const runs = await pg.$$eval('.runs li', (n) => n.length);
-  console.log(`✓ preview/pipelines-${mode}.png  cards=${cards} runs=${runs}`);
-  if (cards !== 7 || runs !== 8) { console.error('  state did not bind'); process.exitCode = 1; }
+  const banner = await pg.$eval('#banner', (n) => n.classList.contains('on'));
+  const det = await pg.$eval('#detail', (n) => getComputedStyle(n).display !== 'none');
+  console.log(`✓ preview/pipelines-${name}.png  cards=${cards} banner=${banner} detail=${det}`);
+  if (cards !== 7 || !banner) { console.error('  state did not bind'); process.exitCode = 1; }
+  if ((layout === 'split') !== det) { console.error('  detail pane wrong for layout'); process.exitCode = 1; }
   await pg.close();
 }
 await browser.close();

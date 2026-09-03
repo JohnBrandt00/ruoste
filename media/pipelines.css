@@ -1,4 +1,5 @@
-/* RUOSTE · pipelines — same rules as the editor: hairlines, flat, one accent. */
+/* RUOSTE · pipelines — hairlines, flat surfaces, one accent.
+   Three layouts: grid (cards), list (dense rows), split (repos | detail). */
 :root {
   --ink:    var(--vscode-editor-background, #14120E);
   --panel:  var(--vscode-sideBar-background, #100E0B);
@@ -7,82 +8,147 @@
   --rule:   var(--vscode-panel-border, #2C2822);
   --accent: var(--vscode-activityBar-activeBorder, #C57749);
   --hover:  var(--vscode-list-hoverBackground, rgba(255,255,255,.05));
+  --sel:    var(--vscode-list-activeSelectionBackground, rgba(197,119,73,.22));
   --pass:   var(--vscode-testing-iconPassed, #8DA668);
   --fail:   var(--vscode-testing-iconFailed, #C76067);
   --queued: var(--vscode-testing-iconQueued, #C7A560);
+  --row: 26px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
 body {
   font-family: var(--vscode-editor-font-family, ui-monospace, monospace);
   font-size: 12px; color: var(--fg); background: var(--ink);
+  display: flex; flex-direction: column; overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
+body.compact { --row: 21px; font-size: 11px; }
+
+/* ── header ─────────────────────────────────────────────────────────── */
 header {
-  position: sticky; top: 0; z-index: 5;
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 16px; background: var(--panel);
-  border-bottom: 1px solid var(--rule);
+  flex: 0 0 auto; display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; background: var(--panel); border-bottom: 1px solid var(--rule);
 }
-.brand { letter-spacing: .22em; font-weight: 600; font-size: 11px; }
-#summary { color: var(--mute); font-size: 11px; letter-spacing: .06em; }
-.spacer { flex: 1; }
+.brand { letter-spacing: .22em; font-weight: 600; font-size: 11px; white-space: nowrap; }
+#summary { color: var(--mute); font-size: 11px; letter-spacing: .05em; white-space: nowrap;
+           overflow: hidden; text-overflow: ellipsis; }
+.spacer { flex: 1 1 auto; min-width: 4px; }
 #filter {
   font: inherit; font-size: 11px; color: var(--fg); background: transparent;
-  border: 1px solid var(--rule); padding: 4px 8px; width: 180px; outline: none;
+  border: 1px solid var(--rule); padding: 3px 7px; width: 150px; min-width: 70px; outline: none;
 }
 #filter:focus { border-color: var(--accent); }
 .btn {
-  font: inherit; font-size: 10px; letter-spacing: .14em; cursor: pointer;
-  background: var(--accent); color: var(--ink); border: 0; padding: 5px 10px;
+  font: inherit; font-size: 10px; letter-spacing: .12em; cursor: pointer; white-space: nowrap;
+  background: var(--accent); color: var(--ink); border: 0; padding: 4px 9px;
 }
 .btn:hover { filter: brightness(1.12); }
 .btn.ghost { background: transparent; color: var(--mute); border: 1px solid var(--rule); }
 .btn.ghost:hover { color: var(--fg); border-color: var(--mute); }
+/* layout switch */
+.seg { display: flex; border: 1px solid var(--rule); }
+.seg button {
+  font: inherit; font-size: 9px; letter-spacing: .1em; cursor: pointer;
+  background: transparent; color: var(--mute); border: 0; padding: 4px 7px;
+}
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button.on { background: var(--accent); color: var(--ink); }
+.seg button:not(.on):hover { color: var(--fg); background: var(--hover); }
 
-main { padding: 16px; display: flex; flex-direction: column; gap: 22px; }
+/* ── banner ─────────────────────────────────────────────────────────── */
+#banner {
+  flex: 0 0 auto; display: none; gap: 8px; align-items: flex-start;
+  padding: 7px 14px; font-size: 11px; line-height: 1.5;
+  border-bottom: 1px solid var(--rule);
+  color: var(--queued); background: color-mix(in srgb, var(--queued) 8%, transparent);
+}
+#banner.on { display: flex; }
+#banner.err { color: var(--fail); background: color-mix(in srgb, var(--fail) 8%, transparent); }
+#banner .x { margin-left: auto; cursor: pointer; opacity: .6; }
+#banner .x:hover { opacity: 1; }
+
+/* ── body ───────────────────────────────────────────────────────────── */
+#wrap { flex: 1 1 auto; min-height: 0; display: flex; }
+#grid { flex: 1 1 auto; min-width: 0; overflow: auto; padding: 14px; }
+#detail {
+  flex: 0 0 var(--detail, 46%); min-width: 260px; overflow: auto;
+  border-left: 1px solid var(--rule); background: var(--panel); display: none;
+}
+body.split #detail { display: block; }
+body.split #grid { padding: 10px 0 10px 10px; }
+
+.owner { margin-bottom: 18px; }
 .owner > h2 {
-  font-size: 10px; letter-spacing: .2em; color: var(--mute); font-weight: 500;
-  padding-bottom: 6px; border-bottom: 1px solid var(--rule); margin-bottom: 10px;
-  display: flex; gap: 10px; align-items: baseline;
+  font-size: 10px; letter-spacing: .18em; color: var(--mute); font-weight: 500;
+  padding-bottom: 5px; border-bottom: 1px solid var(--rule); margin-bottom: 8px;
+  display: flex; gap: 9px; align-items: baseline;
 }
 .owner h2 .count { color: var(--rule); }
-.repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; }
-.repo { border: 1px solid var(--rule); background: var(--panel); }
-.repo.live { border-color: var(--queued); }
-.repo.fail { border-color: var(--fail); }
+
+/* grid layout */
+body.grid .repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 9px; }
+body.grid .repo { border: 1px solid var(--rule); background: var(--panel); }
+body.grid .repo.live { border-color: var(--queued); }
+body.grid .repo.fail { border-color: var(--fail); }
+body.grid .repo > h3 { border-bottom: 1px solid var(--rule); }
+body.grid .runs { display: block; }
+
+/* list + split: dense rows, no cards */
+body.list .repos, body.split .repos { display: block; }
+body.list .repo, body.split .repo { border: 0; border-bottom: 1px solid var(--rule); }
+body.list .runs, body.split .runs { display: block; }
+body.split .repo .runs { display: none; }          /* runs live in the detail pane */
+body.split .repo { cursor: pointer; }
+body.split .repo.sel { background: var(--sel); box-shadow: inset 2px 0 0 var(--accent); }
+
 .repo > h3 {
-  font-size: 12px; font-weight: 600; padding: 8px 10px;
-  display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--rule);
+  font-size: 12px; font-weight: 600; padding: 0 9px; height: var(--row);
+  display: flex; align-items: center; gap: 8px;
 }
-.repo h3 .src { margin-left: auto; font-size: 9px; letter-spacing: .12em; color: var(--rule); }
-.repo h3 .name { cursor: pointer; }
+.repo h3 .src { margin-left: auto; font-size: 9px; letter-spacing: .1em; color: var(--rule); }
+.repo h3 .name { cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .repo h3 .name:hover { color: var(--accent); }
 .dot { width: 7px; height: 7px; flex: 0 0 7px; background: var(--mute); }
 .dot.success { background: var(--pass); }
-.dot.failed, .dot.timed.out { background: var(--fail); }
-.dot.running, .dot.queued { background: var(--queued); animation: pulse 1.4s ease-in-out infinite; }
+.dot.failed, .dot.timed\.out { background: var(--fail); }
+.dot.running, .dot.queued, .dot.requested { background: var(--queued); animation: pulse 1.4s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .25 } }
+
 .runs { list-style: none; }
 .runs li {
-  display: flex; align-items: baseline; gap: 8px; padding: 5px 10px;
+  display: flex; align-items: center; gap: 8px; padding: 0 9px; height: var(--row);
   border-top: 1px solid var(--rule); cursor: pointer;
 }
-.runs li:first-child { border-top: 0; }
+body.list .runs li, body.split .runs li { padding-left: 22px; }
 .runs li:hover { background: var(--hover); }
-.runs .wf { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.runs .br { color: var(--mute); font-size: 10.5px; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.runs .tm { color: var(--rule); font-size: 10px; min-width: 52px; text-align: right; }
+.runs .wf { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.runs .br { color: var(--mute); font-size: 10.5px; max-width: 34%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.runs .tm { color: var(--rule); font-size: 10px; min-width: 50px; text-align: right; }
 .runs .act { display: flex; gap: 4px; opacity: 0; }
 .runs li:hover .act { opacity: 1; }
 .runs .act button {
-  font: inherit; font-size: 9px; letter-spacing: .1em; cursor: pointer;
-  background: transparent; color: var(--mute); border: 1px solid var(--rule); padding: 1px 5px;
+  font: inherit; font-size: 9px; letter-spacing: .08em; cursor: pointer;
+  background: transparent; color: var(--mute); border: 1px solid var(--rule); padding: 0 5px;
 }
 .runs .act button:hover { color: var(--accent); border-color: var(--accent); }
-.err { padding: 8px 10px; color: var(--fail); font-size: 10.5px; }
-.empty { padding: 8px 10px; color: var(--mute); font-size: 10.5px; font-style: italic; }
-footer {
-  position: sticky; bottom: 0; padding: 6px 16px; font-size: 10px; color: var(--rule);
-  background: var(--panel); border-top: 1px solid var(--rule); letter-spacing: .08em;
+.err { padding: 5px 9px; color: var(--fail); font-size: 10.5px; }
+.empty { padding: 5px 9px; color: var(--mute); font-size: 10.5px; font-style: italic; }
+
+/* detail pane */
+#detail .dh {
+  position: sticky; top: 0; background: var(--panel); z-index: 2;
+  padding: 10px 12px; border-bottom: 1px solid var(--rule);
 }
-.gate { padding: 60px 16px; color: var(--mute); text-align: center; }
+#detail .dh .t { font-size: 13px; font-weight: 600; }
+#detail .dh .s { font-size: 10px; letter-spacing: .1em; color: var(--mute); margin-top: 3px; }
+#detail .runs li { padding-left: 12px; }
+#detail .gate { padding: 40px 16px; color: var(--mute); text-align: center; font-size: 11px; }
+
+footer {
+  flex: 0 0 auto; padding: 5px 14px; font-size: 10px; color: var(--rule);
+  background: var(--panel); border-top: 1px solid var(--rule); letter-spacing: .06em;
+  display: flex; gap: 14px;
+}
+.gate { padding: 50px 16px; color: var(--mute); text-align: center; }
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-thumb { background: var(--rule); }

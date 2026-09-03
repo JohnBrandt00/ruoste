@@ -36,11 +36,14 @@ function snapshot(p) {
                url: `https://${r.host}/${r.owner}/${r.repo}/actions` };
     }),
   }));
+  const shown = owners.reduce((n, o) => n + o.repos.length, 0);
   return {
     signedIn: p.signedIn, loading: p.loading, error: p.error,
     live: p.liveCount, failing: p.failedCount,
     budget: p.client.budget(), owners,
     repoCount: p.repos.repos.length,
+    hidden: Math.max(0, p.repos.repos.length - shown),
+    scope: String(vscode.workspace.getConfiguration('ruoste.actions').get('scope', 'affiliated')),
   };
 }
 
@@ -68,11 +71,19 @@ function openPipelinesPanel(ctx, provider, slot) {
   <div class="brand">PIPELINES</div>
   <div id="summary"></div>
   <div class="spacer"></div>
+  <div class="seg" role="group" aria-label="Layout">
+    <button data-layout="grid"  title="Cards">GRID</button>
+    <button data-layout="list"  title="Dense rows — best in a narrow pane">LIST</button>
+    <button data-layout="split" title="Repositories left, runs right">SPLIT</button>
+    <button data-density title="Compact rows">·</button>
+  </div>
   <input id="filter" type="search" placeholder="filter repos…" aria-label="Filter repositories">
-  <button id="run" class="btn">RUN WORKFLOW</button>
+  <button id="scope" class="btn ghost" title="Which repositories are watched">SCOPE</button>
+  <button id="run" class="btn">RUN</button>
   <button id="refresh" class="btn ghost" title="Refresh">↻</button>
 </header>
-<main id="grid"></main>
+<div id="banner"></div>
+<div id="wrap"><main id="grid"></main><aside id="detail"></aside></div>
 <footer id="budget"></footer>
 <script nonce="${n}" src="${uri('pipelines.js')}"></script>
 </body></html>`;
@@ -85,6 +96,13 @@ function openPipelinesPanel(ctx, provider, slot) {
       case 'ready':   push(); break;
       case 'refresh': await provider.refresh(false); break;
       case 'run':     await vscode.commands.executeCommand('ruoste.actions.runWorkflow'); break;
+      case 'scope':   await vscode.commands.executeCommand('ruoste.actions.pickScope'); break;
+      case 'layout': {
+        const cfg = vscode.workspace.getConfiguration('ruoste.actions');
+        await cfg.update('dashboardLayout', String(m.layout || 'grid'), vscode.ConfigurationTarget.Global);
+        await cfg.update('dashboardCompact', !!m.compact, vscode.ConfigurationTarget.Global);
+        break;
+      }
       case 'open':    if (m.url) await vscode.env.openExternal(vscode.Uri.parse(String(m.url))); break;
       case 'rerun':
       case 'cancel': {
@@ -104,6 +122,17 @@ function openPipelinesPanel(ctx, provider, slot) {
   // keep the elapsed times honest between polls
   const tick = setInterval(() => { if (panel.visible && provider.liveCount) push(); }, 1000);
   subs.push(new vscode.Disposable(() => clearInterval(tick)));
+
+  // restore the saved layout as soon as the page is up
+  subs.push(panel.webview.onDidReceiveMessage((m) => {
+    if (m?.type !== 'ready') return;
+    const cfg = vscode.workspace.getConfiguration('ruoste.actions');
+    void panel.webview.postMessage({
+      type: 'layout',
+      layout: String(cfg.get('dashboardLayout', 'grid')),
+      compact: Boolean(cfg.get('dashboardCompact', false)),
+    });
+  }));
 
   panel.onDidChangeViewState(() => push());
   panel.onDidDispose(() => { subs.forEach((d) => d.dispose()); slot.current = undefined; });

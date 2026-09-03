@@ -163,6 +163,18 @@ the **Pipelines dashboard** to see all of them at once.
 
 ![Pipelines dashboard](https://raw.githubusercontent.com/JohnBrandt00/ruoste/main/media/preview-pipelines.png)
 
+**Three layouts**, switchable from the header and remembered:
+
+| | |
+|---|---|
+| **GRID** | cards in an auto-fitting grid — best in a wide pane |
+| **LIST** | dense rows, no cards — best in a narrow column |
+| **SPLIT** | repositories on the left, the selected one's runs on the right |
+
+The **·** button toggles compact rows. **SCOPE** jumps straight to the setting
+that decides which repositories are watched, and the header reports how many are
+hidden so a short list is never a mystery.
+
 **Pop it out.** *RUOSTE: Open Pipelines Dashboard* opens as an editor tab; VS
 Code's *Move Editor into New Window* then floats it on a second monitor. It
 updates live, filters by name, and re-run / cancel are on every row.
@@ -225,6 +237,8 @@ cache.
 | `ruoste.actions.groupByOwner` | `true` | group repos by owner, or one flat list |
 | `ruoste.actions.dashboardRunsPerRepo` | `5` | runs per card in the dashboard |
 | `ruoste.actions.confirmDispatch` | `true` | ask before dispatching a run |
+| `ruoste.actions.dashboardLayout` | `grid` | `grid`, `list` or `split` |
+| `ruoste.actions.dashboardCompact` | `false` | tighter rows and smaller type |
 
 
 ## Spotify
