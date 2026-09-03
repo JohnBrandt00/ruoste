@@ -9,9 +9,9 @@ Three colour themes, a Phosphor **duotone file icon** set, a Phosphor **product
 icon** set that replaces the whole UI chrome, and **Geist Mono in the box**.
 Tuned first for **C#** and **TypeScript**.
 
-![RUOSTE — C#](media/preview-dark-csharp.png)
+![RUOSTE — C#](https://raw.githubusercontent.com/JohnBrandt00/ruoste/main/media/preview-dark-csharp.png)
 
-![RUOSTE Paperi — TypeScript](media/preview-light-typescript.png)
+![RUOSTE Paperi — TypeScript](https://raw.githubusercontent.com/JohnBrandt00/ruoste/main/media/preview-light-typescript.png)
 
 ---
 
@@ -216,7 +216,7 @@ cache.
 A full player in the sidebar — Now Playing webview, plus a library tree for your
 queue, playlists, liked songs and devices.
 
-![RUOSTE Spotify](media/preview-spotify-dark.png)
+![RUOSTE Spotify](https://raw.githubusercontent.com/JohnBrandt00/ruoste/main/media/preview-spotify-dark.png)
 
 **Setup.** Create a free app at
 [developer.spotify.com/dashboard](https://developer.spotify.com/dashboard), add

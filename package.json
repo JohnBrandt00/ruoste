@@ -2,7 +2,7 @@
   "name": "ruoste",
   "displayName": "RUOSTE",
   "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, a GitHub Actions panel and a full Spotify player. Tuned for C# and TypeScript.",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -98,6 +98,11 @@
           "id": "ruoste",
           "title": "RUOSTE",
           "icon": "media/activity-bar.svg"
+        },
+        {
+          "id": "ruoste-spotify",
+          "title": "RUOSTE Spotify",
+          "icon": "media/activity-bar-spotify.svg"
         }
       ]
     },
@@ -106,20 +111,19 @@
         {
           "id": "ruoste.actions",
           "name": "GitHub Actions",
-          "icon": "media/activity-bar.svg",
           "contextualTitle": "RUOSTE \u2014 GitHub Actions"
-        },
+        }
+      ],
+      "ruoste-spotify": [
         {
           "id": "ruoste.spotify.nowPlaying",
           "name": "Now Playing",
           "type": "webview",
-          "icon": "media/activity-bar.svg",
           "contextualTitle": "RUOSTE \u2014 Spotify"
         },
         {
           "id": "ruoste.spotify.library",
-          "name": "Spotify Library",
-          "icon": "media/activity-bar.svg",
+          "name": "Library",
           "contextualTitle": "RUOSTE \u2014 Spotify Library"
         }
       ]
@@ -330,6 +334,11 @@
       {
         "command": "ruoste.actions.unwatchRepo",
         "title": "Stop Watching This Repository",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.diagnostics",
+        "title": "Show Diagnostics",
         "category": "RUOSTE"
       }
     ],
@@ -659,7 +668,7 @@
     "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js test/actions.test.js && python3 build/check_package.py",
     "verify": "node preview/audit.mjs && node preview/spot.mjs && node preview/icons_e2e.mjs",
     "preview": "node preview/render.mjs",
-    "package": "vsce package --allow-missing-repository --no-dependencies --baseImagesUrl https://x.invalid/ && node build/fix-readme.mjs",
+    "package": "vsce package --allow-missing-repository --no-dependencies",
     "all": "npm run build && npm run check && npm run package",
     "ui": "node preview/spotify_ui.mjs"
   },

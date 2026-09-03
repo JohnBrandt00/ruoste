@@ -1,7 +1,12 @@
 .vscode/**
+.github/**
 node_modules/**
 build/**
 test/**
+preview/**
 jsconfig.json
+.gitignore
+BUILD.md
+CONTRIBUTING.md
 *.py
 *.vsix

@@ -10,6 +10,7 @@ const { searchQuickPick } = require('./search');
 const { startDj } = require('./dj');
 const { SpotifyStatus } = require('./status');
 const { parseUri } = require('./format');
+const { safeTreeView, noteView, noteFeature } = require('../diagnostics');
 
 /** @param {vscode.ExtensionContext} ctx */
 function activateSpotify(ctx) {
@@ -20,12 +21,27 @@ function activateSpotify(ctx) {
   const library = new LibraryProvider(api, auth, player);
   const view = new NowPlayingView(ctx, player);
 
-  ctx.subscriptions.push(auth, player, status, library,
-    vscode.window.registerWebviewViewProvider('ruoste.spotify.nowPlaying', view,
-      { webviewOptions: { retainContextWhenHidden: false } }),
-    vscode.window.createTreeView('ruoste.spotify.library', { treeDataProvider: library, showCollapseAll: true }),
-    vscode.window.registerUriHandler({ handleUri: (uri) => auth.handleUri(uri) }),
-  );
+  ctx.subscriptions.push(auth, player, status, library);
+
+  try {
+    ctx.subscriptions.push(vscode.window.registerWebviewViewProvider('ruoste.spotify.nowPlaying', view,
+      { webviewOptions: { retainContextWhenHidden: false } }));
+    noteView('ruoste.spotify.nowPlaying', 'ok');
+  } catch (err) {
+    noteView('ruoste.spotify.nowPlaying', `FAILED — ${err && err.message ? err.message : err}`);
+  }
+
+  // The library tree is a nice-to-have; every command below works without it,
+  // so a registration failure must not stop the player from coming up.
+  const tree = safeTreeView('ruoste.spotify.library',
+    { treeDataProvider: library, showCollapseAll: true });
+  if (tree) ctx.subscriptions.push(tree);
+
+  try {
+    ctx.subscriptions.push(vscode.window.registerUriHandler({ handleUri: (uri) => auth.handleUri(uri) }));
+  } catch (err) {
+    noteFeature('spotify uri handler', `FAILED — ${err && err.message ? err.message : err}`);
+  }
 
   const setCtx = () => vscode.commands.executeCommand('setContext', 'ruoste.spotify.signedIn', auth.signedIn);
   ctx.subscriptions.push(
@@ -120,6 +136,7 @@ function activateSpotify(ctx) {
     vscode.window.setStatusBarMessage('Spotify link copied', 2000);
   });
 
+  noteFeature('spotify', 'ok');
   void auth.load().then(() => { setCtx(); void player.poll(); });
   return { auth, api, player };
 }

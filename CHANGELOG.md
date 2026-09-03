@@ -1,5 +1,39 @@
 # Changelog
 
+## 2.3.2
+
+**Fixed: the packaged .vsix was not what vsce produced.** To keep relative
+README image paths (vsce rewrites them for the marketplace) I had been
+unzipping vsce's output, swapping the readme, and re-zipping. That re-zip was
+not faithful — it injected 11 directory entries vsce never emits and put
+`[Content_Types].xml` ahead of `extension.vsixmanifest`, reordering the OPC
+package. This is the likeliest cause of `ruoste.spotify.clientId is not a
+registered configuration` and `No view is registered with id:
+ruoste.spotify.library`, where commands loaded but views and settings did not.
+
+- The repackaging step is gone. README images now use absolute
+  `raw.githubusercontent.com` URLs, so vsce has nothing to rewrite and its
+  output ships untouched.
+- `.vscodeignore` was missing `preview/` and `.github/` — 2.7 MB of preview
+  renders were shipping inside the extension. Package is down from 5.66 MB to
+  3.2 MB.
+- `check_package.py` now inspects the built .vsix: no directory entries,
+  `extension.vsixmanifest` first, no dev directories, size ceiling. Verified by
+  reproducing the old re-zip and watching the check fail.
+
+### Also
+
+- **Actions and Spotify now live in separate activity bar containers.** Mixing a
+  webview view with tree views in one container is legal but was an unnecessary
+  variable while diagnosing this.
+- **`RUOSTE: Show Diagnostics`** reports the running version, install path, every
+  declared view, which views actually registered, feature status, GitHub
+  sign-in and rate budget, and the Spotify redirect URI. If something is wrong,
+  this says what rather than leaving it to guesswork.
+- View creation no longer assumes success: the Actions panel runs without its
+  tree if registration fails, and the Spotify player comes up whether or not the
+  library tree does.
+
 ## 2.3.1
 
 **Fixed: the extension failed to activate.** `ruoste.spotify.library` was

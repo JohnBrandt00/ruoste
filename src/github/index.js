@@ -5,18 +5,19 @@ const api = require('./api');
 const { ActionsProvider } = require('./tree');
 const { ActionsStatus } = require('./status');
 const { watchWorkspace } = require('./repos');
+const { safeTreeView, noteFeature } = require('../diagnostics');
 
 /** @param {vscode.ExtensionContext} ctx */
 function activateActions(ctx) {
   const provider = new ActionsProvider(ctx);
   const status = new ActionsStatus();
-  const view = vscode.window.createTreeView('ruoste.actions', {
-    treeDataProvider: provider, showCollapseAll: true,
-  });
-  ctx.subscriptions.push(view, provider, status);
+  const view = safeTreeView('ruoste.actions', { treeDataProvider: provider, showCollapseAll: true });
+  ctx.subscriptions.push(provider, status);
+  if (view) ctx.subscriptions.push(view);
 
   const sync = () => {
     status.update(provider);
+    if (!view) return;
     void vscode.commands.executeCommand('setContext', 'ruoste.actions.signedIn', provider.signedIn);
     void vscode.commands.executeCommand('setContext', 'ruoste.actions.hasRepo', provider.repos.repos.length > 0);
     const n = provider.repos.repos.length;
@@ -43,8 +44,10 @@ function activateActions(ctx) {
   cmd('ruoste.actions.refresh', () => provider.refresh(false));
   cmd('ruoste.actions.rediscover', () => provider.refresh(false, true));
   cmd('ruoste.actions.signIn', () => provider.refresh(true));
-  cmd('ruoste.actions.focus', () => view.reveal(undefined, { focus: true }).then(undefined, () =>
-    vscode.commands.executeCommand('workbench.view.extension.ruoste')));
+  cmd('ruoste.actions.focus', () => (view
+    ? view.reveal(undefined, { focus: true }).then(undefined,
+        () => vscode.commands.executeCommand('workbench.view.extension.ruoste'))
+    : vscode.commands.executeCommand('workbench.view.extension.ruoste')));
 
   cmd('ruoste.actions.pickScope', async () => {
     const current = String(provider.cfg.get('scope', 'affiliated'));
@@ -64,7 +67,7 @@ function activateActions(ctx) {
     const pick = await vscode.window.showQuickPick(
       all.map((r) => ({ label: `${r.owner}/${r.repo}`, description: r.source, repo: r })),
       { title: 'Go to repository', matchOnDescription: true });
-    if (pick) await view.reveal(/** @type {any} */ ({ kind: 'repo', repo: pick.repo }),
+    if (pick && view) await view.reveal(/** @type {any} */ ({ kind: 'repo', repo: pick.repo }),
       { select: true, focus: true, expand: true }).then(undefined, () => undefined);
   });
 
@@ -122,8 +125,8 @@ function activateActions(ctx) {
   cmd('ruoste.actions.rerun', (node) => act('rerun', node));
   cmd('ruoste.actions.cancel', (node) => act('cancel', node));
 
-  ctx.subscriptions.push(
-    watchWorkspace(() => void provider.refresh(false, true)),
+  ctx.subscriptions.push(watchWorkspace(() => void provider.refresh(false, true)));
+  if (view) ctx.subscriptions.push(
     view.onDidExpandElement((e) => {
       const el = /** @type {any} */ (e.element);
       if (el && el.kind === 'repo') { provider.expanded.add(el.repo.key); void provider.fetchRepo(el.repo); }
@@ -132,15 +135,18 @@ function activateActions(ctx) {
       const el = /** @type {any} */ (e.element);
       if (el && el.kind === 'repo') provider.expanded.delete(el.repo.key);
     }),
+    view.onDidChangeVisibility((e) => { if (e.visible) void provider.refresh(false); }),
+  );
+  ctx.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((e) => {
       if (e.affectsConfiguration('ruoste.actions')) void provider.refresh(false, true);
     }),
     vscode.authentication.onDidChangeSessions((e) => {
       if (e.provider.id === 'github') void provider.refresh(false, true);
     }),
-    view.onDidChangeVisibility((e) => { if (e.visible) void provider.refresh(false); }),
   );
 
+  noteFeature('github actions', view ? 'ok' : 'running without its tree view');
   void provider.refresh(false);
   return provider;
 }

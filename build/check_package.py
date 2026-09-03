@@ -128,5 +128,22 @@ chk(view_types.get("ruoste.spotify.nowPlaying") == "webview", "Now Playing is de
 reg = re.findall(r"registerWebviewViewProvider\(\s*'([\w.]+)'", open(f"{EXT}/src/spotify/index.js").read())
 chk(all(r in view_types for r in reg), f"webview provider ids match declared views {reg}")
 
+# ── packaged artefact ────────────────────────────────────────────────────
+import subprocess, glob
+vsix = sorted(glob.glob(f"{EXT}/*.vsix"))
+if vsix:
+    print("── vsix")
+    names = subprocess.run(["unzip", "-Z1", vsix[-1]], capture_output=True, text=True).stdout.split()
+    # vsce never emits directory entries; a hand re-zip does, and VS Code's
+    # installer is happier with vsce's exact output
+    dirs = [n for n in names if n.endswith("/")]
+    chk(not dirs, f"no directory entries ({len(dirs)} found)" if dirs else "no directory entries")
+    chk(names[:1] == ["extension.vsixmanifest"], f"extension.vsixmanifest is first (got {names[0] if names else '—'})")
+    for junk in ("extension/preview/", "extension/test/", "extension/build/", "extension/node_modules/"):
+        chk(not any(n.startswith(junk) for n in names), f"{junk} excluded")
+    chk(any(n == "extension/package.json" for n in names), "manifest present")
+    mb = os.path.getsize(vsix[-1]) / 1e6
+    chk(mb < 5, f"package size {mb:.2f} MB")
+
 print("\nRESULT:", "PASS" if not fail else f"FAIL ({len(fail)})")
 sys.exit(0 if not fail else 1)
