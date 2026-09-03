@@ -147,26 +147,54 @@ unmapped falls back to the stock codicon, so there are no holes.
 
 ## GitHub Actions panel
 
-A **RUOSTE** container in the activity bar with a live view of the current repo's
-workflow runs — runs, their jobs, and each job's steps, with status colours drawn
-from the active theme so it never looks bolted on.
+Watches **every repository you can reach**, not just the one you happen to have
+open — grouped by owner, so 40 repos across several organisations stay legible.
+
+```
+▾ JohnBrandt00 · 12 · 1 running
+    radiohub          ● main · 2m ago
+    ruoste            ✓ main · 1h ago
+▾ acme-corp · 26 · 2 failing
+    ingest-service    ✗ deploy · 3h ago
+```
+
+Expand a repo for its runs, a run for its jobs, a job for its steps.
 
 - Signs in with **VS Code's built-in GitHub account**. No personal access token.
-- Finds the repo through the git extension, falling back to reading `.git/config`.
-  GitHub Enterprise hosts work — the API base switches to `/api/v3`.
-- Polls every 60 s when idle and every 10 s while something is queued or running,
-  and stops entirely when the view is hidden.
-- Re-run, cancel, open on GitHub, and copy run URL from the item menu.
-- Status bar shows the latest run for the current branch; it turns red on failure.
+- **Scope** is yours to choose: everything you are affiliated with (default),
+  only what is open in this window, or an explicit watch list. `owner/*`
+  wildcards work in both the watch list and the exclude list.
+- Re-run, cancel, open on GitHub and copy run URL from the item menu; **Go to
+  Repository…** jumps straight to one by name.
+- Status bar summarises across all of them — *3 running*, *1 failing* — and
+  turns red on failure.
+
+**How it stays inside the rate limit.** GitHub has no cross-repo runs endpoint,
+so N repos means N requests. Two things make that cheap. Every GET carries an
+`ETag`, and [a conditional request that returns 304 does not count against the
+primary rate limit](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api),
+so unchanged repositories are free. And requests go through a serial queue
+rather than in parallel, which is what GitHub's own guidance asks for to avoid
+secondary limits. On top of that, only repositories you have expanded — or that
+have a run in progress — refresh every cycle; the rest rotate a few at a time.
+The view title shows your remaining budget and the share of requests served from
+cache.
 
 | Setting | Default | |
 |---|---|---|
+| `ruoste.actions.scope` | `affiliated` | `affiliated`, `workspace` or `watchlist` |
+| `ruoste.actions.repositories` | `[]` | extra repos to watch — `owner/repo`, wildcards allowed |
+| `ruoste.actions.exclude` | `[]` | repos to hide — wildcards allowed |
+| `ruoste.actions.maxRepositories` | `60` | cap on repos watched at once |
+| `ruoste.actions.repositoriesPerCycle` | `8` | idle repos refreshed per cycle |
+| `ruoste.actions.hideWithoutWorkflows` | `true` | hide repos with no runs |
+| `ruoste.actions.runCount` | `10` | runs listed per repository |
 | `ruoste.actions.autoRefresh` | `true` | poll automatically |
 | `ruoste.actions.refreshInterval` | `60` | seconds between idle polls |
 | `ruoste.actions.liveRefreshInterval` | `10` | seconds while a run is live |
-| `ruoste.actions.runCount` | `20` | how many runs to list |
 | `ruoste.actions.currentBranchOnly` | `false` | limit to the checked-out branch |
 | `ruoste.actions.statusBar` | `true` | show the status bar item |
+
 
 ## Spotify
 

@@ -2,7 +2,7 @@
   "name": "ruoste",
   "displayName": "RUOSTE",
   "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, a GitHub Actions panel and a full Spotify player. Tuned for C# and TypeScript.",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -304,19 +304,62 @@
         "command": "ruoste.spotify.copyLink",
         "title": "Copy Spotify Link",
         "category": "RUOSTE Spotify"
+      },
+      {
+        "command": "ruoste.actions.rediscover",
+        "title": "Rediscover Repositories",
+        "category": "RUOSTE",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "ruoste.actions.pickScope",
+        "title": "Choose Watched Repositories\u2026",
+        "category": "RUOSTE",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "ruoste.actions.filter",
+        "title": "Go to Repository\u2026",
+        "category": "RUOSTE",
+        "icon": "$(search)"
+      },
+      {
+        "command": "ruoste.actions.watchRepo",
+        "title": "Watch Repository\u2026",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.actions.unwatchRepo",
+        "title": "Stop Watching This Repository",
+        "category": "RUOSTE"
       }
     ],
     "menus": {
       "view/title": [
         {
-          "command": "ruoste.actions.refresh",
+          "command": "ruoste.actions.filter",
           "when": "view == ruoste.actions",
           "group": "navigation@1"
         },
         {
-          "command": "ruoste.actions.open",
+          "command": "ruoste.actions.refresh",
           "when": "view == ruoste.actions",
           "group": "navigation@2"
+        },
+        {
+          "command": "ruoste.actions.pickScope",
+          "when": "view == ruoste.actions",
+          "group": "1_config@1"
+        },
+        {
+          "command": "ruoste.actions.rediscover",
+          "when": "view == ruoste.actions",
+          "group": "1_config@2"
+        },
+        {
+          "command": "ruoste.actions.watchRepo",
+          "when": "view == ruoste.actions",
+          "group": "1_config@3"
         },
         {
           "command": "ruoste.spotify.search",
@@ -332,7 +375,7 @@
       "view/item/context": [
         {
           "command": "ruoste.actions.open",
-          "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.(run|job)/",
+          "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.(run|job|repo)/",
           "group": "inline@1"
         },
         {
@@ -348,6 +391,16 @@
         {
           "command": "ruoste.actions.copyUrl",
           "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.(run|job)/",
+          "group": "1_copy"
+        },
+        {
+          "command": "ruoste.actions.unwatchRepo",
+          "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.repo/",
+          "group": "1_copy"
+        },
+        {
+          "command": "ruoste.actions.watchRepo",
+          "when": "view == ruoste.actions && viewItem == ruoste.owner",
           "group": "1_copy"
         },
         {
@@ -430,6 +483,14 @@
         {
           "command": "ruoste.spotify.copyLink",
           "when": "false"
+        },
+        {
+          "command": "ruoste.actions.watchRepo",
+          "when": "true"
+        },
+        {
+          "command": "ruoste.actions.unwatchRepo",
+          "when": "false"
         }
       ]
     },
@@ -455,10 +516,11 @@
         },
         "ruoste.actions.runCount": {
           "type": "number",
-          "default": 20,
+          "default": 10,
           "minimum": 1,
           "maximum": 100,
-          "description": "How many recent runs to list."
+          "description": "How many recent runs to list per repository.",
+          "order": 7
         },
         "ruoste.actions.currentBranchOnly": {
           "type": "boolean",
@@ -505,6 +567,62 @@
           "maximum": 100,
           "description": "Truncate the status bar label to this many characters.",
           "order": 14
+        },
+        "ruoste.actions.scope": {
+          "type": "string",
+          "enum": [
+            "affiliated",
+            "workspace",
+            "watchlist"
+          ],
+          "default": "affiliated",
+          "enumDescriptions": [
+            "Every repository you own, collaborate on, or can reach through an organisation.",
+            "Only repositories open in this window.",
+            "Only repositories matching ruoste.actions.repositories."
+          ],
+          "markdownDescription": "Which repositories the Actions view watches.",
+          "order": 1
+        },
+        "ruoste.actions.repositories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Extra repositories to watch, as `owner/repo`. Wildcards allowed (`my-org/*`).",
+          "order": 2
+        },
+        "ruoste.actions.exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Repositories to hide, as `owner/repo`. Wildcards allowed (`old-org/*`).",
+          "order": 3
+        },
+        "ruoste.actions.maxRepositories": {
+          "type": "number",
+          "default": 60,
+          "minimum": 1,
+          "maximum": 300,
+          "description": "Cap on how many repositories are watched at once.",
+          "order": 4
+        },
+        "ruoste.actions.repositoriesPerCycle": {
+          "type": "number",
+          "default": 8,
+          "minimum": 1,
+          "maximum": 50,
+          "markdownDescription": "How many idle repositories to refresh each cycle. Repositories you have expanded, or that have a run in progress, always refresh. Conditional requests mean unchanged repositories cost nothing against the rate limit.",
+          "order": 5
+        },
+        "ruoste.actions.hideWithoutWorkflows": {
+          "type": "boolean",
+          "default": true,
+          "description": "Hide repositories that have no workflow runs.",
+          "order": 6
         }
       }
     }
@@ -515,7 +633,7 @@
   ],
   "scripts": {
     "build": "python3 build/emit_themes.py && python3 build/emit_icons.py && node build/build_font.mjs 0",
-    "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js && python3 build/check_package.py",
+    "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js test/actions.test.js && python3 build/check_package.py",
     "verify": "node preview/audit.mjs && node preview/spot.mjs && node preview/icons_e2e.mjs",
     "preview": "node preview/render.mjs",
     "package": "vsce package --allow-missing-repository --no-dependencies --baseImagesUrl https://x.invalid/ && node build/fix-readme.mjs",

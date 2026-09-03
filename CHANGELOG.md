@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.3.0 — Actions across every repository
+
+**Fixed: the Actions panel only ever showed one repository.** It took the first
+repo from the git extension and stopped there — the wrong model for anyone with
+more than one project, let alone 40 across several organisations.
+
+- Watches every repository you are affiliated with, grouped by owner, with
+  workspace repos first. Scope is configurable: `affiliated`, `workspace` or an
+  explicit `watchlist`, with `owner/*` wildcards in both the watch and exclude
+  lists.
+- Rate limit is handled properly rather than hoped for: every GET carries an
+  `ETag`, so unchanged repositories return 304 and cost nothing; requests go
+  through a serial queue, per GitHub's guidance on secondary limits; and only
+  expanded or actively-running repositories refresh each cycle while the rest
+  rotate. The view title shows remaining budget and cache hit rate.
+- Repositories with no workflow runs are detected once and then skipped.
+- Per-repository failures no longer blank the tree — the repo shows its own
+  error and the rest keep working. SAML SSO and 404s are named specifically.
+- New commands: **Go to Repository…**, **Choose Watched Repositories…**,
+  **Rediscover Repositories**, **Watch Repository…**, **Stop Watching**.
+- Status bar aggregates across all repos ("3 running", "1 failing") with a
+  tooltip listing the most recent runs.
+- 13 new tests covering glob matching, owner grouping, hot/warm rotation, the
+  304 cache path, and serial queue ordering under failure.
+
 ## 2.2.0 — Spotify
 
 A full Spotify player, taking its cue from
