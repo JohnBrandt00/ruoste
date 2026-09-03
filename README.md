@@ -235,7 +235,14 @@ playing works on a free account.
 | Playlists | browse to track level, play in context so the queue survives, add the current track to a playlist |
 | Search | tracks, albums, artists and playlists — play or queue any result from the picker |
 | Library | liked songs, save/unsave, transfer playback between devices |
+| Pop out | **⇱** opens the player as an editor tab — from there VS Code's *Move Editor into New Window* gives you a floating mini-player on a second monitor |
 | DJ | follows along when Spotify's AI DJ is playing, and hands off to the app to start it |
+
+**Popping the player out.** The **⇱** button (or *RUOSTE Spotify: Open Player in
+Editor*) opens Now Playing as an editor tab. Right-click that tab → **Move
+Editor into New Window** and you have a floating player independent of the
+window. You can also drag the sidebar view itself into the panel or the
+secondary side bar with VS Code's own *Move View*.
 
 **On the DJ.** Spotify closed algorithmic and editorial contexts to new apps in
 November 2024, so no extension can *start* the AI DJ — the play call returns 403.

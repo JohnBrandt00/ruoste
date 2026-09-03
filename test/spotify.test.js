@@ -150,3 +150,43 @@ test('webview references assets that exist, and locks down CSP', () => {
   assert.match(html, /i\.scdn\.co/, 'album art host must be allowed');
   assert.doesNotMatch(html, /script-src[^;]*'unsafe-inline'/, 'no unsafe-inline scripts');
 });
+
+// ── response body handling ──────────────────────────────────────────────
+const { readBody, SpotifyApi } = require('../src/spotify/api');
+
+/** new Response() cannot construct 204, so fake the surface we read. */
+const res = (status, body, type) => /** @type {any} */ ({
+  status, ok: status >= 200 && status < 300,
+  headers: { get: (k) => (k.toLowerCase() === 'content-type' ? type ?? null : null) },
+  text: async () => body ?? '',
+});
+
+test('readBody never assumes a 2xx body is JSON', async () => {
+  // the real regression: Spotify answers player POSTs with a bare trace id
+  assert.equal(await readBody(res(200, 'Yv6puxxLYD', 'text/plain')), 'Yv6puxxLYD');
+  assert.equal(await readBody(res(200, 'd84dWL__jz')), 'd84dWL__jz', 'no content-type at all');
+  // and with a JSON content-type but a malformed body, return the text, never throw
+  assert.equal(await readBody(res(200, 'd84dWL__jz', 'application/json')), 'd84dWL__jz');
+  // proper JSON still parses
+  assert.deepEqual(await readBody(res(200, '{"a":1}', 'application/json; charset=utf-8')), { a: 1 });
+  // empty and no-content responses are null
+  for (const r of [res(204, ''), res(205, ''), res(304, ''), res(200, ''), res(200, '   ')])
+    assert.equal(await readBody(r), null);
+});
+
+test('a player command that replies with plain text resolves instead of throwing', async () => {
+  const api = new SpotifyApi(/** @type {any} */ ({ token: async () => 'tok', signedIn: true }));
+  const original = globalThis.fetch;
+  globalThis.fetch = /** @type {any} */ (async () => res(200, 'd84dWL__jz', 'text/plain'));
+  try {
+    // this is exactly the call that failed: POST /me/player/next
+    await assert.doesNotReject(() => api.next(), 'skip forward must not throw on a non-JSON body');
+    await assert.doesNotReject(() => api.enqueue('spotify:track:abc'), 'add to queue likewise');
+  } finally { globalThis.fetch = original; }
+});
+
+test('an error body that is not JSON still produces a usable message', () => {
+  const e = classify(500, '/me/player/next', 'upstream exploded');
+  assert.equal(e.status, 500);
+  assert.ok(e.message.length, 'never an empty message');
+});

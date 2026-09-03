@@ -13,6 +13,7 @@
     shuffle: $('shuffle'), repeat: $('repeat'), like: $('like'),
     device: $('device'), devicename: $('devicename'), vol: $('vol'),
     queue: $('queue'), error: $('error'), search: $('search'), signin: $('signin'),
+    popout: $('popout'),
   };
 
   const time = (ms) => {
@@ -142,6 +143,7 @@
   el.search.addEventListener('click', () => post('search'));
   el.dj.addEventListener('click', () => post('dj'));
   el.signin.addEventListener('click', () => post('signIn'));
+  if (el.popout) el.popout.addEventListener('click', () => post('popout'));
   el.vol.addEventListener('input', () => {
     clearTimeout(volTimer);                     // debounce: one call per gesture
     const v = Number(el.vol.value);

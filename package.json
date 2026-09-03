@@ -2,7 +2,7 @@
   "name": "ruoste",
   "displayName": "RUOSTE",
   "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, a GitHub Actions panel and a full Spotify player. Tuned for C# and TypeScript.",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -340,6 +340,12 @@
         "command": "ruoste.diagnostics",
         "title": "Show Diagnostics",
         "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.spotify.openPanel",
+        "title": "Open Player in Editor",
+        "category": "RUOSTE Spotify",
+        "icon": "$(link-external)"
       }
     ],
     "menus": {
@@ -378,6 +384,11 @@
           "command": "ruoste.spotify.refresh",
           "when": "view == ruoste.spotify.library",
           "group": "navigation@2"
+        },
+        {
+          "command": "ruoste.spotify.openPanel",
+          "when": "view == ruoste.spotify.nowPlaying",
+          "group": "navigation@1"
         }
       ],
       "view/item/context": [
@@ -655,6 +666,14 @@
           "default": false,
           "description": "Also notify when a run starts.",
           "order": 9
+        },
+        "ruoste.spotify.queueBatchLimit": {
+          "type": "number",
+          "default": 50,
+          "minimum": 1,
+          "maximum": 200,
+          "markdownDescription": "Most tracks to add when queueing a whole album or playlist. Spotify's queue endpoint takes one track per request, so this is one request each.",
+          "order": 15
         }
       }
     }

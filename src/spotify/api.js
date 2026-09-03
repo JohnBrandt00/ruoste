@@ -40,6 +40,19 @@ function classify(status, path, body) {
   return new SpotifyError(detail || `Spotify returned ${status}`, status, 'http');
 }
 
+/** Read a response body without assuming it is JSON.
+ *  Spotify does not always send JSON on success — some endpoints reply 200 with
+ *  an empty body or a bare identifier — and blindly parsing turns a successful
+ *  call into a crash. @param {Response} res @returns {Promise<any>} */
+async function readBody(res) {
+  if (res.status === 204 || res.status === 205 || res.status === 304) return null;
+  const text = await res.text().catch(() => '');
+  if (!text.trim()) return null;
+  const type = res.headers.get('content-type') || '';
+  if (!/\bjson\b/i.test(type)) return text;
+  try { return JSON.parse(text); } catch { return text; }
+}
+
 class SpotifyApi {
   /** @param {InstanceType<typeof import('./auth').SpotifyAuth>} auth */
   constructor(auth) {
@@ -74,12 +87,8 @@ class SpotifyApi {
       body: o.body !== undefined ? JSON.stringify(o.body) : undefined,
     });
 
-    if (res.status === 204 || res.status === 202) return null;
-
-    if (res.ok) {
-      const text = await res.text();
-      return text ? JSON.parse(text) : null;
-    }
+    if (res.status === 202) return null;
+    if (res.ok) return readBody(res);
 
     if (res.status === 429) {
       const wait = Math.min(60, Number(res.headers.get('retry-after') || 3));
@@ -93,7 +102,8 @@ class SpotifyApi {
       if (this.auth.signedIn) return this.request(path, { ...o, retry: false });
     }
 
-    throw classify(res.status, path, await res.text().catch(() => ''));
+    const errText = await res.text().catch(() => '');
+    throw classify(res.status, path, errText);
   }
 
   // ── player ────────────────────────────────────────────────────────────
@@ -132,6 +142,10 @@ class SpotifyApi {
       query: { limit, offset, fields: 'total,items(track(id,uri,name,duration_ms,artists(name),album(name,images)))' },
     });
   }
+  /** @param {string} id @param {number} [limit] @param {number} [offset] */
+  albumTracks(id, limit = 50, offset = 0) {
+    return this.request(`/albums/${id}/tracks`, { query: { limit, offset } });
+  }
   /** @param {string} id @param {string[]} uris */
   addToPlaylist(id, uris) { return this.request(`/playlists/${id}/tracks`, { method: 'POST', body: { uris } }); }
   /** @param {number} [limit] @param {number} [offset] */
@@ -158,4 +172,4 @@ class SpotifyApi {
   }
 }
 
-module.exports = { SpotifyApi, SpotifyError, classify, RETIRED, BASE };
+module.exports = { SpotifyApi, SpotifyError, classify, readBody, RETIRED, BASE };

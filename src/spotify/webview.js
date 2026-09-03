@@ -6,6 +6,63 @@ const vscode = require('vscode');
 const nonce = () => Array.from({ length: 32 },
   () => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 62)]).join('');
 
+/** Wire a webview (sidebar view or editor panel) to the player.
+ * @param {vscode.Webview} webview @param {InstanceType<typeof import('./player').Player>} player
+ * @param {vscode.Disposable[]} subs @returns {void} */
+function wireMessages(webview, player, subs) {
+  subs.push(webview.onDidReceiveMessage(async (msg) => {
+    const p = player;
+    switch (msg?.type) {
+      case 'ready':        void webview.postMessage({ type: 'state', state: p.snapshot() }); break;
+      case 'toggle':       await p.toggle(); break;
+      case 'next':         await p.next(); break;
+      case 'previous':     await p.previous(); break;
+      case 'seek':         await p.seek(Number(msg.value)); break;
+      case 'volume':       await p.setVolume(Number(msg.value)); break;
+      case 'shuffle':      await p.toggleShuffle(); break;
+      case 'repeat':       await p.cycleRepeat(); break;
+      case 'like':         await p.toggleLike(); break;
+      case 'device':       await p.offerDevice(); break;
+      case 'signIn':       await vscode.commands.executeCommand('ruoste.spotify.signIn'); break;
+      case 'search':       await vscode.commands.executeCommand('ruoste.spotify.search'); break;
+      case 'dj':           await vscode.commands.executeCommand('ruoste.spotify.dj'); break;
+      case 'popout':       await vscode.commands.executeCommand('ruoste.spotify.openPanel'); break;
+      case 'playQueued':   await p.playThis({ uris: [String(msg.uri)] }); break;
+      case 'openExternal': if (msg.uri) await vscode.env.openExternal(vscode.Uri.parse(String(msg.uri))); break;
+    }
+  }));
+}
+
+/** Open the player as an editor tab. VS Code can then move that tab into its
+ *  own OS window ("Move Editor into New Window"), giving a floating mini-player.
+ * @param {vscode.ExtensionContext} ctx @param {InstanceType<typeof import('./player').Player>} player
+ * @param {{current?: vscode.WebviewPanel}} slot @returns {vscode.WebviewPanel} */
+function openPlayerPanel(ctx, player, slot) {
+  if (slot.current) { slot.current.reveal(undefined, false); return slot.current; }
+  const panel = vscode.window.createWebviewPanel(
+    'ruoste.spotify.player', 'Now Playing',
+    { viewColumn: vscode.ViewColumn.Beside, preserveFocus: true },
+    { enableScripts: true, retainContextWhenHidden: true,
+      localResourceRoots: [vscode.Uri.joinPath(ctx.extensionUri, 'media')] });
+  panel.webview.html = renderHtml(ctx, panel.webview, true);
+  panel.iconPath = vscode.Uri.joinPath(ctx.extensionUri, 'media', 'activity-bar-spotify.svg');
+  slot.current = panel;
+
+  /** @type {vscode.Disposable[]} */ const subs = [];
+  wireMessages(panel.webview, player, subs);
+  subs.push(player.onDidChange(() => {
+    if (panel.visible) void panel.webview.postMessage({ type: 'state', state: player.snapshot() });
+  }));
+  const listener = player.addListener();
+  panel.onDidDispose(() => {
+    listener.dispose();
+    subs.forEach((d) => d.dispose());
+    slot.current = undefined;
+  });
+  void panel.webview.postMessage({ type: 'state', state: player.snapshot() });
+  return panel;
+}
+
 /** @implements {vscode.WebviewViewProvider} */
 class NowPlayingView {
   /** @param {vscode.ExtensionContext} ctx @param {InstanceType<typeof import('./player').Player>} player */
@@ -23,28 +80,9 @@ class NowPlayingView {
       enableScripts: true,
       localResourceRoots: [vscode.Uri.joinPath(this.ctx.extensionUri, 'media')],
     };
-    view.webview.html = this.html(view.webview);
+    view.webview.html = renderHtml(this.ctx, view.webview, false);
 
-    view.webview.onDidReceiveMessage(async (msg) => {
-      const p = this.player;
-      switch (msg?.type) {
-        case 'ready':        this.push(); break;
-        case 'toggle':       await p.toggle(); break;
-        case 'next':         await p.next(); break;
-        case 'previous':     await p.previous(); break;
-        case 'seek':         await p.seek(Number(msg.value)); break;
-        case 'volume':       await p.setVolume(Number(msg.value)); break;
-        case 'shuffle':      await p.toggleShuffle(); break;
-        case 'repeat':       await p.cycleRepeat(); break;
-        case 'like':         await p.toggleLike(); break;
-        case 'device':       await p.offerDevice(); break;
-        case 'signIn':       await vscode.commands.executeCommand('ruoste.spotify.signIn'); break;
-        case 'search':       await vscode.commands.executeCommand('ruoste.spotify.search'); break;
-        case 'dj':           await vscode.commands.executeCommand('ruoste.spotify.dj'); break;
-        case 'playQueued':   await p.playThis({ uris: [String(msg.uri)] }); break;
-        case 'openExternal': if (msg.uri) await vscode.env.openExternal(vscode.Uri.parse(String(msg.uri))); break;
-      }
-    }, undefined, this.ctx.subscriptions);
+    wireMessages(view.webview, this.player, this.ctx.subscriptions);
 
     const sync = () => this.push();
     const sub = this.player.onDidChange(sync);
@@ -64,10 +102,13 @@ class NowPlayingView {
     void this.view.webview.postMessage({ type: 'state', state: this.player.snapshot() });
   }
 
-  /** @param {vscode.Webview} w @returns {string} */
-  html(w) {
+}
+
+/** @param {vscode.ExtensionContext} ctx @param {vscode.Webview} w
+ *  @param {boolean} popped @returns {string} */
+function renderHtml(ctx, w, popped) {
     const n = nonce();
-    const uri = (f) => w.asWebviewUri(vscode.Uri.joinPath(this.ctx.extensionUri, 'media', f));
+    const uri = (f) => w.asWebviewUri(vscode.Uri.joinPath(ctx.extensionUri, 'media', f));
     return `<!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none';
@@ -116,6 +157,7 @@ class NowPlayingView {
       <button id="device" class="chip" title="Transfer playback">
         <span id="devicename">DEVICE</span>
       </button>
+      ${popped ? '' : '<button id="popout" class="chip" title="Open in an editor tab — then drag it into its own window">⇱</button>'}
       <div id="volwrap" title="Volume">
         <input id="vol" type="range" min="0" max="100" step="1" value="70" aria-label="Volume">
       </div>
@@ -131,7 +173,6 @@ class NowPlayingView {
 </main>
 <script nonce="${n}" src="${uri('spotify.js')}"></script>
 </body></html>`;
-  }
 }
 
-module.exports = { NowPlayingView };
+module.exports = { NowPlayingView, openPlayerPanel, renderHtml };

@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.3.3
+
+**Fixed: every Spotify player command failed with a JSON parse error.**
+`could not pause — Unexpected non-whitespace character after JSON`,
+`could not skip forward — Unexpected token 'd', "d84dWL__jz"`,
+`could not add to queue — Unexpected token 'Y', "Yv6puxxLYD"`.
+
+Spotify answers player commands with a bare plain-text trace id, not JSON, and
+the client parsed every 2xx body as JSON unconditionally. Three different
+symptoms, one cause — the third failed differently only because that trace id
+happened to start with a digit, so `JSON.parse` consumed a number before
+choking.
+
+- Response bodies are now read by content-type. A non-JSON body is returned as
+  text, a malformed JSON body falls back to text, and 204/205/304 and empty
+  bodies return null. A successful call can no longer be reported as a failure.
+- The GitHub client had the same unconditional parse and got the same fix.
+
+**Fixed: queueing an album or playlist could never have worked.** Spotify's
+queue endpoint accepts only `track` and `episode` URIs, but the menu offered
+*Add to Queue* on playlists. Albums and playlists are now expanded into their
+tracks and queued with a cancellable progress notification, capped by
+`ruoste.spotify.queueBatchLimit` (default 50). Queueing an artist now says why
+it cannot, instead of failing obscurely.
+
+### Pop-out player
+
+- **⇱ / RUOSTE Spotify: Open Player in Editor** opens Now Playing as an editor
+  tab. VS Code's *Move Editor into New Window* then floats it as an independent
+  mini-player. The sidebar view and the panel share one implementation.
+
 ## 2.3.2
 
 **Fixed: the packaged .vsix was not what vsce produced.** To keep relative

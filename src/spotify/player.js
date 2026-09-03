@@ -3,7 +3,7 @@
 /** Owns player state. Polls fast while playing, slowly while paused, not at all
  *  while nothing is listening. Commands apply optimistically then reconcile. */
 const vscode = require('vscode');
-const { playerSummary } = require('./format');
+const { playerSummary, parseUri } = require('./format');
 
 class Player {
   /** @param {InstanceType<typeof import('./api').SpotifyApi>} api @param {InstanceType<typeof import('./auth').SpotifyAuth>} auth */
@@ -181,6 +181,59 @@ class Player {
   }
   /** @param {string} uri */
   enqueue(uri) { return this.run(() => this.api.enqueue(uri), 'add to queue'); }
+
+  /** Spotify's queue endpoint takes only track and episode URIs. Albums and
+   *  playlists have to be expanded into their tracks first.
+   * @param {string} uri @param {string} [label] @returns {Promise<number>} number queued */
+  async enqueueAny(uri, label = 'item') {
+    const r = parseUri(uri);
+    if (!r) { vscode.window.showWarningMessage(`RUOSTE · Spotify: "${uri}" is not a Spotify URI.`); return 0; }
+    if (r.type === 'track' || r.type === 'episode')
+      return (await this.enqueue(uri)) ? 1 : 0;
+
+    if (r.type !== 'album' && r.type !== 'playlist') {
+      vscode.window.showWarningMessage(
+        `RUOSTE · Spotify: a ${r.type} cannot be queued — only tracks, episodes, albums and playlists.`);
+      return 0;
+    }
+
+    const cap = Math.max(1, Number(this.cfg.get('queueBatchLimit', 50)));
+    /** @type {string[]} */ let uris = [];
+    try {
+      if (r.type === 'album') {
+        const b = await this.api.albumTracks(r.id, Math.min(50, cap));
+        uris = (b?.items || []).map((t) => t && t.uri).filter(Boolean);
+      } else {
+        const b = await this.api.playlistTracks(r.id, Math.min(100, cap));
+        uris = (b?.items || []).map((i) => i && i.track && i.track.uri).filter(Boolean);
+      }
+    } catch (err) {
+      vscode.window.showErrorMessage(`RUOSTE · Spotify: could not read that ${r.type} — ${err?.message || err}`);
+      return 0;
+    }
+    uris = uris.slice(0, cap);
+    if (!uris.length) { vscode.window.showWarningMessage(`RUOSTE · Spotify: that ${r.type} has no playable tracks.`); return 0; }
+
+    let queued = 0;
+    await vscode.window.withProgress(
+      { location: vscode.ProgressLocation.Notification, title: `Queueing ${label}…`, cancellable: true },
+      async (progress, token) => {
+        for (const [i, u] of uris.entries()) {
+          if (token.isCancellationRequested) break;
+          try { await this.api.enqueue(u); queued++; }
+          catch (err) {
+            // one bad track should not abort the batch; a dead device should
+            if (err?.kind === 'no-device' || err?.kind === 'premium') { await this.run(() => Promise.reject(err), 'add to queue'); break; }
+          }
+          progress.report({ message: `${i + 1} / ${uris.length}`, increment: 100 / uris.length });
+        }
+      });
+    if (queued) {
+      vscode.window.setStatusBarMessage(`Queued ${queued} track${queued === 1 ? '' : 's'} from ${label}`, 3000);
+      setTimeout(() => void this.poll(), 400);
+    }
+    return queued;
+  }
   /** @param {{uris?:string[], context_uri?:string, offset?:any}} body */
   playThis(body) { return this.run(() => this.api.play(body), 'start playback'); }
 

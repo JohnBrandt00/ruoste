@@ -4,7 +4,7 @@ const vscode = require('vscode');
 const { SpotifyAuth } = require('./auth');
 const { SpotifyApi } = require('./api');
 const { Player } = require('./player');
-const { NowPlayingView } = require('./webview');
+const { NowPlayingView, openPlayerPanel } = require('./webview');
 const { LibraryProvider } = require('./library');
 const { searchQuickPick } = require('./search');
 const { startDj } = require('./dj');
@@ -66,6 +66,9 @@ function activateSpotify(ctx) {
   cmd('ruoste.spotify.like',     () => player.toggleLike());
   cmd('ruoste.spotify.device',   () => player.offerDevice());
   cmd('ruoste.spotify.search',   () => searchQuickPick(api, player));
+  /** @type {{current?: import('vscode').WebviewPanel}} */
+  const panelSlot = {};
+  cmd('ruoste.spotify.openPanel', () => openPlayerPanel(ctx, player, panelSlot));
   cmd('ruoste.spotify.dj',       () => startDj(api, player));
   cmd('ruoste.spotify.refresh',  () => { library.refresh(); return player.poll(); });
 
@@ -83,15 +86,17 @@ function activateSpotify(ctx) {
   cmd('ruoste.spotify.queueTrack', async (node) => {
     const uri = node?.track?.uri || node?.pl?.uri;
     if (!uri) return;
-    if (await player.enqueue(uri))
-      vscode.window.setStatusBarMessage(`Queued ${node?.track?.name || node?.pl?.name || 'item'}`, 2500);
+    const label = node?.track?.name || node?.pl?.name || 'item';
+    // a playlist or album has to be expanded — the queue endpoint takes tracks
+    const n = await player.enqueueAny(uri, label);
+    if (n === 1 && node?.track) vscode.window.setStatusBarMessage(`Queued ${label}`, 2500);
   });
   cmd('ruoste.spotify.queueFromClipboard', async () => {
     const text = await vscode.env.clipboard.readText();
     const r = parseUri(text);
     if (!r) { vscode.window.showWarningMessage('No Spotify link or URI on the clipboard.'); return; }
-    if (r.type === 'track') { if (await player.enqueue(`spotify:track:${r.id}`)) vscode.window.setStatusBarMessage('Queued from clipboard', 2500); }
-    else await player.playThis({ context_uri: `spotify:${r.type}:${r.id}` });
+    const n = await player.enqueueAny(`spotify:${r.type}:${r.id}`, 'clipboard link');
+    if (n === 1) vscode.window.setStatusBarMessage('Queued from clipboard', 2500);
   });
 
   cmd('ruoste.spotify.addToPlaylist', async (node) => {

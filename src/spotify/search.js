@@ -62,7 +62,12 @@ async function searchQuickPick(api, player) {
   /** @param {any} item @param {boolean} queue */
   const activate = async (item, queue) => {
     if (!item || !item.uri) return;
-    if (queue) { await player.enqueue(item.uri); vscode.window.setStatusBarMessage(`Queued ${item.label.replace(/^\$\([a-z-]+\)\s*/, '')}`, 2500); return; }
+    const name = item.label.replace(/^\$\([a-z-]+\)\s*/, '');
+    if (queue) {
+      const n = await player.enqueueAny(item.uri, name);
+      if (n === 1) vscode.window.setStatusBarMessage(`Queued ${name}`, 2500);
+      return;
+    }
     if (item.kindName === 'track') await player.playThis({ uris: [item.uri] });
     else if (item.kindName === 'artist') {
       // artists have no playable context uri; use their top tracks

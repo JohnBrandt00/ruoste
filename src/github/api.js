@@ -112,8 +112,13 @@ class GitHubClient {
       throw classify(res.status, detail, res.headers);
     }
 
-    const text = await res.text();
-    const body = text ? JSON.parse(text) : null;
+    const text = await res.text().catch(() => '');
+    const type = res.headers.get('content-type') || '';
+    /** @type {any} */ let body = null;
+    if (text.trim()) {
+      if (/\bjson\b/i.test(type)) { try { body = JSON.parse(text); } catch { body = text; } }
+      else body = text;
+    }
     const etag = res.headers.get('etag');
     if (conditional && etag) this._cache.set(url, { etag, body });
     return body;
