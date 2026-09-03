@@ -10,6 +10,7 @@ build/
   syntax.py     96 semantic token rules + 116 TextMate rules
   iconspec.py   which Phosphor icon and colour each file type gets
   producticons.py  codicon id -> phosphor glyph (367 ids, 206 glyphs)
+  emit_producticons.py  -> build/producticons.json, read by build_font.mjs
   build_font.mjs   SVG -> SVG font -> TTF -> WOFF2 for the product icons
   measure_font.mjs renders the font and measures glyph centring
   icongen.py    duotone recolouring + folder/glyph compositing
@@ -23,6 +24,7 @@ npm install                          # @phosphor-icons/core, shiki, playwright, 
 python3 build/palette.py             # print the palette with contrast ratios
 python3 build/emit_themes.py         # -> ext/themes/*-color-theme.json
 python3 build/emit_icons.py          # -> ext/icons/*.svg + icon theme json
+python3 build/emit_producticons.py   # -> build/producticons.json
 node build/build_font.mjs 0          # -> ext/themes/phosphor.woff2 + product icon theme
 ```
 

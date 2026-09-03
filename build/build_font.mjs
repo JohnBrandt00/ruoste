@@ -42,6 +42,7 @@ await new Promise((resolve, reject) => {
 const ttf = Buffer.from(svg2ttf(fs.readFileSync(svgFontPath, 'utf8'), {
   copyright: 'Phosphor Icons (MIT) — packaged for RADIOHUB Oxide',
   version: 'Version 1.1',
+  ts: 0, // fixed timestamp so the font is byte-reproducible across builds
 }).buffer);
 fs.writeFileSync(path.join(ROOT, 'build/phosphor.ttf'), ttf);
 fs.mkdirSync(OUT, { recursive: true });

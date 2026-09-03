@@ -794,7 +794,7 @@
     "onStartupFinished"
   ],
   "scripts": {
-    "build": "python3 build/emit_themes.py && python3 build/emit_icons.py && node build/build_font.mjs 0",
+    "build": "python3 build/emit_themes.py && python3 build/emit_icons.py && python3 build/emit_producticons.py && node build/build_font.mjs 0",
     "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js test/actions.test.js && python3 build/check_package.py",
     "verify": "node preview/audit.mjs && node preview/spot.mjs && node preview/icons_e2e.mjs",
     "preview": "node preview/render.mjs",
