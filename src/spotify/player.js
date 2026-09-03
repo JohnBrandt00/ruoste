@@ -148,9 +148,9 @@ class Player {
       if (pick === OPEN) await vscode.env.openExternal(vscode.Uri.parse('https://open.spotify.com'));
       return;
     }
-    const pick = await vscode.window.showQuickPick(
-      list.map((d) => ({ label: d.name, description: d.type + (d.is_active ? ' · active' : ''), id: d.id })),
-      { title: 'Transfer Spotify playback to…' });
+    /** @type {(vscode.QuickPickItem & { id: string })[]} */
+    const items = list.map((d) => ({ label: d.name, description: d.type + (d.is_active ? ' · active' : ''), id: d.id }));
+    const pick = await vscode.window.showQuickPick(items, { title: 'Transfer Spotify playback to…' });
     if (pick) await this.run(() => this.api.transfer(pick.id, true), 'transfer playback');
   }
 

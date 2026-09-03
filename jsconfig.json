@@ -12,7 +12,11 @@
     "types": [
       "node",
       "vscode"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "string_decoder": ["./node_modules/@types/node/string_decoder.d.ts"]
+    }
   },
   "include": [
     "src/**/*.js",

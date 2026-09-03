@@ -110,9 +110,9 @@ function activateSpotify(ctx) {
     try { me = await api.me(); } catch { /* owner filter is best-effort */ }
     const own = lists.filter((p) => p && (!me || p.owner?.id === me.id || p.collaborative));
     if (!own.length) { vscode.window.showWarningMessage('No playlists you can add to.'); return; }
-    const pick = await vscode.window.showQuickPick(
-      own.map((p) => ({ label: p.name, description: `${p.tracks?.total ?? '?'} tracks`, id: p.id })),
-      { title: `Add “${name}” to playlist…` });
+    /** @type {(vscode.QuickPickItem & { id: string })[]} */
+    const items = own.map((p) => ({ label: p.name, description: `${p.tracks?.total ?? '?'} tracks`, id: p.id }));
+    const pick = await vscode.window.showQuickPick(items, { title: `Add “${name}” to playlist…` });
     if (!pick) return;
     try {
       await api.addToPlaylist(pick.id, [uri]);
