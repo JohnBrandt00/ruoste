@@ -141,6 +141,12 @@ button.chip.active { color: var(--accent); border-color: var(--accent); }
 #queue::-webkit-scrollbar { width: 6px; }
 #queue::-webkit-scrollbar-thumb { background: var(--rule); }
 
+/* a control Spotify currently forbids — visible, but plainly inert */
+.blocked { opacity: .32; cursor: not-allowed; }
+#scrub.blocked { pointer-events: none; }
+#queue li.empty { color: var(--mute); cursor: default; font-style: italic; }
+#queue li.empty:hover { background: transparent; border-left-color: transparent; }
+
 #error {
   margin-top: 12px; padding: 7px 9px; font-size: 10px; line-height: 1.5;
   color: var(--vscode-inputValidation-errorForeground, var(--fg));

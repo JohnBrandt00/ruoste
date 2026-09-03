@@ -73,7 +73,7 @@ class GitHubClient {
   }
 
   /** @param {string} host @param {string} path @param {string} token
-   *  @param {{method?:string, signal?:AbortSignal, conditional?:boolean}} [o]
+   *  @param {{method?:string, signal?:AbortSignal, conditional?:boolean, body?:any}} [o]
    *  @returns {Promise<any>} */
   async request(host, path, token, o = {}) {
     if (this.remaining === 0 && Date.now() < this.resetAt)
@@ -92,7 +92,11 @@ class GitHubClient {
     };
     if (cached) headers['If-None-Match'] = cached.etag;
 
-    const res = await fetch(url, { method: o.method || 'GET', signal: o.signal, headers });
+    if (o.body !== undefined) headers['Content-Type'] = 'application/json';
+    const res = await fetch(url, {
+      method: o.method || 'GET', signal: o.signal, headers,
+      body: o.body !== undefined ? JSON.stringify(o.body) : undefined,
+    });
     this.requests++;
 
     const rem = res.headers.get('x-ratelimit-remaining');
@@ -168,6 +172,36 @@ class GitHubClient {
     return this.enqueue(() => this.request(r.host, `/repos/${r.owner}/${r.repo}/actions/runs/${runId}/rerun`,
       token, { method: 'POST', conditional: false }));
   }
+  /** Workflows defined in a repo. @param {{host:string, owner:string, repo:string}} r @param {string} token */
+  listWorkflows(r, token) {
+    return this.enqueue(() =>
+      this.request(r.host, `/repos/${r.owner}/${r.repo}/actions/workflows?per_page=100`, token)
+    ).then((b) => (b && b.workflows) || []);
+  }
+
+  /** @param {{host:string, owner:string, repo:string}} r @param {string} token @param {number} [limit] */
+  listBranches(r, token, limit = 100) {
+    return this.enqueue(() =>
+      this.request(r.host, `/repos/${r.owner}/${r.repo}/branches?per_page=${limit}`, token)
+    ).then((b) => (Array.isArray(b) ? b : []));
+  }
+
+  /** Trigger a workflow_dispatch run.
+   * @param {{host:string, owner:string, repo:string}} r @param {number|string} workflowId
+   * @param {string} ref @param {Record<string,string>} inputs @param {string} token */
+  dispatch(r, workflowId, ref, inputs, token) {
+    return this.enqueue(() => this.request(
+      r.host, `/repos/${r.owner}/${r.repo}/actions/workflows/${workflowId}/dispatches`, token,
+      { method: 'POST', conditional: false, body: { ref, inputs } }));
+  }
+
+  /** @param {{host:string, owner:string, repo:string}} r @param {number} runId @param {string} token */
+  rerunFailed(r, runId, token) {
+    return this.enqueue(() => this.request(
+      r.host, `/repos/${r.owner}/${r.repo}/actions/runs/${runId}/rerun-failed-jobs`, token,
+      { method: 'POST', conditional: false }));
+  }
+
   /** @param {{host:string, owner:string, repo:string}} r @param {number} runId @param {string} token */
   cancel(r, runId, token) {
     return this.enqueue(() => this.request(r.host, `/repos/${r.owner}/${r.repo}/actions/runs/${runId}/cancel`,

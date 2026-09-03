@@ -1,5 +1,46 @@
 # Changelog
 
+## 2.4.0
+
+**Fixed: the queue did not reflect Spotify's queue.** Three compounding causes.
+The queue was only refetched every 15 seconds with nothing invalidating it after
+a change, so a track added to the queue could take that long to appear. Nothing
+refetched it when the playing track advanced, which is precisely when the queue
+moves. And the webview skipped re-rendering unless the list length *and* first
+item both changed — which stayed true for most real changes once the list was
+capped. The queue is now invalidated by anything that reorders it (queueing,
+skipping, shuffling, starting playback), read twice after a write because
+Spotify's queue endpoint lags writes, and the view re-renders on any change to
+what is visible.
+
+**Fixed: `could not seek — Restriction violated`.** Spotify reports what is
+disallowed at any moment — seeking is blocked during ads and while the DJ is
+playing. RUOSTE now reads that map: forbidden controls are greyed rather than
+offered and failed, the scrubber ignores drags when seeking is blocked, and if a
+restriction is hit anyway the message says what and why instead of quoting
+Spotify's jargon.
+
+### Pipelines dashboard
+
+- **RUOSTE: Open Pipelines Dashboard** — every watched repository as cards in one
+  grid, grouped by owner, live-updating, filterable, with re-run and cancel on
+  each row and the rate-limit budget in the footer. Opens as an editor tab, so
+  *Move Editor into New Window* floats it on a second monitor.
+
+### Starting runs
+
+- **Run Workflow…** picks repo → workflow → branch → optional `key=value` inputs
+  and dispatches. A workflow without a `workflow_dispatch` trigger returns 422,
+  which is reported as that rather than as a generic error; 403 explains that
+  write access and possibly SAML SSO are needed.
+- **Re-run Failed Jobs** on any completed run.
+
+### Configuration
+
+Six new settings: `actions.groupByOwner`, `actions.dashboardRunsPerRepo`,
+`actions.confirmDispatch`, `spotify.queueLength`, `spotify.queuePollInterval`,
+`spotify.showArtwork` — plus `spotify.queueBatchLimit` from 2.3.3. 26 in total.
+
 ## 2.3.3
 
 **Fixed: every Spotify player command failed with a JSON parse error.**

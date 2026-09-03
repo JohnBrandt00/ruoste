@@ -6,6 +6,8 @@ const { ActionsProvider } = require('./tree');
 const { ActionsStatus } = require('./status');
 const { watchWorkspace } = require('./repos');
 const { safeTreeView, noteFeature } = require('../diagnostics');
+const { openPipelinesPanel } = require('./dashboard');
+const { runWorkflow, rerunFailed } = require('./dispatch');
 
 /** @param {vscode.ExtensionContext} ctx */
 function activateActions(ctx) {
@@ -41,6 +43,11 @@ function activateActions(ctx) {
   /** @param {string} id @param {(...a:any[]) => any} fn */
   const cmd = (id, fn) => ctx.subscriptions.push(vscode.commands.registerCommand(id, fn));
 
+  /** @type {{current?: import('vscode').WebviewPanel}} */
+  const dashSlot = {};
+  cmd('ruoste.actions.openDashboard', () => openPipelinesPanel(ctx, provider, dashSlot));
+  cmd('ruoste.actions.runWorkflow', (node) => runWorkflow(provider, node?.repo));
+  cmd('ruoste.actions.rerunFailed', (node) => rerunFailed(provider, node));
   cmd('ruoste.actions.refresh', () => provider.refresh(false));
   cmd('ruoste.actions.rediscover', () => provider.refresh(false, true));
   cmd('ruoste.actions.signIn', () => provider.refresh(true));

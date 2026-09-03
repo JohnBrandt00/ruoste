@@ -38,7 +38,7 @@
     if (!s.signedIn) return;
 
     // artwork
-    if (s.art) {
+    if (s.art && s.showArtwork !== false) {
       if (el.art.getAttribute('src') !== s.art) {
         el.art.setAttribute('src', s.art);
         el.backdrop.style.backgroundImage = `url("${s.art}")`;
@@ -71,6 +71,20 @@
       el.dur.textContent = time(s.duration);
     }
 
+    // reflect Spotify's own restriction map so nothing offered is doomed to fail
+    const no = s.disallows || {};
+    const gate = (node, blocked, why) => {
+      if (!node) return;
+      node.classList.toggle('blocked', !!blocked);
+      node.title = blocked ? (why || 'Not allowed right now') : (node.dataset.title || node.title);
+    };
+    if (!el.scrub.dataset.title) el.scrub.dataset.title = 'Seek';
+    gate(el.scrub, no.seeking, s.dj ? 'Spotify blocks seeking during DJ' : 'Seeking is not allowed right now');
+    gate(el.next, no.skipping_next, 'Skip forward is not allowed right now');
+    gate(el.prev, no.skipping_prev, 'Skip back is not allowed right now');
+    gate(el.shuffle, no.toggling_shuffle, 'Shuffle is not allowed right now');
+    gate(el.repeat, no.toggling_repeat_context && no.toggling_repeat_track, 'Repeat is not allowed right now');
+
     el.toggle.textContent = s.playing ? '❚❚' : '▶';
     el.toggle.title = s.playing ? 'Pause' : 'Play';
     el.shuffle.classList.toggle('active', !!s.shuffle);
@@ -82,14 +96,25 @@
     el.device.classList.toggle('active', !!s.hasDevice);
     if (document.activeElement !== el.vol && typeof s.volume === 'number') el.vol.value = String(s.volume);
 
-    renderQueue(s.queue || []);
+    renderQueue(s.queue || [], s.queueLimit || 25);
   }
 
-  function renderQueue(items) {
-    if (el.queue.childElementCount === items.length && el.queue.dataset.first === (items[0] && items[0].uri)) return;
-    el.queue.dataset.first = (items[0] && items[0].uri) || '';
+  function renderQueue(items, limit) {
+    const shown = items.slice(0, limit);
+    // Key on the whole visible list. Comparing length + first item alone missed
+    // any change that kept both — which is most of them once the list is capped.
+    const sig = shown.map((t) => t && t.uri).join('|');
+    if (el.queue.dataset.sig === sig) return;
+    el.queue.dataset.sig = sig;
     el.queue.textContent = '';
-    items.slice(0, 25).forEach((t, i) => {
+    if (!shown.length) {
+      const li = document.createElement('li');
+      li.className = 'empty';
+      li.textContent = 'nothing queued';
+      el.queue.append(li);
+      return;
+    }
+    shown.forEach((t, i) => {
       const li = document.createElement('li');
       li.title = 'Play now';
       const n = document.createElement('span'); n.className = 'n'; n.textContent = String(i + 1);
@@ -113,7 +138,7 @@
     if (state) el.pos.textContent = time(f * state.duration);
   }
   el.scrub.addEventListener('pointerdown', (ev) => {
-    if (!state || !state.duration) return;
+    if (!state || !state.duration || (state.disallows && state.disallows.seeking)) return;
     dragging = true; el.scrub.classList.add('dragging');
     el.scrub.setPointerCapture(ev.pointerId);
     preview(fractionFrom(ev));

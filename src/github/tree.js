@@ -269,6 +269,9 @@ class ActionsProvider {
       // one repo total reads better flattened
       if (groups.length === 1 && groups[0][1].length === 1)
         return this.getChildren({ kind: 'repo', repo: groups[0][1][0] });
+      // an empty owner name is the "flat list" marker from RepoSet.byOwner
+      if (groups.length === 1 && groups[0][0] === '')
+        return groups[0][1].map((repo) => /** @type {RepoNode} */ ({ kind: 'repo', repo }));
       const out = groups.map(([owner, repos]) => /** @type {OwnerNode} */ ({ kind: 'owner', owner, repos }));
       return this.error ? [{ kind: 'message', text: this.error, icon: 'warning' }, ...out] : out;
     }

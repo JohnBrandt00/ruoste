@@ -158,7 +158,20 @@ open — grouped by owner, so 40 repos across several organisations stay legible
     ingest-service    ✗ deploy · 3h ago
 ```
 
-Expand a repo for its runs, a run for its jobs, a job for its steps.
+Expand a repo for its runs, a run for its jobs, a job for its steps — or open
+the **Pipelines dashboard** to see all of them at once.
+
+![Pipelines dashboard](https://raw.githubusercontent.com/JohnBrandt00/ruoste/main/media/preview-pipelines.png)
+
+**Pop it out.** *RUOSTE: Open Pipelines Dashboard* opens as an editor tab; VS
+Code's *Move Editor into New Window* then floats it on a second monitor. It
+updates live, filters by name, and re-run / cancel are on every row.
+
+**Start a run.** *RUOSTE: Run Workflow…* picks a repo, a workflow, a branch and
+optional `key=value` inputs, then dispatches it. GitHub only permits this for
+workflows declaring a `workflow_dispatch` trigger — if one does not, the 422 is
+reported as exactly that rather than as a generic failure. **Re-run Failed
+Jobs** is on any completed run, which is cheaper than re-running everything.
 
 - Signs in with **VS Code's built-in GitHub account**. No personal access token.
 - **Scope** is yours to choose: everything you are affiliated with (default),
@@ -209,6 +222,9 @@ cache.
 | `ruoste.actions.notifyOnStart` | `false` | also notify when a run starts |
 | `ruoste.actions.currentBranchOnly` | `false` | limit to the checked-out branch |
 | `ruoste.actions.statusBar` | `true` | show the status bar item |
+| `ruoste.actions.groupByOwner` | `true` | group repos by owner, or one flat list |
+| `ruoste.actions.dashboardRunsPerRepo` | `5` | runs per card in the dashboard |
+| `ruoste.actions.confirmDispatch` | `true` | ask before dispatching a run |
 
 
 ## Spotify
@@ -235,6 +251,7 @@ playing works on a free account.
 | Playlists | browse to track level, play in context so the queue survives, add the current track to a playlist |
 | Search | tracks, albums, artists and playlists — play or queue any result from the picker |
 | Library | liked songs, save/unsave, transfer playback between devices |
+| Restrictions | controls Spotify currently forbids (seeking during DJ or ads) are greyed rather than offered and failed |
 | Pop out | **⇱** opens the player as an editor tab — from there VS Code's *Move Editor into New Window* gives you a floating mini-player on a second monitor |
 | DJ | follows along when Spotify's AI DJ is playing, and hands off to the app to start it |
 

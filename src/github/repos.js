@@ -168,8 +168,14 @@ class RepoSet {
     return this.repos;
   }
 
-  /** Group for display: owner -> repos, workspace repos first. @returns {[string, Repo[]][]} */
+  /** Group for display: owner -> repos, workspace repos first. A single group
+   *  named '' means "do not group". @returns {[string, Repo[]][]} */
   byOwner() {
+    if (!this.cfg.get('groupByOwner', true)) {
+      const flat = this.repos.filter((r) =>
+        !(this.cfg.get('hideWithoutWorkflows', true) && this.barren.has(r.key)));
+      return flat.length ? [['', flat]] : [];
+    }
     /** @type {Map<string, Repo[]>} */ const g = new Map();
     for (const r of this.repos) {
       if (this.cfg.get('hideWithoutWorkflows', true) && this.barren.has(r.key)) continue;

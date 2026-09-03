@@ -34,6 +34,10 @@ function classify(status, path, body) {
         403, 'retired');
     if (/premium/i.test(detail))
       return new SpotifyError('Spotify Premium is required to control playback.', 403, 'premium');
+    if (/restriction violated/i.test(detail))
+      return new SpotifyError(
+        'Spotify does not allow that right now — seeking and skipping are blocked ' +
+        'during ads and while the DJ is playing.', 403, 'restricted');
     return new SpotifyError(detail || 'Spotify refused the request (403)', 403, 'forbidden');
   }
   if (status === 429) return new SpotifyError('Rate limited by Spotify', 429, 'rate-limit');

@@ -12,6 +12,7 @@ class Player {
     this.auth = auth;
     /** @type {any} */ this.summary = playerSummary(null);
     /** @type {any[]} */ this.queue = [];
+    /** @type {any} */ this.queueNowPlaying = null;
     /** @type {any[]} */ this.devices = [];
     this.liked = false;
     /** @type {string|undefined} */ this.error = undefined;
@@ -22,6 +23,7 @@ class Player {
     /** @type {AbortController|undefined} */ this._inflight = undefined;
     this._listeners = 0;                 // how many surfaces are visible
     this._lastQueueFetch = 0;
+    this._queueDirty = true;      // force a fetch after anything that reorders it
     this._localProgressAt = 0;
   }
 
@@ -47,6 +49,8 @@ class Player {
     return {
       ...s, queue: this.queue, devices: this.devices,
       liked: this.liked, error: this.error, signedIn: this.auth.signedIn,
+      queueLimit: Math.max(1, Number(this.cfg.get('queueLength', 25))),
+      showArtwork: Boolean(this.cfg.get('showArtwork', true)),
     };
   }
 
@@ -74,19 +78,26 @@ class Player {
       this.error = undefined;
 
       if (this.summary.id && this.summary.id !== prevId) {
+        this._queueDirty = true;   // the track changed, so the queue moved with it
         this.liked = false;
         try {
           const r = await this.api.isSaved([this.summary.id]);
           this.liked = Array.isArray(r) ? !!r[0] : false;
         } catch { /* non-fatal */ }
       }
-      // the queue changes less often and costs a request; refresh it sparingly
-      if (Date.now() - this._lastQueueFetch > 15_000) {
+      // Refetch when something has reordered the queue, otherwise on a slow
+      // cadence. Spotify's queue is eventually consistent, so a write is not
+      // immediately visible — hence the retry below rather than a single read.
+      const stale = Date.now() - this._lastQueueFetch >
+        Math.max(3, Number(this.cfg.get('queuePollInterval', 8))) * 1000;
+      if (this._queueDirty || stale) {
+        this._queueDirty = false;
         this._lastQueueFetch = Date.now();
         try {
           const q = await this.api.queue();
-          this.queue = Array.isArray(q?.queue) ? q.queue.slice(0, 30) : [];
-        } catch { /* 403 on some accounts — leave the queue empty */ }
+          this.queue = Array.isArray(q?.queue) ? q.queue : [];
+          this.queueNowPlaying = q?.currently_playing || null;
+        } catch { /* some accounts 403 this endpoint; leave the queue as-is */ }
       }
     } catch (err) {
       if (ctrl.signal.aborted) return;
@@ -98,11 +109,19 @@ class Player {
   }
 
   /** Run a command, surface a useful message, then re-poll.
-   * @param {() => Promise<any>} fn @param {string} what @returns {Promise<boolean>} */
-  async run(fn, what) {
+   * @param {() => Promise<any>} fn @param {string} what @param {boolean} [touchesQueue]
+   * @returns {Promise<boolean>} */
+  async run(fn, what, touchesQueue = false) {
     try {
       await fn();
-      setTimeout(() => void this.poll(), 350);          // let Spotify settle
+      if (touchesQueue) {
+        this._queueDirty = true;
+        // the queue endpoint lags the write; read twice rather than show stale
+        setTimeout(() => { this._queueDirty = true; void this.poll(); }, 400);
+        setTimeout(() => { this._queueDirty = true; void this.poll(); }, 1400);
+      } else {
+        setTimeout(() => void this.poll(), 350);
+      }
       return true;
     } catch (err) {
       const kind = err?.kind;
@@ -110,7 +129,7 @@ class Player {
         vscode.window.showWarningMessage('Spotify Premium is required to control playback from the Web API.');
       else if (kind === 'no-device')
         void this.offerDevice();
-      else if (kind === 'retired')
+      else if (kind === 'retired' || kind === 'restricted')
         vscode.window.showWarningMessage(err.message);
       else
         vscode.window.showErrorMessage(`RUOSTE · Spotify: could not ${what} — ${err?.message || err}`);
@@ -144,10 +163,32 @@ class Player {
     const ok = await this.run(() => (wasPlaying ? this.api.pause() : this.api.play()), wasPlaying ? 'pause' : 'play');
     if (!ok) { this.summary = { ...this.summary, playing: wasPlaying }; this.fire(); }
   }
-  next()     { return this.run(() => this.api.next(), 'skip forward'); }
-  previous() { return this.run(() => this.api.previous(), 'skip back'); }
+  next() {
+    if (this.disallowed('skipping_next')) {
+      vscode.window.showWarningMessage('Spotify is not allowing skip forward right now.');
+      return Promise.resolve(false);
+    }
+    return this.run(() => this.api.next(), 'skip forward', true);
+  }
+  previous() {
+    if (this.disallowed('skipping_prev')) {
+      vscode.window.showWarningMessage('Spotify is not allowing skip back right now.');
+      return Promise.resolve(false);
+    }
+    return this.run(() => this.api.previous(), 'skip back', true);
+  }
+  /** @param {string} action @returns {boolean} */
+  disallowed(action) { return !!(this.summary.disallows && this.summary.disallows[action]); }
+
   /** @param {number} ms */
-  seek(ms)   {
+  seek(ms) {
+    if (this.disallowed('seeking')) {
+      vscode.window.showWarningMessage(this.summary.dj
+        ? 'Spotify blocks seeking while the DJ is playing.'
+        : 'Spotify is not allowing seeking on this track right now.');
+      this.fire();                       // snap the scrubber back
+      return Promise.resolve(false);
+    }
     this.summary = { ...this.summary, progress: ms };
     this._localProgressAt = Date.now();
     this.fire();
@@ -162,7 +203,8 @@ class Player {
   toggleShuffle() {
     const next = !this.summary.shuffle;
     this.summary = { ...this.summary, shuffle: next }; this.fire();
-    return this.run(() => this.api.shuffle(next), 'toggle shuffle');
+    // shuffle reorders everything after the current track
+    return this.run(() => this.api.shuffle(next), 'toggle shuffle', true);
   }
   cycleRepeat() {
     const order = /** @type {const} */ (['off', 'context', 'track']);
@@ -180,7 +222,7 @@ class Player {
     if (!ok) { this.liked = !want; this.fire(); }
   }
   /** @param {string} uri */
-  enqueue(uri) { return this.run(() => this.api.enqueue(uri), 'add to queue'); }
+  enqueue(uri) { return this.run(() => this.api.enqueue(uri), 'add to queue', true); }
 
   /** Spotify's queue endpoint takes only track and episode URIs. Albums and
    *  playlists have to be expanded into their tracks first.
@@ -235,7 +277,7 @@ class Player {
     return queued;
   }
   /** @param {{uris?:string[], context_uri?:string, offset?:any}} body */
-  playThis(body) { return this.run(() => this.api.play(body), 'start playback'); }
+  playThis(body) { return this.run(() => this.api.play(body), 'start playback', true); }
 
   dispose() {
     if (this._timer) clearTimeout(this._timer);

@@ -1,0 +1,88 @@
+/* RUOSTE · pipelines — same rules as the editor: hairlines, flat, one accent. */
+:root {
+  --ink:    var(--vscode-editor-background, #14120E);
+  --panel:  var(--vscode-sideBar-background, #100E0B);
+  --fg:     var(--vscode-foreground, #E4DFD3);
+  --mute:   var(--vscode-descriptionForeground, #A6A196);
+  --rule:   var(--vscode-panel-border, #2C2822);
+  --accent: var(--vscode-activityBar-activeBorder, #C57749);
+  --hover:  var(--vscode-list-hoverBackground, rgba(255,255,255,.05));
+  --pass:   var(--vscode-testing-iconPassed, #8DA668);
+  --fail:   var(--vscode-testing-iconFailed, #C76067);
+  --queued: var(--vscode-testing-iconQueued, #C7A560);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--vscode-editor-font-family, ui-monospace, monospace);
+  font-size: 12px; color: var(--fg); background: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+header {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; background: var(--panel);
+  border-bottom: 1px solid var(--rule);
+}
+.brand { letter-spacing: .22em; font-weight: 600; font-size: 11px; }
+#summary { color: var(--mute); font-size: 11px; letter-spacing: .06em; }
+.spacer { flex: 1; }
+#filter {
+  font: inherit; font-size: 11px; color: var(--fg); background: transparent;
+  border: 1px solid var(--rule); padding: 4px 8px; width: 180px; outline: none;
+}
+#filter:focus { border-color: var(--accent); }
+.btn {
+  font: inherit; font-size: 10px; letter-spacing: .14em; cursor: pointer;
+  background: var(--accent); color: var(--ink); border: 0; padding: 5px 10px;
+}
+.btn:hover { filter: brightness(1.12); }
+.btn.ghost { background: transparent; color: var(--mute); border: 1px solid var(--rule); }
+.btn.ghost:hover { color: var(--fg); border-color: var(--mute); }
+
+main { padding: 16px; display: flex; flex-direction: column; gap: 22px; }
+.owner > h2 {
+  font-size: 10px; letter-spacing: .2em; color: var(--mute); font-weight: 500;
+  padding-bottom: 6px; border-bottom: 1px solid var(--rule); margin-bottom: 10px;
+  display: flex; gap: 10px; align-items: baseline;
+}
+.owner h2 .count { color: var(--rule); }
+.repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; }
+.repo { border: 1px solid var(--rule); background: var(--panel); }
+.repo.live { border-color: var(--queued); }
+.repo.fail { border-color: var(--fail); }
+.repo > h3 {
+  font-size: 12px; font-weight: 600; padding: 8px 10px;
+  display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--rule);
+}
+.repo h3 .src { margin-left: auto; font-size: 9px; letter-spacing: .12em; color: var(--rule); }
+.repo h3 .name { cursor: pointer; }
+.repo h3 .name:hover { color: var(--accent); }
+.dot { width: 7px; height: 7px; flex: 0 0 7px; background: var(--mute); }
+.dot.success { background: var(--pass); }
+.dot.failed, .dot.timed.out { background: var(--fail); }
+.dot.running, .dot.queued { background: var(--queued); animation: pulse 1.4s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .25 } }
+.runs { list-style: none; }
+.runs li {
+  display: flex; align-items: baseline; gap: 8px; padding: 5px 10px;
+  border-top: 1px solid var(--rule); cursor: pointer;
+}
+.runs li:first-child { border-top: 0; }
+.runs li:hover { background: var(--hover); }
+.runs .wf { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.runs .br { color: var(--mute); font-size: 10.5px; max-width: 40%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.runs .tm { color: var(--rule); font-size: 10px; min-width: 52px; text-align: right; }
+.runs .act { display: flex; gap: 4px; opacity: 0; }
+.runs li:hover .act { opacity: 1; }
+.runs .act button {
+  font: inherit; font-size: 9px; letter-spacing: .1em; cursor: pointer;
+  background: transparent; color: var(--mute); border: 1px solid var(--rule); padding: 1px 5px;
+}
+.runs .act button:hover { color: var(--accent); border-color: var(--accent); }
+.err { padding: 8px 10px; color: var(--fail); font-size: 10.5px; }
+.empty { padding: 8px 10px; color: var(--mute); font-size: 10.5px; font-style: italic; }
+footer {
+  position: sticky; bottom: 0; padding: 6px 16px; font-size: 10px; color: var(--rule);
+  background: var(--panel); border-top: 1px solid var(--rule); letter-spacing: .08em;
+}
+.gate { padding: 60px 16px; color: var(--mute); text-align: center; }

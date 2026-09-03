@@ -2,7 +2,7 @@
   "name": "ruoste",
   "displayName": "RUOSTE",
   "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, a GitHub Actions panel and a full Spotify player. Tuned for C# and TypeScript.",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -346,10 +346,37 @@
         "title": "Open Player in Editor",
         "category": "RUOSTE Spotify",
         "icon": "$(link-external)"
+      },
+      {
+        "command": "ruoste.actions.openDashboard",
+        "title": "Open Pipelines Dashboard",
+        "category": "RUOSTE",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "ruoste.actions.runWorkflow",
+        "title": "Run Workflow\u2026",
+        "category": "RUOSTE",
+        "icon": "$(play)"
+      },
+      {
+        "command": "ruoste.actions.rerunFailed",
+        "title": "Re-run Failed Jobs",
+        "category": "RUOSTE"
       }
     ],
     "menus": {
       "view/title": [
+        {
+          "command": "ruoste.actions.openDashboard",
+          "when": "view == ruoste.actions",
+          "group": "navigation@0"
+        },
+        {
+          "command": "ruoste.actions.runWorkflow",
+          "when": "view == ruoste.actions",
+          "group": "navigation@1"
+        },
         {
           "command": "ruoste.actions.filter",
           "when": "view == ruoste.actions",
@@ -456,6 +483,16 @@
           "command": "ruoste.spotify.transfer",
           "when": "view == ruoste.spotify.library && viewItem == ruoste.spotify.device",
           "group": "inline@1"
+        },
+        {
+          "command": "ruoste.actions.rerunFailed",
+          "when": "view == ruoste.actions && viewItem == ruoste.run.done",
+          "group": "1_copy@0"
+        },
+        {
+          "command": "ruoste.actions.runWorkflow",
+          "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.repo/",
+          "group": "1_copy@1"
         }
       ],
       "commandPalette": [
@@ -509,6 +546,10 @@
         },
         {
           "command": "ruoste.actions.unwatchRepo",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.actions.rerunFailed",
           "when": "false"
         }
       ]
@@ -674,6 +715,48 @@
           "maximum": 200,
           "markdownDescription": "Most tracks to add when queueing a whole album or playlist. Spotify's queue endpoint takes one track per request, so this is one request each.",
           "order": 15
+        },
+        "ruoste.actions.groupByOwner": {
+          "type": "boolean",
+          "default": true,
+          "description": "Group repositories under their owner. Off gives one flat list.",
+          "order": 10
+        },
+        "ruoste.actions.dashboardRunsPerRepo": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 20,
+          "description": "Runs shown per repository in the pipelines dashboard.",
+          "order": 11
+        },
+        "ruoste.actions.confirmDispatch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask before dispatching a workflow run.",
+          "order": 12
+        },
+        "ruoste.spotify.queueLength": {
+          "type": "number",
+          "default": 25,
+          "minimum": 1,
+          "maximum": 50,
+          "description": "How many upcoming tracks to list in Now Playing.",
+          "order": 16
+        },
+        "ruoste.spotify.queuePollInterval": {
+          "type": "number",
+          "default": 8,
+          "minimum": 3,
+          "maximum": 60,
+          "markdownDescription": "Seconds between queue reads. The queue is also refetched immediately after anything that reorders it \u2014 queueing, skipping, shuffling \u2014 since Spotify's queue endpoint lags writes.",
+          "order": 17
+        },
+        "ruoste.spotify.showArtwork": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show album artwork and its blurred backdrop.",
+          "order": 18
         }
       }
     }
@@ -689,7 +772,7 @@
     "preview": "node preview/render.mjs",
     "package": "vsce package --allow-missing-repository --no-dependencies",
     "all": "npm run build && npm run check && npm run package",
-    "ui": "node preview/spotify_ui.mjs"
+    "ui": "node preview/spotify_ui.mjs && node preview/pipelines_ui.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/core": "^2.1.1",

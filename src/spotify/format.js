@@ -81,6 +81,10 @@ function playerSummary(s) {
     isEpisode: item?.type === 'episode',
     dj: isDjPlaying(s),
     contextUri: s?.context?.uri || '',
+    // Spotify reports what is *currently* not permitted — seeking is blocked
+    // during ads and while the DJ is playing, for instance. Offering a control
+    // that is guaranteed to fail is worse than hiding it.
+    disallows: (s && s.actions && s.actions.disallows) || {},
   };
 }
 
