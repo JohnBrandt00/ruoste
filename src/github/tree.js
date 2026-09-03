@@ -7,6 +7,7 @@
 const vscode = require('vscode');
 const api = require('./api');
 const { RepoSet } = require('./repos');
+const { RunNotifier } = require('./notify');
 const { formatDuration, relativeTime, statusPresentation, runElapsed, shortRef } = require('../util');
 
 /** @param {string} id @param {string|undefined} color @returns {vscode.ThemeIcon} */
@@ -37,6 +38,8 @@ class ActionsProvider {
     /** @type {string|undefined} */ this.error = undefined;
     this.loading = false;
     this._rotation = 0;
+    this.notifier = new RunNotifier();
+    /** @type {((events:any[]) => void)|undefined} */ this.onTransitions = undefined;
     /** @type {NodeJS.Timeout|undefined} */ this._timer = undefined;
     /** @type {AbortController|undefined} */ this._inflight = undefined;
     /** @type {((p:any)=>void)|undefined} */ this.onDidRefresh = undefined;
@@ -65,6 +68,16 @@ class ActionsProvider {
     for (const v of this.runsByRepo.values()) n += v.runs.filter((r) => r.status !== 'completed').length;
     return n;
   }
+  /** runs that are still queued or in progress, with their repo @returns {{run:any, repo:any}[]} */
+  liveRuns() {
+    /** @type {{run:any, repo:any}[]} */ const out = [];
+    for (const r of this.repos.repos) {
+      for (const run of this.runsByRepo.get(r.key)?.runs || [])
+        if (run.status !== 'completed') out.push({ run, repo: r });
+    }
+    return out;
+  }
+
   get failedCount() {
     let n = 0;
     for (const v of this.runsByRepo.values())
@@ -126,6 +139,16 @@ class ActionsProvider {
           if (err?.status === 404) this.repos.barren.add(r.key);
         }
       }
+      // steps of a running job change constantly — drop their cache so the
+      // tree shows live progress rather than the state at first expansion
+      for (const { run } of this.liveRuns()) this.jobs.delete(run.id);
+
+      /** @type {{run:any, repo:any}[]} */ const seenNow = [];
+      for (const r of all)
+        for (const run of this.runsByRepo.get(r.key)?.runs || []) seenNow.push({ run, repo: r });
+      const events = this.notifier.diff(seenNow);
+      if (events.length) this.onTransitions?.(events);
+
       if (!this.error && this.repos.warning) this.error = this.repos.warning;
     } catch (err) {
       if (!ctrl.signal.aborted) this.error = err?.message || String(err);

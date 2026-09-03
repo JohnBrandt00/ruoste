@@ -166,8 +166,21 @@ Expand a repo for its runs, a run for its jobs, a job for its steps.
   wildcards work in both the watch list and the exclude list.
 - Re-run, cancel, open on GitHub and copy run URL from the item menu; **Go to
   Repository…** jumps straight to one by name.
-- Status bar summarises across all of them — *3 running*, *1 failing* — and
-  turns red on failure.
+- **Notifications** when a run finishes — failures only by default, or every
+  completion, or nothing. A failure notification offers **Re-run** inline. More
+  than three at once collapse into a single summary, and the first sync after
+  start-up is silent so connecting doesn't fire forty alerts.
+- **Live tracking**: while a run is in progress the view polls every 8 seconds
+  and refreshes its jobs too, so steps tick over as they complete. The status
+  bar shows a running elapsed timer that advances every second between polls.
+- Status bar summarises across all of them — *3 running · 4m 12s*, *1 failing* —
+  and turns red on failure.
+
+**On "real time".** This is polling, not push. GitHub exposes no stream a
+desktop client can subscribe to — webhooks need a public endpoint, which an
+editor extension has no business running. What makes short intervals affordable
+is the ETag cache below: an unchanged run costs nothing, so the live interval
+can sit at 8 seconds (3 minimum) without eating the budget.
 
 **How it stays inside the rate limit.** GitHub has no cross-repo runs endpoint,
 so N repos means N requests. Two things make that cheap. Every GET carries an
@@ -191,7 +204,9 @@ cache.
 | `ruoste.actions.runCount` | `10` | runs listed per repository |
 | `ruoste.actions.autoRefresh` | `true` | poll automatically |
 | `ruoste.actions.refreshInterval` | `60` | seconds between idle polls |
-| `ruoste.actions.liveRefreshInterval` | `10` | seconds while a run is live |
+| `ruoste.actions.liveRefreshInterval` | `8` | seconds while a run is live (min 3) |
+| `ruoste.actions.notifications` | `failures` | `off`, `failures`, `completions` or `all` |
+| `ruoste.actions.notifyOnStart` | `false` | also notify when a run starts |
 | `ruoste.actions.currentBranchOnly` | `false` | limit to the checked-out branch |
 | `ruoste.actions.statusBar` | `true` | show the status bar item |
 

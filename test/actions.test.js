@@ -168,3 +168,66 @@ test('liveCount and failedCount aggregate across every repo', () => {
   assert.equal(p.liveCount, 2, 'in_progress and queued both count as live');
   assert.equal(p.failedCount, 1, 'only the newest run per repo counts');
 });
+
+// ── run transition notifications ────────────────────────────────────────
+const { RunNotifier } = require('../src/github/notify');
+
+/** @param {Record<string,any>} cfg */
+function notifierWith(cfg = {}) {
+  const n = new RunNotifier();
+  Object.defineProperty(n, 'cfg', { get: () => ({ get: (k, d) => (k in cfg ? cfg[k] : d) }) });
+  return n;
+}
+const RUN = (id, status, conclusion = null) => ({ run: { id, status, conclusion, name: 'ci' }, repo: R('acme', 'a') });
+
+test('the first sync seeds silently — connecting must not fire 40 alerts', () => {
+  const n = notifierWith();
+  const events = n.diff([RUN(1, 'completed', 'failure'), RUN(2, 'in_progress'), RUN(3, 'completed', 'success')]);
+  assert.deepEqual(events, [], 'baseline pass emits nothing');
+  assert.equal(n.seeded, true);
+});
+
+test('a run crossing into completed emits exactly one finished event', () => {
+  const n = notifierWith();
+  n.diff([RUN(1, 'in_progress')]);                       // seed
+  const first = n.diff([RUN(1, 'completed', 'failure')]);
+  assert.equal(first.length, 1);
+  assert.equal(first[0].event, 'finished');
+  assert.equal(first[0].run.conclusion, 'failure');
+  const again = n.diff([RUN(1, 'completed', 'failure')]);
+  assert.deepEqual(again, [], 'a completed run does not re-fire on later polls');
+});
+
+test('a newly appearing in-progress run counts as started, a finished one does not', () => {
+  const n = notifierWith();
+  n.diff([RUN(1, 'completed', 'success')]);              // seed
+  const e = n.diff([RUN(1, 'completed', 'success'), RUN(2, 'in_progress'), RUN(3, 'completed', 'success')]);
+  assert.equal(e.length, 1);
+  assert.equal(e[0].event, 'started');
+  assert.equal(e[0].run.id, 2);
+});
+
+test('notification policy gates which events surface', () => {
+  const fail = { conclusion: 'failure' }, ok = { conclusion: 'success' }, skip = { conclusion: 'skipped' };
+  const off = notifierWith({ notifications: 'off' });
+  assert.equal(off.wants(fail, 'finished'), false);
+
+  const failures = notifierWith({ notifications: 'failures' });
+  assert.equal(failures.wants(fail, 'finished'), true);
+  assert.equal(failures.wants(ok, 'finished'), false);
+  assert.equal(failures.wants(skip, 'finished'), false, 'skipped is not a failure');
+
+  const all = notifierWith({ notifications: 'completions' });
+  assert.equal(all.wants(ok, 'finished'), true);
+
+  assert.equal(failures.wants(fail, 'started'), false, 'starts are off by default');
+  assert.equal(notifierWith({ notifyOnStart: true }).wants(fail, 'started'), true);
+});
+
+test('the seen map is pruned so a long session cannot grow without bound', () => {
+  const n = notifierWith();
+  n.diff(Array.from({ length: 2100 }, (_, i) => RUN(i, 'completed', 'success')));
+  assert.ok(n.seen.size <= 2100);
+  n.diff([RUN(0, 'completed', 'success')]);
+  assert.equal(n.seen.size, 1, 'runs no longer present are dropped');
+});

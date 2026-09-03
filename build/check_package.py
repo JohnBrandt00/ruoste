@@ -87,9 +87,20 @@ menu_cmds = {m["command"] for grp in c.get("menus", {}).values() for m in grp if
 chk(not (menu_cmds - declared), "every menu entry points at a declared command")
 for vc in c.get("viewsContainers", {}).get("activitybar", []):
     chk(os.path.isfile(f"{EXT}/{vc['icon']}"), f"activity bar icon -> {vc['icon']}")
-view_ids = {v["id"] for grp in c.get("views", {}).values() for v in grp}
+views = {v["id"]: v for grp in c.get("views", {}).values() for v in grp}
+view_ids = set(views)
 welcome  = {w["view"] for w in c.get("viewsWelcome", [])}
 chk(not (welcome - view_ids), "viewsWelcome only references declared views")
+
+# A view created during activate() must be registered unconditionally. A `when`
+# clause that is false at activation makes createTreeView throw, which aborts
+# activate() and takes every other feature down with it.
+eager = set(re.findall(r"(?:createTreeView|registerWebviewViewProvider)\(\s*['\"]([\w.]+)['\"]", blob))
+chk(not (eager - view_ids), f"eagerly created views are declared: {sorted(eager)}"
+    + (f"  (undeclared: {sorted(eager - view_ids)})" if eager - view_ids else ""))
+gated = {v for v in eager if views.get(v, {}).get("when")}
+chk(not gated, "no eagerly created view carries a `when` clause"
+    + (f"  ({sorted(gated)} would throw at activation)" if gated else ""))
 cfg_keys = set(c.get("configuration", {}).get("properties", {}))
 # every getConfiguration('x').get('y') must resolve to a declared "x.y"
 unknown = set()

@@ -1,5 +1,37 @@
 # Changelog
 
+## 2.3.1
+
+**Fixed: the extension failed to activate.** `ruoste.spotify.library` was
+declared with `when: ruoste.spotify.signedIn`, but `createTreeView` is called
+during `activate()` — before that context key is ever set. VS Code had not
+registered the view, so the call threw, and because it threw inside `activate()`
+it took the GitHub Actions panel and the Spotify webview down with it. The
+themes and icons were unaffected, being declarative.
+
+- The `when` clause is gone; `viewsWelcome` already handled the signed-out
+  state, which is the correct mechanism.
+- **Each feature now activates in isolation.** A failure in fonts, Actions or
+  Spotify reports itself and leaves the others running, instead of aborting
+  activation for everything.
+- `check_package.py` gained the rule that would have caught this: no view
+  created eagerly during activation may carry a `when` clause. Verified by
+  reintroducing the bug and watching the check fail.
+
+### Notifications and live tracking
+
+- Notifies when a run finishes: `failures` (default), `completions`, `all` or
+  `off`, with **Re-run** offered inline on a failure. Bursts of more than three
+  collapse into one summary, and the first sync after start-up is silent so
+  connecting with 40 repos does not fire 40 alerts.
+- While a run is in progress its jobs are refetched each cycle, so steps update
+  live rather than freezing at whatever they were when first expanded.
+- Live poll interval is now 8s (minimum 3) — affordable because unchanged runs
+  return 304 and cost nothing.
+- The status bar elapsed timer ticks every second between polls.
+- GitHub has no push channel for Actions that a desktop client can subscribe to;
+  this is polling, and the README says so.
+
 ## 2.3.0 — Actions across every repository
 
 **Fixed: the Actions panel only ever showed one repository.** It took the first

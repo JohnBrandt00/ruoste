@@ -1,7 +1,7 @@
 // @ts-check
 'use strict';
 const vscode = require('vscode');
-const { statusPresentation, shortRef, relativeTime } = require('../util');
+const { statusPresentation, shortRef, relativeTime, formatDuration, runElapsed } = require('../util');
 
 /** Status bar summary across every watched repository. */
 class ActionsStatus {
@@ -10,12 +10,30 @@ class ActionsStatus {
     this.item.name = 'RUOSTE Actions';
     this.item.command = 'ruoste.actions.focus';
     this.item.hide();
+    /** @type {NodeJS.Timeout|undefined} */ this._tick = undefined;
+    /** @type {any} */ this._provider = undefined;
+  }
+
+  /** While something is running, retick every second so the elapsed time moves
+   *  between polls instead of freezing at whatever the last fetch said. */
+  _retick() {
+    if (this._tick) { clearInterval(this._tick); this._tick = undefined; }
+    if (!this._provider || !this._provider.liveCount) return;
+    this._tick = setInterval(() => {
+      if (!this._provider || !this._provider.liveCount) { this._retick(); return; }
+      const live = this._provider.liveRuns();
+      const oldest = live.reduce((a, b) =>
+        (runElapsed(a.run) > runElapsed(b.run) ? a : b), live[0]);
+      const el = oldest ? formatDuration(runElapsed(oldest.run)) : '';
+      this.item.text = `$(sync~spin) ${live.length} running${el ? ` · ${el}` : ''}`;
+    }, 1000);
   }
 
   /** @param {any} p the ActionsProvider */
   update(p) {
     const cfg = vscode.workspace.getConfiguration('ruoste.actions');
-    if (!cfg.get('statusBar', true) || !p || !p.signedIn) { this.item.hide(); return; }
+    this._provider = p;
+    if (!cfg.get('statusBar', true) || !p || !p.signedIn) { this.item.hide(); this._retick(); return; }
 
     const watched = p.repos.repos.length;
     if (!watched) { this.item.hide(); return; }
@@ -25,7 +43,9 @@ class ActionsStatus {
     const newest = p.allRuns()[0];
 
     if (live) {
-      this.item.text = `$(sync~spin) ${live} running`;
+      const oldest = p.liveRuns()[0];
+      const el = oldest ? formatDuration(runElapsed(oldest.run)) : '';
+      this.item.text = `$(sync~spin) ${live} running${el ? ` · ${el}` : ''}`;
       this.item.backgroundColor = undefined;
     } else if (failing) {
       this.item.text = `$(error) ${failing} failing`;
@@ -49,9 +69,10 @@ class ActionsStatus {
     if (budget) lines.push('', `_rate limit ${budget}_`);
     this.item.tooltip = new vscode.MarkdownString(lines.join('  \n'));
     this.item.show();
+    this._retick();
   }
 
-  dispose() { this.item.dispose(); }
+  dispose() { if (this._tick) clearInterval(this._tick); this.item.dispose(); }
 }
 
 module.exports = { ActionsStatus };
