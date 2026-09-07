@@ -91,6 +91,17 @@ test('rows carry a context value the menus can match', () => {
   assert.equal(ctxOf(ISSUE({ state: 'closed' })), 'ruoste.work.item.issue.closed');
 });
 
+test('a pull request row names what it closes, from the body it already has', () => {
+  const p = providerWith();
+  const repo = /** @type {any} */ ({ owner: 'acme', repo: 'api', host: 'github.com', key: 'k' });
+  const tip = (item) => String(/** @type {any} */ (
+    p.getTreeItem({ kind: 'item', item, repo, sectionId: 'review' })).tooltip.value);
+  assert.match(tip(PR({ body: 'Closes #388, fixes acme/web#4' })), /closes `#388` `acme\/web#4`/);
+  assert.doesNotMatch(tip(PR({ body: 'mentions #388 in passing' })), /closes/);
+  // an issue's links need a timeline, so its row does not pretend to know
+  assert.doesNotMatch(tip(ISSUE({ body: 'Closes #1' })), /closes/);
+});
+
 test('find locates a held item regardless of case', () => {
   const p = providerWith();
   const repo = /** @type {any} */ ({ owner: 'Acme', repo: 'API', host: 'github.com', key: 'github.com/acme/api' });
@@ -148,6 +159,133 @@ test('failures are explained in terms of what to do about them', () => {
   assert.match(explain({ status: 403 }, repo), /write access/);
   assert.match(explain({ status: 404 }, repo), /acme\/api/);
   assert.match(explain({ message: 'boom' }, repo), /boom/);
+});
+
+// ── linked issues and pull requests ──────────────────────────────────────
+const { closingRefs, linksFromTimeline, unnamedConnections, mergeLinks } = require('../src/github/links');
+const SELF = { owner: 'acme', repo: 'api' };
+
+test('closing keywords name the issues a pull request will close', () => {
+  const body = [
+    'Closes #12 and fixes #13.',
+    'resolved: #14',
+    'Fixes acme/other#99 and closes https://github.com/acme/third/issues/7',
+    'This also mentions #500 without a keyword.',
+    'closing #600 is not a keyword either',
+  ].join('\n');
+  const refs = closingRefs(body, SELF);
+  assert.deepEqual(refs.map((r) => `${r.owner}/${r.repo}#${r.number}`), [
+    'acme/api#12', 'acme/api#13', 'acme/api#14', 'acme/other#99', 'acme/third#7',
+  ]);
+});
+
+test('closing refs are deduplicated and case does not matter', () => {
+  assert.equal(closingRefs('Fixes #12. FIXES #12. fixed #12', SELF).length, 1);
+  assert.deepEqual(closingRefs('', SELF), []);
+  assert.deepEqual(closingRefs(/** @type {any} */ (null), SELF), []);
+});
+
+test('a timeline yields the cross-references, minus the item itself', () => {
+  const events = [
+    { event: 'commented' },
+    { event: 'cross-referenced', source: { issue: {
+      number: 412, title: 'Squelch the retry storm', state: 'open',
+      repository_url: 'https://api.github.com/repos/acme/api',
+      pull_request: { url: 'u' }, html_url: 'https://github.com/acme/api/pull/412' } } },
+    // the same reference twice keeps one row
+    { event: 'cross-referenced', source: { issue: {
+      number: 412, title: 'Squelch the retry storm', state: 'open',
+      repository_url: 'https://api.github.com/repos/acme/api', pull_request: {} } } },
+    // a self-reference is noise
+    { event: 'cross-referenced', source: { issue: {
+      number: 388, repository_url: 'https://api.github.com/repos/acme/api' } } },
+  ];
+  const links = linksFromTimeline(events, { ...SELF, number: 388 });
+  assert.equal(links.length, 1);
+  assert.equal(links[0].kind, 'pr');
+  assert.equal(links[0].number, 412);
+  assert.equal(links[0].relation, 'referenced');
+});
+
+test('connected links are counted, since REST will not name them', () => {
+  assert.equal(unnamedConnections([{ event: 'connected' }, { event: 'connected' }]), 2);
+  assert.equal(unnamedConnections([{ event: 'connected' }, { event: 'disconnected' }]), 0);
+  assert.equal(unnamedConnections([{ event: 'disconnected' }]), 0, 'never negative');
+});
+
+test('a declared closing link outranks the same one seen as a mention', () => {
+  const referenced = [{ owner: 'acme', repo: 'api', number: 12, title: 'Bug', kind: 'issue',
+                        state: 'open', merged: false, url: 'u', relation: 'referenced' }];
+  const merged = mergeLinks([{ owner: 'acme', repo: 'api', number: 12 }], referenced);
+  assert.equal(merged.length, 1);
+  assert.equal(merged[0].relation, 'closes');
+  assert.equal(merged[0].title, 'Bug', 'the title from the timeline survives');
+  // closing links sort first
+  const both = mergeLinks([{ owner: 'acme', repo: 'api', number: 30 }], referenced);
+  assert.deepEqual(both.map((l) => l.number), [30, 12]);
+});
+
+// ── repository filters ───────────────────────────────────────────────────
+const { allowsRepo, scopedQuery } = require('../src/github/work');
+
+test('an empty watch list means every repository', () => {
+  assert.equal(allowsRepo(SELF, [], []), true);
+  assert.equal(allowsRepo(SELF, ['   '], []), true, 'blank entries do not filter');
+});
+
+test('watch and exclude patterns filter by repo and by owner', () => {
+  assert.equal(allowsRepo(SELF, ['acme/*'], []), true);
+  assert.equal(allowsRepo(SELF, ['acme/api'], []), true);
+  assert.equal(allowsRepo(SELF, ['other/*'], []), false);
+  assert.equal(allowsRepo(SELF, ['acme/*'], ['acme/api']), false, 'exclude wins');
+  assert.equal(allowsRepo(SELF, [], ['acme/*']), false);
+});
+
+test('a concrete watch list is pushed into the search query', () => {
+  const q = 'is:open is:pr review-requested:@me archived:false';
+  assert.equal(scopedQuery(q, ['acme/api', 'acme/web']), `${q} repo:acme/api repo:acme/web`);
+  assert.equal(scopedQuery(q, []), q, 'no filter, no qualifiers');
+  assert.equal(scopedQuery(q, ['acme/*']), q, 'a wildcard owner is an org OR a user — filtered locally');
+  assert.equal(scopedQuery(q, Array.from({ length: 20 }, (_, i) => `acme/r${i}`)), q,
+    'a long list would make an unwieldy query, so it stays local');
+});
+
+test('the view says what the filter is doing', () => {
+  assert.equal(providerWith().filterLabel(), '');
+  assert.equal(providerWith({ repositories: ['acme/api'] }).filterLabel(), 'only acme/api');
+  assert.equal(providerWith({ repositories: ['a/b', 'c/*'] }).filterLabel(), '2 filters');
+  assert.equal(providerWith({ exclude: ['old/*'] }).filterLabel(), '1 hidden');
+});
+
+test('a filtered-out workspace repo takes its section with it', () => {
+  const p = providerWith({ repositories: ['other/*'] });
+  p.signedIn = true;
+  p.workspace = [/** @type {any} */ ({ owner: 'acme', repo: 'api', host: 'github.com', key: 'k' })];
+  assert.ok(!p.getChildren().some((n) => /** @type {any} */ (n).id === 'workspace'));
+});
+
+// ── diff ─────────────────────────────────────────────────────────────────
+const { fileUri, parseUri, isBinary, SCHEME } = require('../src/github/diff');
+
+test('a diff uri round-trips repo, ref and path', () => {
+  const repo = { host: 'github.com', owner: 'acme', repo: 'api' };
+  const uri = fileUri(repo, 'src/Ingest/RetryPolicy.cs', 'abc1234');
+  assert.equal(uri.scheme, SCHEME);
+  assert.equal(uri.authority, 'github.com');
+  const back = parseUri(uri);
+  assert.deepEqual(back?.repo, repo);
+  assert.equal(back?.ref, 'abc1234');
+  assert.equal(back?.path, 'src/Ingest/RetryPolicy.cs', 'nested paths survive');
+  assert.equal(back?.empty, false);
+  assert.equal(parseUri(fileUri(repo, 'x.cs', 'abc', { empty: true }))?.empty, true);
+  // the extension is the last segment, which is what VS Code reads the language from
+  assert.ok(uri.path.endsWith('.cs'));
+});
+
+test('a file with no patch and no line changes is treated as binary', () => {
+  assert.equal(isBinary({ status: 'modified', additions: 0, deletions: 0 }), true);
+  assert.equal(isBinary({ status: 'modified', additions: 3, deletions: 1, patch: '@@' }), false);
+  assert.equal(isBinary({ status: 'renamed', additions: 0, deletions: 0 }), false);
 });
 
 // ── rate limit buckets ───────────────────────────────────────────────────

@@ -116,16 +116,65 @@ img.av { width: 16px; height: 16px; border-radius: 50%; vertical-align: -3px; }
 .prose hr { border: 0; border-top: 1px solid var(--rule); margin: 10px 0; }
 .prose .empty { color: var(--mute); font-style: italic; }
 
-/* ── changed files ──────────────────────────────────────────────────── */
-details.files { border: 1px solid var(--rule); background: var(--panel); }
-details.files summary { padding: 7px 12px; cursor: pointer; letter-spacing: .04em; }
-details.files ul { list-style: none; border-top: 1px solid var(--rule); max-height: 320px; overflow: auto; }
-details.files li {
-  display: flex; gap: 10px; padding: 3px 12px; cursor: pointer; align-items: baseline;
+/* ── linked issues and pull requests ────────────────────────────────── */
+#links:empty { display: none; }
+.linked { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.link {
+  font: inherit; color: var(--fg); background: transparent;
+  border: 1px solid var(--rule); border-left: 2px solid var(--mute);
+  padding: 2px 8px; cursor: pointer; display: inline-flex; gap: 6px; align-items: baseline;
+  max-width: 100%; text-align: left;
 }
-details.files li:hover { background: var(--hover); }
-details.files li .path { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-details.files li .st { color: var(--mute); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+.link:hover { border-color: var(--accent); }
+.link.closes { border-left-color: var(--accent); }
+.link .sym { color: var(--mute); }
+.link .no { color: var(--mute); }
+.link .in { color: var(--mute); }
+.link .ttl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 44ch; }
+.link .rel {
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute);
+}
+.link .rel.open { color: var(--pass); }
+.link .rel.closed { color: var(--fail); }
+.link .rel.merged { color: var(--merged); }
+
+/* ── changed files ──────────────────────────────────────────────────── */
+.filesbar {
+  display: flex; align-items: center; gap: 8px; padding: 6px 10px;
+  border: 1px solid var(--rule); border-bottom: 0; background: var(--panel);
+}
+.filesbar .count { margin-right: auto; }
+.mini {
+  font: inherit; font-size: 10px; letter-spacing: .1em; padding: 2px 7px; cursor: pointer;
+  color: var(--ink); background: var(--accent); border: 1px solid var(--accent);
+}
+.mini.ghost { background: transparent; color: var(--mute); border-color: var(--rule); }
+.mini.ghost:hover { color: var(--accent); border-color: var(--accent); }
+ul.files { list-style: none; border: 1px solid var(--rule); background: var(--panel); }
+li.file + li.file { border-top: 1px solid var(--rule); }
+li.file .row {
+  display: flex; gap: 10px; padding: 3px 10px; cursor: pointer; align-items: baseline;
+}
+li.file .row:hover { background: var(--hover); }
+li.file .caret { color: var(--mute); width: 10px; flex: 0 0 10px; }
+li.file .path { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+li.file .st { color: var(--mute); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+li.file .mini { opacity: .55; }
+li.file:hover .mini, li.file .row:focus-within .mini { opacity: 1; }
+
+/* unified patch, straight from the API */
+pre.patch {
+  border-top: 1px solid var(--rule); background: var(--ink);
+  max-height: 420px; overflow: auto; padding: 4px 0;
+}
+pre.patch .ln {
+  padding: 0 10px; white-space: pre; line-height: 1.45;
+  border-left: 2px solid transparent;
+}
+pre.patch .ln.add { color: var(--pass); border-left-color: var(--pass); background: color-mix(in srgb, var(--pass) 8%, transparent); }
+pre.patch .ln.del { color: var(--fail); border-left-color: var(--fail); background: color-mix(in srgb, var(--fail) 8%, transparent); }
+pre.patch .ln.hunk { color: var(--accent); background: var(--hover); }
+pre.patch .ln.meta { color: var(--mute); font-style: italic; }
 
 /* ── timeline ───────────────────────────────────────────────────────── */
 #timeline { display: flex; flex-direction: column; gap: 10px; }

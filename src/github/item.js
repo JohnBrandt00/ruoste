@@ -10,6 +10,8 @@ const vscode = require('vscode');
 const apiMod = require('./api');
 const manage = require('./manage');
 const { renderMarkdown } = require('./markdown');
+const { closingRefs, linksFromTimeline, unnamedConnections, mergeLinks } = require('./links');
+const { openFileDiff, isBinary } = require('./diff');
 const { issuePresentation, relativeTime, formatDuration, statusPresentation } = require('../util');
 
 const nonce = () => Array.from({ length: 32 },
@@ -61,6 +63,14 @@ async function load(client, repo, number, token) {
     if (pr.head?.sha) checks = await client.checkRuns(repo, pr.head.sha, token).catch(() => []);
   }
 
+  // what this is linked to, in whichever direction the link runs
+  const events = await client.timeline(repo, number, token).catch(() => []);
+  const declared = p.kind === 'pr'
+    ? closingRefs(`${item.title || ''}\n${item.body || ''}`, { owner: repo.owner, repo: repo.repo })
+    : [];
+  const links = mergeLinks(declared,
+    linksFromTimeline(events, { owner: repo.owner, repo: repo.repo, number }));
+
   // comments and reviews are two lists on GitHub's side and one conversation
   // in practice, so they are merged back into posting order here
   const timeline = [
@@ -79,7 +89,7 @@ async function load(client, repo, number, token) {
     })),
   ].sort((a, b) => a.at - b.at);
 
-  return {
+  const state = {
     repo: { owner: repo.owner, name: repo.repo, host: repo.host, url: repoUrl },
     item: {
       number: item.number, title: item.title, url: item.html_url,
@@ -100,17 +110,34 @@ async function load(client, repo, number, token) {
       additions: pr.additions ?? 0, deletions: pr.deletions ?? 0,
       commits: pr.commits ?? 0, changed: pr.changed_files ?? files.length,
       reviewers: (pr.requested_reviewers || []).map((r) => r.login),
-      files: files.slice(0, 300).map((f) => ({
-        name: f.filename, status: f.status,
+      // the patch comes with the file list, so the inline diff costs nothing
+      // beyond the request we already made
+      files: files.slice(0, 300).map((f, i) => ({
+        index: i, name: f.filename, status: f.status,
         additions: f.additions ?? 0, deletions: f.deletions ?? 0, url: f.blob_url,
+        patch: typeof f.patch === 'string' ? f.patch : '', binary: isBinary(f),
       })),
+      truncated: Math.max(0, files.length - 300),
       checks: checks.map((c) => {
         const s = statusPresentation(c.status, c.conclusion);
         return { name: c.name, label: s.label, live: s.live, ok: c.conclusion === 'success', url: c.html_url };
       }),
     },
+    links: links.map((l) => ({
+      owner: l.owner, repo: l.repo, number: l.number, title: l.title,
+      kind: l.kind, relation: l.relation,
+      state: l.merged ? 'merged' : l.state || '',
+      sameRepo: l.owner.toLowerCase() === repo.owner.toLowerCase() &&
+                l.repo.toLowerCase() === repo.repo.toLowerCase(),
+    })),
+    // links made only by dragging in GitHub's Development panel come back
+    // without a target, so they are reported as a count rather than dropped
+    unnamedLinks: unnamedConnections(events),
     timeline,
   };
+  // the page gets a flat, serialisable state; the panel keeps the raw pull
+  // request and file list, which is what the diff editor needs
+  return { state, raw: { pr, files } };
 }
 
 /** @param {vscode.ExtensionContext} ctx @param {any} provider @param {any} target
@@ -156,6 +183,7 @@ function openItemPanel(ctx, provider, target) {
 <main id="body">
   <section id="head"></section>
   <section id="strip"></section>
+  <section id="links"></section>
   <section id="desc" class="card"></section>
   <section id="files"></section>
   <section id="timeline"></section>
@@ -177,14 +205,19 @@ function openItemPanel(ctx, provider, target) {
   let pending = null;
   const reload = () => (pending = pending || doReload().finally(() => { pending = null; }));
 
+  /** the pull request and file list behind the last render, for the diff editor
+   *  @type {{pr:any, files:any[]}} */
+  let raw = { pr: null, files: [] };
+
   const doReload = async () => {
     post({ type: 'loading' });
     const session = await apiMod.getSession(false);
     if (!session) { post({ type: 'error', error: 'Not signed in to GitHub.' }); return; }
     try {
-      const state = await load(provider.client, repo, number, session.accessToken);
-      panel.title = `#${number} ${String(state.item.title).slice(0, 40)}`;
-      post({ type: 'state', state });
+      const loaded = await load(provider.client, repo, number, session.accessToken);
+      raw = loaded.raw;
+      panel.title = `#${number} ${String(loaded.state.item.title).slice(0, 40)}`;
+      post({ type: 'state', state: loaded.state });
     } catch (err) {
       post({ type: 'error', error: manage.explain(err, repo) });
     }
@@ -210,6 +243,31 @@ function openItemPanel(ctx, provider, target) {
       case 'assign':   await manage.assign(provider, node()); await reload(); break;
       case 'label':    await manage.label(provider, node()); await reload(); break;
       case 'review':   await manage.requestReview(provider, node()); await reload(); break;
+      case 'diff': {
+        const file = raw.files[Number(m.index)];
+        if (file && raw.pr) await openFileDiff(repo, raw.pr, file);
+        break;
+      }
+      case 'diffAll': {
+        // opening every file at once is how a review actually starts; the cap
+        // keeps a 60-file pull request from filling the editor with tabs
+        const files = raw.files.filter((f) => !isBinary(f)).slice(0, 10);
+        for (const file of files) if (raw.pr) await openFileDiff(repo, raw.pr, file);
+        if (raw.files.length > files.length)
+          vscode.window.setStatusBarMessage(
+            `Opened ${files.length} of ${raw.files.length} files`, 4000);
+        break;
+      }
+      case 'openItem': {
+        // a linked item opens in its own panel, as if picked from the tree
+        const owner = String(m.owner), name = String(m.repo);
+        const target = {
+          repo: { host: repo.host, owner, repo: name, key: `${repo.host}/${owner}/${name}`.toLowerCase() },
+          number: Number(m.number),
+        };
+        openItemPanel(ctx, provider, target);
+        break;
+      }
     }
   });
 

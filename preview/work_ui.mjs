@@ -51,11 +51,28 @@ const PR = {
     merged: false, mergeable: true, mergeableState: 'unstable',
     additions: 148, deletions: 63, commits: 4, changed: 6,
     reviewers: ['acme-ops'],
+    truncated: 0,
     files: [
-      { name: 'src/Ingest/RetryPolicy.cs', status: 'modified', additions: 71, deletions: 40, url: '#' },
-      { name: 'src/Ingest/NodeWatcher.cs', status: 'modified', additions: 34, deletions: 12, url: '#' },
-      { name: 'test/RetryPolicyTests.cs', status: 'added', additions: 38, deletions: 0, url: '#' },
-      { name: 'docs/operations.md', status: 'modified', additions: 5, deletions: 11, url: '#' },
+      { index: 0, name: 'src/Ingest/RetryPolicy.cs', status: 'modified', additions: 71, deletions: 40,
+        url: '#', binary: false, patch: [
+          '@@ -18,9 +18,14 @@ public sealed class RetryPolicy',
+          '     private readonly TimeSpan _cap;',
+          '-    public TimeSpan Next(int attempt) =>',
+          '-        TimeSpan.FromMilliseconds(_base.TotalMilliseconds * (1 << attempt));',
+          '+    public TimeSpan Next(int attempt)',
+          '+    {',
+          '+        var raw = _base.TotalMilliseconds * (1 << Math.Min(attempt, 16));',
+          '+        var capped = Math.Min(raw, _cap.TotalMilliseconds);',
+          '+        return TimeSpan.FromMilliseconds(capped * Jitter());',
+          '+    }',
+          ' }',
+        ].join('\n') },
+      { index: 1, name: 'src/Ingest/NodeWatcher.cs', status: 'modified', additions: 34, deletions: 12,
+        url: '#', binary: false, patch: '@@ -4,3 +4,5 @@\n using System;\n+using System.Diagnostics;\n' },
+      { index: 2, name: 'test/RetryPolicyTests.cs', status: 'added', additions: 38, deletions: 0,
+        url: '#', binary: false, patch: '@@ -0,0 +1,3 @@\n+[Fact]\n+public void CapsTheBackoff() { }\n' },
+      { index: 3, name: 'docs/diagram.png', status: 'modified', additions: 0, deletions: 0,
+        url: '#', binary: true, patch: '' },
     ],
     checks: [
       { name: 'build', label: 'success', live: false, ok: true, url: '#' },
@@ -64,6 +81,11 @@ const PR = {
       { name: 'lint', label: 'failed', live: false, ok: false, url: '#' },
     ],
   },
+  links: [
+    { owner: 'JohnBrandt00', repo: 'radiohub', number: 388, title: 'Ingest retries hammer the replacement node', kind: 'issue', relation: 'closes', state: 'open', sameRepo: true },
+    { owner: 'acme-corp', repo: 'ingest-service', number: 1902, title: 'Backport the cap', kind: 'pr', relation: 'referenced', state: 'merged', sameRepo: false },
+  ],
+  unnamedLinks: 1,
   timeline: [
     { id: 'c1', kind: 'comment', at: 1, author: who('acme-ops'), url: '#', when: '1d ago',
       edited: false, state: '', bodyHtml: md('Numbers look right. One question on the `jitter` seed — is it per node or per batch?') },
@@ -86,6 +108,10 @@ const ISSUE = {
     assignees: [], locked: false,
   },
   pr: null,
+  links: [
+    { owner: 'JohnBrandt00', repo: 'radiohub', number: 412, title: 'Squelch the retry storm when the ingest node drops', kind: 'pr', relation: 'referenced', state: 'open', sameRepo: true },
+  ],
+  unnamedLinks: 0,
   timeline: [
     { id: 'c1', kind: 'comment', at: 1, author: who('JohnBrandt00'), url: '#', when: '8d ago',
       edited: false, state: '', bodyHtml: md('Reproduced. Working on it in #412.') },
@@ -129,7 +155,11 @@ const SHOTS = [
 for (const [name, theme, state, w, h] of SHOTS) {
   const pg = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 2 });
   await pg.setContent(page(theme, state), { waitUntil: 'load' });
-  await pg.evaluate(() => document.querySelector('details.files')?.setAttribute('open', ''));
+  // the patches start collapsed, as they do in the panel; open the first one
+  await pg.evaluate(() => {
+    const rows = document.querySelectorAll('li.file .row');
+    if (rows.length) /** @type {any} */ (rows[0]).click();
+  });
   await pg.waitForTimeout(200);
   await pg.screenshot({ path: `preview/work-${name}.png`, fullPage: false });
 
@@ -138,8 +168,13 @@ for (const [name, theme, state, w, h] of SHOTS) {
   const checks = await pg.$$eval('.check', (n) => n.length);
   const acts = await pg.$$eval('.acts .btn', (n) => n.map((x) => x.textContent));
   const scripts = await pg.$$eval('.prose script', (n) => n.length);
+  const linkRows = await pg.$$eval('.link', (n) => n.length);
+  const patchLines = await pg.$$eval('pre.patch .ln.add', (n) => n.length);
   console.log(`✓ preview/work-${name}.png  cards=${cards} chips=${chips} checks=${checks}`);
   console.log(`  actions: ${acts.join(' ')}`);
+  console.log(`  links=${linkRows} added-patch-lines=${patchLines}`);
+  if (linkRows !== state.links.length) { console.error('  links did not bind'); process.exitCode = 1; }
+  if (state.pr && !patchLines) { console.error('  patch did not render'); process.exitCode = 1; }
 
   const wantCards = state.timeline.length + 1;              // description plus the conversation
   if (cards !== wantCards) { console.error(`  expected ${wantCards} cards`); process.exitCode = 1; }

@@ -10,8 +10,9 @@
  *  question from "what is waiting on me". */
 const vscode = require('vscode');
 const api = require('./api');
-const { workspaceRepos } = require('./repos');
+const { workspaceRepos, matches } = require('./repos');
 const { WorkNotifier } = require('./worknotify');
+const { closingRefs } = require('./links');
 const { issuePresentation, relativeTime } = require('../util');
 
 /** @param {string} id @param {string|undefined} color @returns {vscode.ThemeIcon} */
@@ -55,6 +56,31 @@ function passesFilter(item, include) {
   if (include === 'issues') return !isPr;
   if (include === 'prs') return isPr;
   return true;
+}
+
+/** Whether a repository survives the watch and exclude lists. An empty watch
+ *  list means "everything", the same reading the Actions view gives it.
+ * @param {{owner:string, repo:string}} repo @param {string[]} include
+ * @param {string[]} exclude @returns {boolean} */
+function allowsRepo(repo, include, exclude) {
+  if ((exclude || []).some((p) => matches(p, repo))) return false;
+  const want = (include || []).filter((p) => String(p || '').trim());
+  return !want.length || want.some((p) => matches(p, repo));
+}
+
+/** Push the filter into the query where GitHub can apply it, so a narrow watch
+ *  list spends its 25 results on repositories you asked for rather than
+ *  discarding most of them here. Only unambiguous patterns qualify: `owner/*`
+ *  is an org OR a user account and GitHub has no qualifier meaning either, so
+ *  those stay a client-side filter.
+ * @param {string} q @param {string[]} include @param {number} [max]
+ * @returns {string} */
+function scopedQuery(q, include, max = 12) {
+  const want = (include || []).map((p) => String(p || '').trim()).filter(Boolean);
+  if (!want.length || want.length > max || want.some((p) => p.includes('*'))) return q;
+  const repos = want.filter((p) => /^[\w.-]+\/[\w.-]+$/.test(p));
+  if (repos.length !== want.length) return q;
+  return `${q} ${repos.map((r) => `repo:${r}`).join(' ')}`;
 }
 
 /** @implements {vscode.TreeDataProvider<Node>} */
@@ -103,6 +129,22 @@ class WorkProvider {
     return /** @type {any[]} */ (out.length ? out : ALL_SECTIONS.slice(0, 4));
   }
 
+  /** @returns {string[]} */ get watchList() { return this.cfg.get('repositories', []) || []; }
+  /** @returns {string[]} */ get excludes() { return this.cfg.get('exclude', []) || []; }
+  /** @param {{owner:string, repo:string}} repo @returns {boolean} */
+  allowed(repo) { return allowsRepo(repo, this.watchList, this.excludes); }
+
+  /** What the filter is doing, for the view description — a short list should
+   *  never be a mystery. @returns {string} */
+  filterLabel() {
+    const want = this.watchList.filter((p) => String(p || '').trim());
+    const hidden = this.excludes.filter((p) => String(p || '').trim());
+    if (!want.length && !hidden.length) return '';
+    if (want.length === 1) return `only ${want[0]}`;
+    if (want.length) return `${want.length} filters`;
+    return `${hidden.length} hidden`;
+  }
+
   /** @param {string} id @returns {{item:any, repo:Repo}[]} */
   rows(id) { return this.sections.get(id)?.rows || []; }
 
@@ -145,15 +187,16 @@ class WorkProvider {
           /** @type {{item:any, repo:Repo}[]} */ let rows = [];
           if (section.id === 'workspace') {
             for (const repo of this.workspace) {
+              if (!this.allowed(repo)) continue;
               const items = await this.client.listRepoIssues(repo, token, { limit, signal: ctrl.signal });
               for (const item of items) rows.push({ item, repo });
             }
           } else {
-            const items = await this.client.searchIssues(this.host, token,
-              /** @type {string} */ (section.q), { limit, signal: ctrl.signal });
+            const q = scopedQuery(/** @type {string} */ (section.q), this.watchList);
+            const items = await this.client.searchIssues(this.host, token, q, { limit, signal: ctrl.signal });
             for (const item of items) {
               const repo = repoOfItem(item, this.host);
-              if (repo) rows.push({ item, repo });
+              if (repo && this.allowed(repo)) rows.push({ item, repo });
             }
           }
           rows = rows.filter(({ item }) => passesFilter(item, include));
@@ -235,6 +278,14 @@ class WorkProvider {
 
     const { item, repo } = node;
     const p = issuePresentation(item);
+    // search results carry the body, so a pull request's closing links cost
+    // nothing to show here; the other direction needs a timeline, which is why
+    // it waits for the detail panel
+    const closes = p.kind === 'pr'
+      ? closingRefs(`${item.title || ''}\n${item.body || ''}`, repo)
+        .map((c) => (c.repo === repo.repo && c.owner === repo.owner
+          ? `#${c.number}` : `${c.owner}/${c.repo}#${c.number}`))
+      : [];
     const it = new vscode.TreeItem(String(item.title || 'untitled'), S.None);
     it.id = `work:${node.sectionId}:${item.id}`;
     it.iconPath = icon(p.icon, p.color);
@@ -247,6 +298,7 @@ class WorkProvider {
       (item.labels || []).length ? (item.labels || []).map((l) => `\`${l.name || l}\``).join(' ') : '',
       (item.assignees || []).length
         ? `assigned: ${(item.assignees || []).map((a) => `\`${a.login}\``).join(' ')}` : '',
+      closes.length ? `closes ${closes.map((c) => `\`${c}\``).join(' ')}` : '',
       Number(item.comments) ? `${item.comments} comment${item.comments === 1 ? '' : 's'}` : '',
       `opened ${relativeTime(item.created_at)} · updated ${relativeTime(item.updated_at)}`,
     ].filter(Boolean).join('  \n'));
@@ -259,7 +311,7 @@ class WorkProvider {
     if (!node) {
       if (!this.signedIn) return [];
       const sections = this.enabledSections()
-        .filter((s) => s.id !== 'workspace' || this.workspace.length);
+        .filter((s) => s.id !== 'workspace' || this.workspace.some((r) => this.allowed(r)));
       if (!sections.length)
         return [{ kind: 'message', text: 'No sections enabled — see ruoste.work.sections', icon: 'settings-gear' }];
       /** @type {Node[]} */
@@ -276,10 +328,11 @@ class WorkProvider {
 
       // the workspace section is the only one spanning repos we already know by
       // name, so it is the only one worth grouping
-      if (node.id === 'workspace' && this.workspace.length > 1) {
+      if (node.id === 'workspace') {
         /** @type {Map<string, Repo>} */ const repos = new Map();
         for (const r of entry.rows) repos.set(r.repo.key, r.repo);
-        return [...repos.values()].map((repo) => ({ kind: 'workrepo', repo, sectionId: node.id }));
+        if (repos.size > 1)
+          return [...repos.values()].map((repo) => ({ kind: 'workrepo', repo, sectionId: node.id }));
       }
       return entry.rows.map(({ item, repo }) => ({ kind: 'item', item, repo, sectionId: node.id }));
     }
@@ -302,4 +355,7 @@ class WorkProvider {
   }
 }
 
-module.exports = { WorkProvider, repoOfItem, passesFilter, SEARCH_SECTIONS, ALL_SECTIONS };
+module.exports = {
+  WorkProvider, repoOfItem, passesFilter, allowsRepo, scopedQuery,
+  SEARCH_SECTIONS, ALL_SECTIONS,
+};

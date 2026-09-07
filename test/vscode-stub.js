@@ -28,6 +28,11 @@ module.exports = {
     parse: (s) => ({ toString: () => s, query: (s.split('?')[1] || '') }),
     file: (s) => ({ fsPath: s, toString: () => `file://${s}` }),
     joinPath: (base, ...p) => ({ fsPath: [base.fsPath, ...p].join('/') }),
+    from: ({ scheme, authority = '', path = '', query = '', fragment = '' }) => ({
+      scheme, authority, path, query, fragment,
+      toString: () => `${scheme}://${authority}${path}${query ? `?${query}` : ''}` +
+        (fragment ? `#${fragment}` : ''),
+    }),
   },
   env: {
     uriScheme: 'vscode', clipboard: { readText: async () => '', writeText: async () => {} },

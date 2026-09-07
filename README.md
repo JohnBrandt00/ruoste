@@ -307,6 +307,69 @@ branch, diff, commits, mergeability, the changed files and the check runs on its
 head commit. Comment from the box at the bottom (⌃⏎ posts), or use the row of
 buttons beside it.
 
+### What it is linked to
+
+A pull request and the issue it closes are one piece of work in two places, so
+each one names the other. Click a link to open it in its own tab.
+
+```
+LINKED ISSUES  ◎ #388 Ingest retries hammer the replacement node  CLOSES OPEN
+               ⑂ #1902 acme-corp/ingest-service Backport the cap  MERGED
+```
+
+A pull request's closing keywords — `closes #388`, `fixes acme/web#4`, or the
+full URL — are read straight from its body, so the tree can show them without a
+request; the reverse direction comes from the item's timeline, which is the only
+place REST exposes it. A link made by dragging in GitHub's *Development* panel
+comes back without a target, so those are reported as a count rather than
+quietly dropped.
+
+### Reviewing the diff
+
+```
+4 CHANGED FILES                          OPEN ALL DIFFS   COLLAPSE PATCHES
+▾ src/Ingest/RetryPolicy.cs                 +71 −40  MODIFIED  DIFF  ↗
+  @@ -18,9 +18,14 @@ public sealed class RetryPolicy
+  -    public TimeSpan Next(int attempt) =>
+  +    public TimeSpan Next(int attempt)
+```
+
+Two depths, neither of them a browser tab:
+
+- **The patch inline.** Click a file to unfold the unified diff GitHub already
+  sent with the file list — no extra request, enough to read a change.
+- **The diff editor.** **DIFF** on a row fetches both sides at their exact
+  commits and hands them to VS Code's own side-by-side, with syntax
+  highlighting, folding, find, and every diff setting you already have.
+  **OPEN ALL DIFFS** does the first ten files at once, which is how a review
+  actually starts. **RUOSTE: Review Changed Files…** does the same from the tree
+  without opening the item.
+
+Both sides are read-only documents behind RUOSTE's own URI scheme, so nothing
+here can be mistaken for a working-tree file and saved over. Binary files say so
+rather than opening as mojibake.
+
+### Narrowing it down
+
+```
+Issues & PRs                                      12 · only acme-corp/*
+```
+
+**Choose Repositories…** in the view header lists every owner and repository
+currently in view — pick the ones you want and everything else drops away. The
+patterns are the Actions view's: `owner/repo`, `owner/*` for a whole
+organisation or account, and an empty list meaning everything you can reach.
+**Hide This Repository** on any row adds it to the exclude list, **Clear
+Repository Filters** puts it all back, and the view description says what the
+filter is doing so a short list is never a mystery.
+
+Where GitHub can apply the filter itself it does: a watch list of concrete
+`owner/repo` entries becomes `repo:` qualifiers in the search, so the 25
+results per section are spent on repositories you asked for rather than
+discarded here. Owner wildcards stay a local filter — `acme/*` is an
+organisation *or* a user account, and GitHub has no qualifier that means
+either.
+
 **Managing them, from the tree or the tab:**
 
 | | |
@@ -319,6 +382,8 @@ buttons beside it.
 | **Check Out** | fetches and switches the window to the PR's branch |
 | **New Issue…** | title and body, in any repo open here |
 | **Search…** | full GitHub search syntax — `repo:`, `is:`, `label:`, `review:required` |
+| **Review Changed Files…** | pick a file, read it in the diff editor |
+| **Choose Repositories…** | filter the whole view down to the repos and orgs you want |
 
 A merge is refused before it is attempted if the pull request is a draft, is
 already closed, or conflicts with its base. Checking out is limited to branches
@@ -349,6 +414,8 @@ serial queue cover both, and an unchanged section costs nothing.
 | `ruoste.work.statusBar` | `true` | show the status bar item |
 | `ruoste.work.mergeMethod` | `merge` | method offered first when merging |
 | `ruoste.work.confirmMerge` | `true` | ask before merging |
+| `ruoste.work.repositories` | `[]` | only these repos — `owner/repo`, wildcards allowed |
+| `ruoste.work.exclude` | `[]` | repos to hide — wildcards allowed |
 
 
 ## Spotify

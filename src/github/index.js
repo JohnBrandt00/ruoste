@@ -10,6 +10,7 @@ const { openPipelinesPanel } = require('./dashboard');
 const { runWorkflow, rerunFailed } = require('./dispatch');
 const { WorkProvider } = require('./work');
 const { openItemPanel, refreshPanels } = require('./item');
+const { registerDiffProvider, pickAndDiff } = require('./diff');
 const manage = require('./manage');
 
 /** @param {vscode.ExtensionContext} ctx */
@@ -178,7 +179,8 @@ function activateWork(ctx, client) {
     void vscode.commands.executeCommand('setContext', 'ruoste.work.signedIn', provider.signedIn);
     if (!view) return;
     const n = provider.allRows().length;
-    view.description = n ? String(n) : undefined;
+    const filter = provider.filterLabel();
+    view.description = [n ? String(n) : '', filter].filter(Boolean).join(' · ') || undefined;
     const review = provider.reviewCount;
     view.title = review ? `Issues & PRs — ${review} to review` : 'Issues & PRs';
   };
@@ -233,6 +235,58 @@ function activateWork(ctx, client) {
   cmd('ruoste.work.search', async () => {
     const hit = await manage.search(provider);
     if (hit) openItemPanel(ctx, provider, hit);
+  });
+
+  registerDiffProvider(ctx, provider.client);
+  cmd('ruoste.work.diff', (node) => pickAndDiff(provider, node));
+
+  // Repository filter, the same vocabulary the Actions view uses: `owner/repo`
+  // and `owner/*` patterns, an empty list meaning everything.
+  cmd('ruoste.work.pickRepositories', async () => {
+    const seen = new Map();
+    for (const r of provider.workspace) seen.set(`${r.owner}/${r.repo}`, 'open in this window');
+    for (const { repo } of provider.allRows())
+      if (!seen.has(`${repo.owner}/${repo.repo}`)) seen.set(`${repo.owner}/${repo.repo}`, '');
+    const owners = [...new Set([...seen.keys()].map((k) => k.split('/')[0]))];
+    const current = provider.watchList.map(String);
+
+    const ALL = { label: 'All repositories', description: 'clear the filter', value: '' };
+    const items = /** @type {any[]} */ ([
+      ALL,
+      { label: 'Organisations and owners', kind: vscode.QuickPickItemKind.Separator },
+      ...owners.map((o) => ({ label: `${o}/*`, description: 'every repository of this owner',
+        value: `${o}/*`, picked: current.includes(`${o}/*`) })),
+      { label: 'Repositories', kind: vscode.QuickPickItemKind.Separator },
+      ...[...seen.entries()].map(([full, why]) => ({ label: full, description: why,
+        value: full, picked: current.includes(full) })),
+      ...current.filter((p) => !seen.has(p) && !owners.includes(String(p).split('/')[0]))
+        .map((p) => ({ label: p, description: 'from your settings', value: p, picked: true })),
+    ]);
+    const picks = /** @type {any[]} */ (await vscode.window.showQuickPick(items, {
+      title: 'Which repositories should Issues & PRs show?',
+      canPickMany: true, matchOnDescription: true,
+    }));
+    if (!picks) return;
+    const chosen = picks.map((p) => p.value).filter(Boolean);
+    // "All repositories" alongside a pattern means the pattern; alone it clears
+    await provider.cfg.update('repositories', chosen, vscode.ConfigurationTarget.Global);
+    await provider.refresh(false);
+  });
+
+  cmd('ruoste.work.hideRepository', async (node) => {
+    const r = node?.repo;
+    if (!r) return;
+    const list = (provider.cfg.get('exclude', []) || []).slice();
+    const pat = `${r.owner}/${r.repo}`;
+    if (!list.includes(pat)) list.push(pat);
+    await provider.cfg.update('exclude', list, vscode.ConfigurationTarget.Global);
+    await provider.refresh(false);
+  });
+
+  cmd('ruoste.work.clearFilters', async () => {
+    await provider.cfg.update('repositories', [], vscode.ConfigurationTarget.Global);
+    await provider.cfg.update('exclude', [], vscode.ConfigurationTarget.Global);
+    await provider.refresh(false);
   });
 
   cmd('ruoste.work.pickSections', async () => {

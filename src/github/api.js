@@ -367,6 +367,34 @@ class GitHubClient {
     ).then((b) => (Array.isArray(b) ? b : []));
   }
 
+  /** The event timeline of an issue or pull request. This is where the link
+   *  between the two lives: a pull request saying "closes #12" puts a
+   *  `cross-referenced` event on issue 12 naming it, which is the only way the
+   *  REST API exposes that relationship in the issue → pull request direction.
+   * @param {{host:string, owner:string, repo:string}} r @param {number} n
+   * @param {string} token @param {number} [limit] @returns {Promise<any[]>} */
+  timeline(r, n, token, limit = 100) {
+    return this.enqueue(() => this.request(
+      r.host, `/repos/${r.owner}/${r.repo}/issues/${n}/timeline?per_page=${limit}`, token)
+    ).then((b) => (Array.isArray(b) ? b : []));
+  }
+
+  /** One file at one ref, decoded. The contents endpoint answers with base64
+   *  and refuses anything over a megabyte, which is the right refusal for a
+   *  diff view: a file that size is not being read in a side-by-side.
+   * @param {{host:string, owner:string, repo:string}} r @param {string} filePath
+   * @param {string} ref @param {string} token @returns {Promise<string>} */
+  async fileAt(r, filePath, ref, token) {
+    const q = new URLSearchParams({ ref });
+    const segments = String(filePath).split('/').map(encodeURIComponent).join('/');
+    const body = await this.enqueue(() => this.request(
+      r.host, `/repos/${r.owner}/${r.repo}/contents/${segments}?${q}`, token));
+    if (!body || typeof body !== 'object' || body.type !== 'file')
+      throw new GitHubError(`${filePath} is not a file at ${ref.slice(0, 7)}`, 404, 'not-found');
+    if (body.encoding !== 'base64') return String(body.content ?? '');
+    return Buffer.from(String(body.content || ''), 'base64').toString('utf8');
+  }
+
   /** Users who can be assigned an issue in this repo.
    * @param {{host:string, owner:string, repo:string}} r @param {string} token */
   assignees(r, token) {

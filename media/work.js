@@ -3,11 +3,12 @@
   const vs = acquireVsCodeApi();
   const post = (type, extra) => vs.postMessage(Object.assign({ type }, extra || {}));
   const $ = (id) => document.getElementById(id);
-  const head = $('head'), strip = $('strip'), desc = $('desc'), files = $('files'),
-        timeline = $('timeline'), acts = $('acts'), banner = $('banner'),
+  const head = $('head'), strip = $('strip'), links = $('links'), desc = $('desc'),
+        files = $('files'), timeline = $('timeline'), acts = $('acts'), banner = $('banner'),
         where = $('where'), chip = $('chip'), draft = $('draft');
 
   let state = null;
+  const openPatches = new Set();          // file paths whose patch is expanded
 
   const el = (tag, cls, text) => {
     const n = document.createElement(tag);
@@ -107,6 +108,33 @@
     strip.append(box);
   }
 
+  // ── linked issues and pull requests ───────────────────────────────────
+  function renderLinks() {
+    links.textContent = '';
+    const list = state.links || [];
+    if (!list.length && !state.unnamedLinks) return;
+
+    const box = el('div', 'linked');
+    box.append(el('span', 'count', state.item.kind === 'pr' ? 'linked issues' : 'linked'));
+    for (const l of list) {
+      const a = el('button', `link ${l.relation} ${l.state || ''}`);
+      a.append(el('span', 'sym', l.kind === 'pr' ? '⑂' : '◎'));
+      a.append(el('span', 'no', `#${l.number}`));
+      if (!l.sameRepo) a.append(el('span', 'in', `${l.owner}/${l.repo}`));
+      if (l.title) a.append(el('span', 'ttl', l.title));
+      if (l.relation === 'closes') a.append(el('span', 'rel', 'closes'));
+      if (l.state) a.append(el('span', `rel ${l.state}`, l.state));
+      a.title = `${l.owner}/${l.repo}#${l.number}${l.title ? ` · ${l.title}` : ''}`;
+      a.addEventListener('click', () =>
+        post('openItem', { owner: l.owner, repo: l.repo, number: l.number }));
+      box.append(a);
+    }
+    if (state.unnamedLinks)
+      box.append(el('span', 'chip empty',
+        `${state.unnamedLinks} more link${state.unnamedLinks === 1 ? '' : 's'} the API does not name`));
+    links.append(box);
+  }
+
   // ── prose blocks ──────────────────────────────────────────────────────
   function prose(html) {
     const d = el('div', 'prose');
@@ -136,24 +164,77 @@
     return c;
   }
 
+  // ── changed files, with the patch inline ──────────────────────────────
+  function patchBlock(f) {
+    const pre = el('pre', 'patch');
+    if (!f.patch) {
+      pre.append(el('div', 'ln meta', f.binary
+        ? 'Binary file — open it in the diff editor or on GitHub.'
+        : 'GitHub sent no patch for this file (too large, or renamed with no changes).'));
+      return pre;
+    }
+    for (const line of f.patch.split('\n')) {
+      const c = line[0] === '+' ? 'add' : line[0] === '-' ? 'del'
+        : line.startsWith('@@') ? 'hunk' : line[0] === '\\' ? 'meta' : '';
+      pre.append(el('div', `ln ${c}`, line || ' '));
+    }
+    return pre;
+  }
+
+  function fileRow(f) {
+    const wrap = el('li', 'file');
+    const row = el('div', 'row');
+    row.append(el('span', 'caret', openPatches.has(f.name) ? '▾' : '▸'));
+    row.append(el('span', 'path', f.name));
+    row.append(el('span', 'add', `+${f.additions}`));
+    row.append(el('span', 'del', `−${f.deletions}`));
+    row.append(el('span', 'st', f.status));
+
+    const diff = el('button', 'mini ghost', 'DIFF');
+    diff.title = 'Open in the diff editor';
+    diff.addEventListener('click', (ev) => { ev.stopPropagation(); post('diff', { index: f.index }); });
+    row.append(diff);
+
+    const gh = el('button', 'mini ghost', '↗');
+    gh.title = 'Open the file on GitHub';
+    gh.addEventListener('click', (ev) => { ev.stopPropagation(); post('open', { url: f.url }); });
+    row.append(gh);
+
+    row.addEventListener('click', () => {
+      if (openPatches.has(f.name)) openPatches.delete(f.name);
+      else openPatches.add(f.name);
+      renderFiles();
+    });
+    wrap.append(row);
+    if (openPatches.has(f.name)) wrap.append(patchBlock(f));
+    return wrap;
+  }
+
   function renderFiles() {
     files.textContent = '';
     const pr = state.pr;
     if (!pr || !pr.files.length) return;
-    const d = el('details', 'files');
-    d.append(el('summary', null, `${pr.files.length} changed file${pr.files.length === 1 ? '' : 's'}`));
-    const ul = el('ul');
-    for (const f of pr.files) {
-      const li = el('li');
-      li.append(el('span', 'path', f.name));
-      li.append(el('span', 'add', `+${f.additions}`));
-      li.append(el('span', 'del', `−${f.deletions}`));
-      li.append(el('span', 'st', f.status));
-      li.addEventListener('click', () => post('open', { url: f.url }));
-      ul.append(li);
-    }
-    d.append(ul);
-    files.append(d);
+
+    const bar = el('div', 'filesbar');
+    bar.append(el('span', 'count',
+      `${pr.files.length} changed file${pr.files.length === 1 ? '' : 's'}` +
+      (pr.truncated ? ` (+${pr.truncated} more on GitHub)` : '')));
+    const all = el('button', 'mini', 'OPEN ALL DIFFS');
+    all.addEventListener('click', () => post('diffAll'));
+    bar.append(all);
+    const expand = el('button', 'mini ghost',
+      openPatches.size ? 'COLLAPSE PATCHES' : 'EXPAND PATCHES');
+    expand.addEventListener('click', () => {
+      if (openPatches.size) openPatches.clear();
+      else for (const f of pr.files) openPatches.add(f.name);
+      renderFiles();
+    });
+    bar.append(expand);
+    files.append(bar);
+
+    const ul = el('ul', 'files');
+    for (const f of pr.files) ul.append(fileRow(f));
+    files.append(ul);
   }
 
   function renderTimeline() {
@@ -202,6 +283,7 @@
     document.body.className = state.item.kind;
     renderHead();
     renderStrip();
+    renderLinks();
     desc.textContent = '';
     const author = el('div', 'who');
     const av = avatar(state.item.author);

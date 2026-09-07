@@ -1,5 +1,33 @@
 # Changelog
 
+## 2.7.0
+
+**Issues and pull requests, three ways deeper.**
+
+- **What it is linked to.** A pull request now names the issues it closes and an
+  issue names the pull requests that reference it, each clickable straight
+  through to its own tab. A pull request's closing keywords are read from the
+  body the tree already holds, so that direction costs nothing; the reverse
+  comes from the item's timeline, which is the only place REST exposes it.
+  Links made by dragging in GitHub's *Development* panel come back without a
+  target, and are reported as a count rather than quietly dropped.
+- **The diff, without a browser tab.** Click a file to unfold the unified patch
+  inline — GitHub sends it with the file list, so it costs no extra request.
+  **DIFF** on a row opens VS Code's own side-by-side with both sides fetched at
+  their exact commits, which brings syntax highlighting, folding and find along
+  with it; **OPEN ALL DIFFS** does the first ten at once. Both sides are
+  read-only documents behind RUOSTE's own URI scheme, so neither can be mistaken
+  for a working-tree file and saved over. **RUOSTE: Review Changed Files…** does
+  the same from the tree.
+- **Repository filters, like the Actions view.** `ruoste.work.repositories` and
+  `ruoste.work.exclude` take `owner/repo` and `owner/*` patterns, and
+  **Choose Repositories…** builds the list from what is actually in view. A
+  concrete watch list is pushed into the GitHub query as `repo:` qualifiers, so
+  each section's results are spent on repositories you asked for rather than
+  discarded locally; owner wildcards stay a local filter, since `acme/*` is an
+  organisation *or* a user and GitHub has no qualifier meaning either. The view
+  description says what the filter is doing.
+
 ## 2.6.0
 
 **Issues and pull requests.** RUOSTE watched what CI was doing to your code and

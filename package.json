@@ -2,7 +2,7 @@
   "name": "ruoste",
   "displayName": "RUOSTE",
   "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, GitHub Actions and issue/pull-request panels, and a full Spotify player. Tuned for C# and TypeScript.",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -467,6 +467,28 @@
         "title": "Choose Issue Sections\u2026",
         "category": "RUOSTE",
         "icon": "$(filter)"
+      },
+      {
+        "command": "ruoste.work.diff",
+        "title": "Review Changed Files\u2026",
+        "category": "RUOSTE",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "ruoste.work.pickRepositories",
+        "title": "Choose Repositories\u2026",
+        "category": "RUOSTE",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "ruoste.work.hideRepository",
+        "title": "Hide This Repository",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.clearFilters",
+        "title": "Clear Repository Filters",
+        "category": "RUOSTE"
       }
     ],
     "menus": {
@@ -540,6 +562,16 @@
           "command": "ruoste.work.pickSections",
           "when": "view == ruoste.work",
           "group": "1_config@1"
+        },
+        {
+          "command": "ruoste.work.pickRepositories",
+          "when": "view == ruoste.work",
+          "group": "1_config@2"
+        },
+        {
+          "command": "ruoste.work.clearFilters",
+          "when": "view == ruoste.work",
+          "group": "1_config@3"
         }
       ],
       "view/item/context": [
@@ -672,6 +704,16 @@
           "command": "ruoste.work.newIssue",
           "when": "view == ruoste.work && viewItem == ruoste.work.repo",
           "group": "1_edit@1"
+        },
+        {
+          "command": "ruoste.work.diff",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.item\\.pr/",
+          "group": "inline@0"
+        },
+        {
+          "command": "ruoste.work.hideRepository",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.(item|repo)/",
+          "group": "5_filter@1"
         }
       ],
       "commandPalette": [
@@ -773,6 +815,14 @@
         },
         {
           "command": "ruoste.work.checkout",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.diff",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.hideRepository",
           "when": "false"
         }
       ]
@@ -1116,6 +1166,24 @@
           "default": true,
           "description": "Ask before merging a pull request.",
           "order": 48
+        },
+        "ruoste.work.repositories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Only show issues and pull requests from these repositories, as `owner/repo`. Wildcards allowed (`my-org/*`). Empty means every repository you can reach. Run **RUOSTE: Choose Repositories\u2026** to pick from what you have.",
+          "order": 49
+        },
+        "ruoste.work.exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "Repositories to hide, as `owner/repo`. Wildcards allowed (`old-org/*`). Applied after the watch list.",
+          "order": 50
         }
       }
     }
