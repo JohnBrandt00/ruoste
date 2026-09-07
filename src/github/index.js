@@ -3,11 +3,14 @@
 const vscode = require('vscode');
 const api = require('./api');
 const { ActionsProvider } = require('./tree');
-const { ActionsStatus } = require('./status');
+const { ActionsStatus, WorkStatus } = require('./status');
 const { watchWorkspace } = require('./repos');
 const { safeTreeView, noteFeature } = require('../diagnostics');
 const { openPipelinesPanel } = require('./dashboard');
 const { runWorkflow, rerunFailed } = require('./dispatch');
+const { WorkProvider } = require('./work');
+const { openItemPanel, refreshPanels } = require('./item');
+const manage = require('./manage');
 
 /** @param {vscode.ExtensionContext} ctx */
 function activateActions(ctx) {
@@ -158,4 +161,110 @@ function activateActions(ctx) {
   return provider;
 }
 
-module.exports = { activateActions };
+/** Issues and pull requests. Given the Actions client, this shares its ETag
+ *  cache and its serial request queue — two independent pollers hitting GitHub
+ *  concurrently is exactly what the secondary rate limit is there to stop.
+ * @param {vscode.ExtensionContext} ctx
+ * @param {InstanceType<typeof import('./api').GitHubClient>} [client] */
+function activateWork(ctx, client) {
+  const provider = new WorkProvider(ctx, client);
+  const status = new WorkStatus();
+  const view = safeTreeView('ruoste.work', { treeDataProvider: provider, showCollapseAll: true });
+  ctx.subscriptions.push(provider, status);
+  if (view) ctx.subscriptions.push(view);
+
+  const sync = () => {
+    status.update(provider);
+    void vscode.commands.executeCommand('setContext', 'ruoste.work.signedIn', provider.signedIn);
+    if (!view) return;
+    const n = provider.allRows().length;
+    view.description = n ? String(n) : undefined;
+    const review = provider.reviewCount;
+    view.title = review ? `Issues & PRs — ${review} to review` : 'Issues & PRs';
+  };
+  provider.onDidRefresh = sync;
+
+  provider.onTransitions = (events) => {
+    provider.notifier.show(events, (action, item, repo) => {
+      if (action === 'focus') return void vscode.commands.executeCommand('ruoste.work.focus');
+      if (action === 'view') return void vscode.commands.executeCommand('ruoste.work.view', { repo, item });
+      if (action === 'browser' && item?.html_url)
+        return void vscode.env.openExternal(vscode.Uri.parse(item.html_url));
+    });
+  };
+
+  // a mutation from the tree updates any panel showing the same item
+  provider.onDidMutate = (repo, number) => refreshPanels(repo, number);
+
+  /** @param {string} id @param {(...a:any[]) => any} fn */
+  const cmd = (id, fn) => ctx.subscriptions.push(vscode.commands.registerCommand(id, fn));
+
+  cmd('ruoste.work.refresh', () => provider.refresh(false));
+  cmd('ruoste.work.signIn', () => provider.refresh(true));
+  cmd('ruoste.work.focus', () => (view
+    ? view.reveal(undefined, { focus: true }).then(undefined,
+        () => vscode.commands.executeCommand('workbench.view.extension.ruoste'))
+    : vscode.commands.executeCommand('workbench.view.extension.ruoste')));
+
+  cmd('ruoste.work.view', (node) => openItemPanel(ctx, provider, node));
+  cmd('ruoste.work.open', (node) => {
+    const url = node?.item?.html_url;
+    if (url) return vscode.env.openExternal(vscode.Uri.parse(url));
+    const r = node?.repo || provider.workspace[0];
+    if (r) return vscode.env.openExternal(vscode.Uri.parse(`https://${r.host}/${r.owner}/${r.repo}/issues`));
+  });
+  cmd('ruoste.work.copyUrl', async (node) => {
+    const url = node?.item?.html_url;
+    if (!url) return;
+    await vscode.env.clipboard.writeText(url);
+    vscode.window.setStatusBarMessage('URL copied', 2000);
+  });
+
+  cmd('ruoste.work.comment', (node) => manage.comment(provider, node));
+  cmd('ruoste.work.close', (node) => manage.setState(provider, node, 'closed'));
+  cmd('ruoste.work.reopen', (node) => manage.setState(provider, node, 'open'));
+  cmd('ruoste.work.assign', (node) => manage.assign(provider, node));
+  cmd('ruoste.work.label', (node) => manage.label(provider, node));
+  cmd('ruoste.work.requestReview', (node) => manage.requestReview(provider, node));
+  cmd('ruoste.work.merge', (node) => manage.merge(provider, node));
+  cmd('ruoste.work.checkout', (node) => manage.checkout(provider, node));
+  cmd('ruoste.work.newIssue', (node) => manage.newIssue(provider, node?.repo || node));
+
+  cmd('ruoste.work.search', async () => {
+    const hit = await manage.search(provider);
+    if (hit) openItemPanel(ctx, provider, hit);
+  });
+
+  cmd('ruoste.work.pickSections', async () => {
+    const { ALL_SECTIONS } = require('./work');
+    const on = new Set(provider.enabledSections().map((s) => s.id));
+    const picks = await vscode.window.showQuickPick(
+      ALL_SECTIONS.map((s) => ({ label: s.label, id: s.id, picked: on.has(s.id),
+        description: s.id === 'workspace' ? 'open issues and PRs in the repos open here' : `search: ${s.q}` })),
+      { title: 'Which sections should Issues & PRs show?', canPickMany: true, matchOnDescription: true });
+    if (!picks) return;
+    await provider.cfg.update('sections', picks.map((p) => p.id), vscode.ConfigurationTarget.Global);
+    await provider.refresh(false);
+  });
+
+  if (view) ctx.subscriptions.push(
+    view.onDidChangeVisibility((e) => { if (e.visible) void provider.refreshIfStale(); }),
+  );
+  ctx.subscriptions.push(
+    // git state changes fire on every status refresh; only a repo actually
+    // appearing or leaving changes what this view should show
+    watchWorkspace(() => void provider.refreshIfStale(15_000)),
+    vscode.workspace.onDidChangeConfiguration((e) => {
+      if (e.affectsConfiguration('ruoste.work')) void provider.refresh(false);
+    }),
+    vscode.authentication.onDidChangeSessions((e) => {
+      if (e.provider.id === 'github') { provider.login = ''; void provider.refresh(false); }
+    }),
+  );
+
+  noteFeature('github issues & prs', view ? 'ok' : 'running without its tree view');
+  void provider.refresh(false);
+  return provider;
+}
+
+module.exports = { activateActions, activateWork };

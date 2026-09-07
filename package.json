@@ -1,8 +1,8 @@
 {
   "name": "ruoste",
   "displayName": "RUOSTE",
-  "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, a GitHub Actions panel and a full Spotify player. Tuned for C# and TypeScript.",
-  "version": "2.5.0",
+  "description": "Swiss industrial brutalism for VS Code \u2014 three themes, Phosphor file and product icons, Geist Mono with a one-click installer, GitHub Actions and issue/pull-request panels, and a full Spotify player. Tuned for C# and TypeScript.",
+  "version": "2.6.0",
   "publisher": "gapashu",
   "license": "MIT",
   "engines": {
@@ -38,6 +38,10 @@
     "workflow",
     "ci",
     "continuous integration",
+    "issues",
+    "pull requests",
+    "code review",
+    "github",
     "spotify",
     "music",
     "player",
@@ -109,6 +113,11 @@
           "contextualTitle": "RUOSTE \u2014 Pipelines"
         },
         {
+          "id": "ruoste.work",
+          "name": "Issues & PRs",
+          "contextualTitle": "RUOSTE \u2014 Issues & Pull Requests"
+        },
+        {
           "id": "ruoste.spotify.nowPlaying",
           "name": "Now Playing",
           "type": "webview",
@@ -131,6 +140,11 @@
         "view": "ruoste.actions",
         "contents": "Sign in to GitHub to watch workflow runs for this repository.\n[Sign in to GitHub](command:ruoste.actions.signIn)\nRUOSTE uses VS Code's built-in GitHub account \u2014 no personal access token needed.",
         "when": "ruoste.actions.hasRepo && !ruoste.actions.signedIn"
+      },
+      {
+        "view": "ruoste.work",
+        "contents": "Sign in to GitHub to see the issues and pull requests waiting on you.\n[Sign in to GitHub](command:ruoste.work.signIn)\nRUOSTE uses VS Code's built-in GitHub account \u2014 no personal access token needed.",
+        "when": "!ruoste.work.signedIn"
       },
       {
         "view": "ruoste.spotify.library",
@@ -361,6 +375,98 @@
         "command": "ruoste.openLayout",
         "title": "Open Utilities Layout (Pipelines + Player)",
         "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.refresh",
+        "title": "Refresh Issues & PRs",
+        "category": "RUOSTE",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "ruoste.work.signIn",
+        "title": "Sign in to GitHub",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.focus",
+        "title": "Show Issues & Pull Requests",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.view",
+        "title": "Open Issue or Pull Request",
+        "category": "RUOSTE",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "ruoste.work.open",
+        "title": "Open on GitHub",
+        "category": "RUOSTE",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "ruoste.work.copyUrl",
+        "title": "Copy Issue URL",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.comment",
+        "title": "Comment\u2026",
+        "category": "RUOSTE",
+        "icon": "$(comment)"
+      },
+      {
+        "command": "ruoste.work.close",
+        "title": "Close",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.reopen",
+        "title": "Reopen",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.assign",
+        "title": "Assign\u2026",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.label",
+        "title": "Labels\u2026",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.requestReview",
+        "title": "Request Review\u2026",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.merge",
+        "title": "Merge Pull Request\u2026",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.checkout",
+        "title": "Check Out Pull Request Branch",
+        "category": "RUOSTE"
+      },
+      {
+        "command": "ruoste.work.newIssue",
+        "title": "New Issue\u2026",
+        "category": "RUOSTE",
+        "icon": "$(add)"
+      },
+      {
+        "command": "ruoste.work.search",
+        "title": "Search Issues & Pull Requests\u2026",
+        "category": "RUOSTE",
+        "icon": "$(search)"
+      },
+      {
+        "command": "ruoste.work.pickSections",
+        "title": "Choose Issue Sections\u2026",
+        "category": "RUOSTE",
+        "icon": "$(filter)"
       }
     ],
     "menus": {
@@ -414,6 +520,26 @@
           "command": "ruoste.spotify.openPanel",
           "when": "view == ruoste.spotify.nowPlaying",
           "group": "navigation@1"
+        },
+        {
+          "command": "ruoste.work.newIssue",
+          "when": "view == ruoste.work",
+          "group": "navigation@0"
+        },
+        {
+          "command": "ruoste.work.search",
+          "when": "view == ruoste.work",
+          "group": "navigation@1"
+        },
+        {
+          "command": "ruoste.work.refresh",
+          "when": "view == ruoste.work",
+          "group": "navigation@2"
+        },
+        {
+          "command": "ruoste.work.pickSections",
+          "when": "view == ruoste.work",
+          "group": "1_config@1"
         }
       ],
       "view/item/context": [
@@ -491,6 +617,61 @@
           "command": "ruoste.actions.runWorkflow",
           "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.repo/",
           "group": "1_copy@1"
+        },
+        {
+          "command": "ruoste.work.comment",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.item/",
+          "group": "inline@1"
+        },
+        {
+          "command": "ruoste.work.open",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.item/",
+          "group": "inline@2"
+        },
+        {
+          "command": "ruoste.work.assign",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.item/",
+          "group": "1_edit@1"
+        },
+        {
+          "command": "ruoste.work.label",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.item/",
+          "group": "1_edit@2"
+        },
+        {
+          "command": "ruoste.work.requestReview",
+          "when": "view == ruoste.work && viewItem == ruoste.work.item.pr",
+          "group": "1_edit@3"
+        },
+        {
+          "command": "ruoste.work.checkout",
+          "when": "view == ruoste.work && viewItem == ruoste.work.item.pr",
+          "group": "2_pr@1"
+        },
+        {
+          "command": "ruoste.work.merge",
+          "when": "view == ruoste.work && viewItem == ruoste.work.item.pr",
+          "group": "2_pr@2"
+        },
+        {
+          "command": "ruoste.work.close",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.item\\.(pr|issue)$/",
+          "group": "3_state@1"
+        },
+        {
+          "command": "ruoste.work.reopen",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.item\\..*closed$/",
+          "group": "3_state@1"
+        },
+        {
+          "command": "ruoste.work.copyUrl",
+          "when": "view == ruoste.work && viewItem =~ /^ruoste\\.work\\.item/",
+          "group": "4_copy@1"
+        },
+        {
+          "command": "ruoste.work.newIssue",
+          "when": "view == ruoste.work && viewItem == ruoste.work.repo",
+          "group": "1_edit@1"
         }
       ],
       "commandPalette": [
@@ -548,6 +729,50 @@
         },
         {
           "command": "ruoste.actions.rerunFailed",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.view",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.open",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.copyUrl",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.comment",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.close",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.reopen",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.assign",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.label",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.requestReview",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.merge",
+          "when": "false"
+        },
+        {
+          "command": "ruoste.work.checkout",
           "when": "false"
         }
       ]
@@ -785,6 +1010,112 @@
           "maximum": 0.8,
           "markdownDescription": "Share of the utilities column given to the player when running **Open Utilities Layout**.",
           "order": 30
+        },
+        "ruoste.work.sections": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "review",
+              "assigned",
+              "created",
+              "mentioned",
+              "workspace"
+            ],
+            "enumDescriptions": [
+              "Pull requests waiting on your review.",
+              "Issues and pull requests assigned to you.",
+              "Issues and pull requests you opened.",
+              "Anything that mentions you.",
+              "Open issues and pull requests in the repositories open in this window."
+            ]
+          },
+          "default": [
+            "review",
+            "assigned",
+            "created",
+            "workspace"
+          ],
+          "markdownDescription": "Sections shown in the Issues & PRs view, in this order. Each search-backed section costs one request per refresh.",
+          "order": 40
+        },
+        "ruoste.work.include": {
+          "type": "string",
+          "enum": [
+            "both",
+            "issues",
+            "prs"
+          ],
+          "enumDescriptions": [
+            "Issues and pull requests.",
+            "Issues only.",
+            "Pull requests only."
+          ],
+          "default": "both",
+          "description": "What the Issues & PRs view lists.",
+          "order": 41
+        },
+        "ruoste.work.itemLimit": {
+          "type": "number",
+          "default": 25,
+          "minimum": 1,
+          "maximum": 100,
+          "description": "How many items to list per section.",
+          "order": 42
+        },
+        "ruoste.work.autoRefresh": {
+          "type": "boolean",
+          "default": true,
+          "description": "Poll GitHub for new issues and pull requests automatically.",
+          "order": 43
+        },
+        "ruoste.work.refreshInterval": {
+          "type": "number",
+          "default": 180,
+          "minimum": 30,
+          "markdownDescription": "Seconds between polls. Search has its own rate limit (30 requests a minute), which a handful of queries every few minutes never approaches.",
+          "order": 44
+        },
+        "ruoste.work.notifications": {
+          "type": "string",
+          "enum": [
+            "off",
+            "review-requested",
+            "assigned",
+            "all"
+          ],
+          "enumDescriptions": [
+            "Never notify.",
+            "Only when a pull request is sent to you for review.",
+            "Review requests and issues assigned to you.",
+            "Anything new in any section."
+          ],
+          "default": "review-requested",
+          "markdownDescription": "Notify when something new appears. Detected by diffing polls \u2014 the first pass after start-up is silent, so signing in does not announce your whole backlog.",
+          "order": 45
+        },
+        "ruoste.work.statusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show review requests and assigned items in the status bar.",
+          "order": 46
+        },
+        "ruoste.work.mergeMethod": {
+          "type": "string",
+          "enum": [
+            "merge",
+            "squash",
+            "rebase"
+          ],
+          "default": "merge",
+          "description": "Merge method offered first when merging a pull request.",
+          "order": 47
+        },
+        "ruoste.work.confirmMerge": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask before merging a pull request.",
+          "order": 48
         }
       }
     }
@@ -795,12 +1126,12 @@
   ],
   "scripts": {
     "build": "python3 build/emit_themes.py && python3 build/emit_icons.py && python3 build/emit_producticons.py && node build/build_font.mjs 0",
-    "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js test/actions.test.js && python3 build/check_package.py",
+    "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js test/actions.test.js test/work.test.js && python3 build/check_package.py",
     "verify": "node preview/audit.mjs && node preview/spot.mjs && node preview/icons_e2e.mjs",
     "preview": "node preview/render.mjs",
     "package": "vsce package --allow-missing-repository --no-dependencies",
     "all": "npm run build && npm run check && npm run package",
-    "ui": "node preview/spotify_ui.mjs && node preview/pipelines_ui.mjs"
+    "ui": "node preview/spotify_ui.mjs && node preview/pipelines_ui.mjs && node preview/work_ui.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/core": "^2.1.1",

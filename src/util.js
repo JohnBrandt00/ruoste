@@ -108,7 +108,30 @@ function shortRef(ref, max = 28) {
   return `${s.slice(0, head)}…${s.slice(-tail)}`;
 }
 
+/** Map an issue or pull request to a codicon and a theme colour id. GitHub's
+ *  own vocabulary: green open, purple merged, red closed pull request, grey
+ *  draft — a closed issue is purple ("done") unless it was closed as not
+ *  planned, which reads as grey.
+ * @param {any} item an issue or pull request, from search or from a repo listing
+ * @returns {{icon:string, color:string, label:string, kind:'pr'|'issue', open:boolean}} */
+function issuePresentation(item) {
+  const it = item || {};
+  const isPr = Boolean(it.pull_request || it.head || it.merge_commit_sha);
+  const open = it.state === 'open';
+  const merged = Boolean(it.merged_at || it.merged || it.pull_request?.merged_at);
+  if (isPr) {
+    if (merged) return { icon: 'git-merge', color: 'charts.purple', label: 'merged', kind: 'pr', open: false };
+    if (!open) return { icon: 'git-pull-request-closed', color: 'charts.red', label: 'closed', kind: 'pr', open: false };
+    if (it.draft) return { icon: 'git-pull-request-draft', color: 'disabledForeground', label: 'draft', kind: 'pr', open: true };
+    return { icon: 'git-pull-request', color: 'charts.green', label: 'open', kind: 'pr', open: true };
+  }
+  if (!open) return it.state_reason === 'not_planned'
+    ? { icon: 'issue-closed', color: 'disabledForeground', label: 'not planned', kind: 'issue', open: false }
+    : { icon: 'issue-closed', color: 'charts.purple', label: 'closed', kind: 'issue', open: false };
+  return { icon: 'issues', color: 'charts.green', label: 'open', kind: 'issue', open: true };
+}
+
 module.exports = {
   parseRemote, formatDuration, relativeTime,
-  statusPresentation, runElapsed, shortRef,
+  statusPresentation, issuePresentation, runElapsed, shortRef,
 };

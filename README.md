@@ -9,6 +9,9 @@ Three colour themes, a Phosphor **duotone file icon** set, a Phosphor **product
 icon** set that replaces the whole UI chrome, and **Geist Mono in the box**.
 Tuned first for **C#** and **TypeScript**.
 
+Plus the panels that keep you out of the browser: **GitHub Actions**, **issues
+and pull requests**, and a full **Spotify** player.
+
 ![RUOSTE — C#](https://raw.githubusercontent.com/JohnBrandt00/ruoste/main/media/preview-dark-csharp.png)
 
 ![RUOSTE Paperi — TypeScript](https://raw.githubusercontent.com/JohnBrandt00/ruoste/main/media/preview-light-typescript.png)
@@ -273,6 +276,79 @@ cache.
 | `ruoste.actions.confirmDispatch` | `true` | ask before dispatching a run |
 | `ruoste.actions.dashboardLayout` | `grid` | `grid`, `list` or `split` |
 | `ruoste.actions.dashboardCompact` | `false` | tighter rows and smaller type |
+
+
+## Issues & pull requests
+
+The other half of the GitHub story: what is **waiting on you**, in the sidebar,
+without a browser tab.
+
+```
+▾ Review requested · 3
+    Squelch the retry storm      #412 · radiohub · 18m ago
+    Bump the ingest timeout      #77  · edge-router · 2h ago
+▾ Assigned to me · 2
+    Ingest retries hammer…       #388 · radiohub · 2d ago
+▾ This window · 6
+    ▾ JohnBrandt00/radiohub
+        Squelch the retry storm  #412 · radiohub · 18m ago
+```
+
+![Issue and pull request panel](https://raw.githubusercontent.com/JohnBrandt00/ruoste/main/media/preview-issues.png)
+
+**Five sections**, any of them off: pull requests waiting on your review, issues
+and PRs assigned to you, ones you opened, anything that mentions you, and
+everything open in the repositories open in this window. **Choose Issue
+Sections…** picks them from the view header.
+
+**Open one and it is an editor tab**, not a link out: body and conversation
+rendered as markdown, labels, assignees, reviewers, and — for a pull request —
+branch, diff, commits, mergeability, the changed files and the check runs on its
+head commit. Comment from the box at the bottom (⌃⏎ posts), or use the row of
+buttons beside it.
+
+**Managing them, from the tree or the tab:**
+
+| | |
+|---|---|
+| **Comment** | markdown, posted as you |
+| **Close / Reopen** | closing an issue asks *completed* or *not planned*, as GitHub does |
+| **Assign… / Labels…** | multi-select against what the repository actually offers |
+| **Request Review…** | on an open pull request |
+| **Merge…** | merge, squash or rebase, with a confirmation and a conflict check first |
+| **Check Out** | fetches and switches the window to the PR's branch |
+| **New Issue…** | title and body, in any repo open here |
+| **Search…** | full GitHub search syntax — `repo:`, `is:`, `label:`, `review:required` |
+
+A merge is refused before it is attempted if the pull request is a draft, is
+already closed, or conflicts with its base. Checking out is limited to branches
+of the repository itself — a fork's head needs a remote this extension has no
+business adding to your checkout, so that case offers GitHub instead.
+
+**Notifications** when a pull request is sent to you for review — that only, by
+default. As with workflow runs, the first pass after start-up is silent, so
+signing in does not announce your whole backlog, and a burst collapses into one
+summary. The status bar carries the two numbers that matter: *⑂ 3  ◎ 2* —
+review requests and assigned items.
+
+**Cost.** Four search queries answer "what is waiting on me" across every
+repository you can reach; listing issues repository by repository would take one
+request each and still miss the repos you are not watching. Search has its own
+budget — 30 requests a minute — which a poll every three minutes does not
+approach. It shares the Actions client, so the same ETag cache and the same
+serial queue cover both, and an unchanged section costs nothing.
+
+| Setting | Default | |
+|---|---|---|
+| `ruoste.work.sections` | `review, assigned, created, workspace` | which sections, in which order |
+| `ruoste.work.include` | `both` | `both`, `issues` or `prs` |
+| `ruoste.work.itemLimit` | `25` | items listed per section |
+| `ruoste.work.autoRefresh` | `true` | poll automatically |
+| `ruoste.work.refreshInterval` | `180` | seconds between polls (min 30) |
+| `ruoste.work.notifications` | `review-requested` | `off`, `review-requested`, `assigned` or `all` |
+| `ruoste.work.statusBar` | `true` | show the status bar item |
+| `ruoste.work.mergeMethod` | `merge` | method offered first when merging |
+| `ruoste.work.confirmMerge` | `true` | ask before merging |
 
 
 ## Spotify

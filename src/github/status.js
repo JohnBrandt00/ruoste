@@ -1,7 +1,7 @@
 // @ts-check
 'use strict';
 const vscode = require('vscode');
-const { statusPresentation, shortRef, relativeTime, formatDuration, runElapsed } = require('../util');
+const { statusPresentation, issuePresentation, shortRef, relativeTime, formatDuration, runElapsed } = require('../util');
 
 /** Status bar summary across every watched repository. */
 class ActionsStatus {
@@ -75,4 +75,43 @@ class ActionsStatus {
   dispose() { if (this._tick) clearInterval(this._tick); this.item.dispose(); }
 }
 
-module.exports = { ActionsStatus };
+/** Status bar summary for issues and pull requests. Separate from the runs
+ *  item: a red build and a review request are different kinds of urgent, and
+ *  one number hides both. */
+class WorkStatus {
+  constructor() {
+    this.item = vscode.window.createStatusBarItem('ruoste.work', vscode.StatusBarAlignment.Left, 89);
+    this.item.name = 'RUOSTE Issues & PRs';
+    this.item.command = 'ruoste.work.focus';
+    this.item.hide();
+  }
+
+  /** @param {any} p the WorkProvider */
+  update(p) {
+    const cfg = vscode.workspace.getConfiguration('ruoste.work');
+    if (!cfg.get('statusBar', true) || !p || !p.signedIn) { this.item.hide(); return; }
+
+    const review = p.reviewCount, assigned = p.assignedCount;
+    if (!review && !assigned) { this.item.hide(); return; }
+
+    this.item.text = [
+      review ? `$(git-pull-request) ${review}` : '',
+      assigned ? `$(issues) ${assigned}` : '',
+    ].filter(Boolean).join(' ');
+
+    const lines = [];
+    if (review) lines.push(`**${review}** waiting on your review`);
+    if (assigned) lines.push(`**${assigned}** assigned to you`);
+    lines.push('');
+    for (const { item, repo } of [...p.rows('review'), ...p.rows('assigned')].slice(0, 6)) {
+      const pr = issuePresentation(item);
+      lines.push(`\`${pr.label}\` ${repo.owner}/${repo.repo}#${item.number} · ${item.title}`);
+    }
+    this.item.tooltip = new vscode.MarkdownString(lines.join('  \n'));
+    this.item.show();
+  }
+
+  dispose() { this.item.dispose(); }
+}
+
+module.exports = { ActionsStatus, WorkStatus };

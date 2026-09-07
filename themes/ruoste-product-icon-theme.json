@@ -15,67 +15,67 @@
   ],
   "iconDefinitions": {
     "files": {
-      "fontCharacter": "\\E058"
+      "fontCharacter": "\\E05B"
     },
     "explorer-view-icon": {
-      "fontCharacter": "\\E058"
+      "fontCharacter": "\\E05B"
     },
     "search": {
-      "fontCharacter": "\\E083"
+      "fontCharacter": "\\E086"
     },
     "search-view-icon": {
-      "fontCharacter": "\\E083"
+      "fontCharacter": "\\E086"
     },
     "source-control": {
-      "fontCharacter": "\\E065"
+      "fontCharacter": "\\E068"
     },
     "source-control-view-icon": {
-      "fontCharacter": "\\E065"
+      "fontCharacter": "\\E068"
     },
     "debug-alt": {
-      "fontCharacter": "\\E022"
+      "fontCharacter": "\\E023"
     },
     "run-view-icon": {
-      "fontCharacter": "\\E022"
+      "fontCharacter": "\\E023"
     },
     "debug": {
-      "fontCharacter": "\\E022"
+      "fontCharacter": "\\E023"
     },
     "extensions": {
-      "fontCharacter": "\\E09E"
+      "fontCharacter": "\\E0A1"
     },
     "extensions-view-icon": {
-      "fontCharacter": "\\E09E"
+      "fontCharacter": "\\E0A1"
     },
     "beaker": {
-      "fontCharacter": "\\E0BE"
+      "fontCharacter": "\\E0C1"
     },
     "test-view-icon": {
-      "fontCharacter": "\\E0BE"
+      "fontCharacter": "\\E0C1"
     },
     "beaker-stop": {
-      "fontCharacter": "\\E0BE"
+      "fontCharacter": "\\E0C1"
     },
     "remote-explorer": {
-      "fontCharacter": "\\E08B"
+      "fontCharacter": "\\E08E"
     },
     "remote-explorer-view-icon": {
-      "fontCharacter": "\\E08B"
+      "fontCharacter": "\\E08E"
     },
     "settings-gear": {
-      "fontCharacter": "\\E064"
+      "fontCharacter": "\\E067"
     },
     "settings-view-bar-icon": {
-      "fontCharacter": "\\E064"
+      "fontCharacter": "\\E067"
     },
     "gear": {
-      "fontCharacter": "\\E064"
+      "fontCharacter": "\\E067"
     },
     "account": {
-      "fontCharacter": "\\E0C7"
+      "fontCharacter": "\\E0CA"
     },
     "accounts-view-bar-icon": {
-      "fontCharacter": "\\E0C7"
+      "fontCharacter": "\\E0CA"
     },
     "output": {
       "fontCharacter": "\\E013"
@@ -84,91 +84,91 @@
       "fontCharacter": "\\E013"
     },
     "terminal": {
-      "fontCharacter": "\\E0BD"
+      "fontCharacter": "\\E0C0"
     },
     "terminal-view-icon": {
-      "fontCharacter": "\\E0BD"
+      "fontCharacter": "\\E0C0"
     },
     "terminal-bash": {
-      "fontCharacter": "\\E0BD"
+      "fontCharacter": "\\E0C0"
     },
     "terminal-powershell": {
-      "fontCharacter": "\\E0BD"
+      "fontCharacter": "\\E0C0"
     },
     "warning": {
-      "fontCharacter": "\\E0CA"
+      "fontCharacter": "\\E0CD"
     },
     "problems-view-icon": {
-      "fontCharacter": "\\E0CA"
+      "fontCharacter": "\\E0CD"
     },
     "debug-console": {
-      "fontCharacter": "\\E0BC"
+      "fontCharacter": "\\E0BF"
     },
     "debug-console-view-icon": {
-      "fontCharacter": "\\E0BC"
+      "fontCharacter": "\\E0BF"
     },
     "comment-discussion": {
-      "fontCharacter": "\\E02D"
+      "fontCharacter": "\\E030"
     },
     "comments-view-icon": {
-      "fontCharacter": "\\E02D"
+      "fontCharacter": "\\E030"
     },
     "list-tree": {
-      "fontCharacter": "\\E0C5"
+      "fontCharacter": "\\E0C8"
     },
     "outline-view-icon": {
-      "fontCharacter": "\\E0C5"
+      "fontCharacter": "\\E0C8"
     },
     "history": {
-      "fontCharacter": "\\E037"
+      "fontCharacter": "\\E03A"
     },
     "timeline-view-icon": {
-      "fontCharacter": "\\E037"
+      "fontCharacter": "\\E03A"
     },
     "callstack-view-session": {
-      "fontCharacter": "\\E0B3"
+      "fontCharacter": "\\E0B6"
     },
     "chat": {
-      "fontCharacter": "\\E0AD"
+      "fontCharacter": "\\E0B0"
     },
     "copilot": {
-      "fontCharacter": "\\E0AD"
+      "fontCharacter": "\\E0B0"
     },
     "sparkle": {
-      "fontCharacter": "\\E0AD"
+      "fontCharacter": "\\E0B0"
     },
     "robot": {
-      "fontCharacter": "\\E0A2"
+      "fontCharacter": "\\E0A5"
     },
     "chevron-right": {
-      "fontCharacter": "\\E028"
+      "fontCharacter": "\\E029"
     },
     "chevron-left": {
-      "fontCharacter": "\\E027"
-    },
-    "chevron-down": {
-      "fontCharacter": "\\E026"
-    },
-    "chevron-up": {
-      "fontCharacter": "\\E029"
-    },
-    "tree-item-expanded": {
-      "fontCharacter": "\\E026"
-    },
-    "tree-item-loading": {
-      "fontCharacter": "\\E033"
-    },
-    "triangle-right": {
       "fontCharacter": "\\E028"
     },
-    "triangle-down": {
-      "fontCharacter": "\\E026"
-    },
-    "triangle-left": {
+    "chevron-down": {
       "fontCharacter": "\\E027"
     },
-    "triangle-up": {
+    "chevron-up": {
+      "fontCharacter": "\\E02A"
+    },
+    "tree-item-expanded": {
+      "fontCharacter": "\\E027"
+    },
+    "tree-item-loading": {
+      "fontCharacter": "\\E036"
+    },
+    "triangle-right": {
       "fontCharacter": "\\E029"
+    },
+    "triangle-down": {
+      "fontCharacter": "\\E027"
+    },
+    "triangle-left": {
+      "fontCharacter": "\\E028"
+    },
+    "triangle-up": {
+      "fontCharacter": "\\E02A"
     },
     "arrow-right": {
       "fontCharacter": "\\E008"
@@ -219,184 +219,184 @@
       "fontCharacter": "\\E012"
     },
     "chrome-close": {
-      "fontCharacter": "\\E0CC"
+      "fontCharacter": "\\E0CF"
     },
     "close": {
-      "fontCharacter": "\\E0CC"
+      "fontCharacter": "\\E0CF"
     },
     "close-all": {
-      "fontCharacter": "\\E0CC"
+      "fontCharacter": "\\E0CF"
     },
     "chrome-minimize": {
-      "fontCharacter": "\\E089"
+      "fontCharacter": "\\E08C"
     },
     "chrome-maximize": {
-      "fontCharacter": "\\E0B0"
+      "fontCharacter": "\\E0B3"
     },
     "chrome-restore": {
-      "fontCharacter": "\\E03F"
+      "fontCharacter": "\\E042"
     },
     "menu": {
-      "fontCharacter": "\\E07A"
+      "fontCharacter": "\\E07D"
     },
     "three-bars": {
-      "fontCharacter": "\\E07A"
+      "fontCharacter": "\\E07D"
     },
     "list-flat": {
-      "fontCharacter": "\\E07A"
+      "fontCharacter": "\\E07D"
     },
     "more": {
-      "fontCharacter": "\\E048"
+      "fontCharacter": "\\E04B"
     },
     "ellipsis": {
-      "fontCharacter": "\\E048"
+      "fontCharacter": "\\E04B"
     },
     "kebab-vertical": {
-      "fontCharacter": "\\E04A"
+      "fontCharacter": "\\E04D"
     },
     "layout": {
-      "fontCharacter": "\\E075"
+      "fontCharacter": "\\E078"
     },
     "layout-sidebar-left": {
-      "fontCharacter": "\\E0AA"
+      "fontCharacter": "\\E0AD"
     },
     "layout-sidebar-right": {
-      "fontCharacter": "\\E0AA"
+      "fontCharacter": "\\E0AD"
     },
     "layout-panel": {
-      "fontCharacter": "\\E0B1"
+      "fontCharacter": "\\E0B4"
     },
     "layout-menubar": {
-      "fontCharacter": "\\E0A4"
+      "fontCharacter": "\\E0A7"
     },
     "layout-statusbar": {
-      "fontCharacter": "\\E0A4"
+      "fontCharacter": "\\E0A7"
     },
     "split-horizontal": {
-      "fontCharacter": "\\E03C"
-    },
-    "split-vertical": {
-      "fontCharacter": "\\E0A4"
-    },
-    "editor-layout": {
-      "fontCharacter": "\\E075"
-    },
-    "multiple-windows": {
       "fontCharacter": "\\E03F"
     },
+    "split-vertical": {
+      "fontCharacter": "\\E0A7"
+    },
+    "editor-layout": {
+      "fontCharacter": "\\E078"
+    },
+    "multiple-windows": {
+      "fontCharacter": "\\E042"
+    },
     "screen-full": {
-      "fontCharacter": "\\E041"
+      "fontCharacter": "\\E044"
     },
     "screen-normal": {
-      "fontCharacter": "\\E040"
+      "fontCharacter": "\\E043"
     },
     "zoom-in": {
-      "fontCharacter": "\\E085"
+      "fontCharacter": "\\E088"
     },
     "zoom-out": {
-      "fontCharacter": "\\E084"
+      "fontCharacter": "\\E087"
     },
     "file": {
-      "fontCharacter": "\\E051"
-    },
-    "file-code": {
-      "fontCharacter": "\\E052"
-    },
-    "file-text": {
-      "fontCharacter": "\\E056"
-    },
-    "file-media": {
-      "fontCharacter": "\\E053"
-    },
-    "file-pdf": {
       "fontCharacter": "\\E054"
     },
-    "file-zip": {
-      "fontCharacter": "\\E057"
-    },
-    "file-binary": {
-      "fontCharacter": "\\E018"
-    },
-    "file-submodule": {
-      "fontCharacter": "\\E060"
-    },
-    "folder": {
-      "fontCharacter": "\\E05D"
-    },
-    "folder-opened": {
-      "fontCharacter": "\\E05E"
-    },
-    "folder-active": {
-      "fontCharacter": "\\E05E"
-    },
-    "root-folder": {
-      "fontCharacter": "\\E060"
-    },
-    "root-folder-opened": {
-      "fontCharacter": "\\E05E"
-    },
-    "new-file": {
+    "file-code": {
       "fontCharacter": "\\E055"
     },
+    "file-text": {
+      "fontCharacter": "\\E059"
+    },
+    "file-media": {
+      "fontCharacter": "\\E056"
+    },
+    "file-pdf": {
+      "fontCharacter": "\\E057"
+    },
+    "file-zip": {
+      "fontCharacter": "\\E05A"
+    },
+    "file-binary": {
+      "fontCharacter": "\\E019"
+    },
+    "file-submodule": {
+      "fontCharacter": "\\E063"
+    },
+    "folder": {
+      "fontCharacter": "\\E060"
+    },
+    "folder-opened": {
+      "fontCharacter": "\\E061"
+    },
+    "folder-active": {
+      "fontCharacter": "\\E061"
+    },
+    "root-folder": {
+      "fontCharacter": "\\E063"
+    },
+    "root-folder-opened": {
+      "fontCharacter": "\\E061"
+    },
+    "new-file": {
+      "fontCharacter": "\\E058"
+    },
     "new-folder": {
-      "fontCharacter": "\\E05F"
+      "fontCharacter": "\\E062"
     },
     "go-to-file": {
       "fontCharacter": "\\E009"
     },
     "go-to-search": {
-      "fontCharacter": "\\E083"
+      "fontCharacter": "\\E086"
     },
     "save": {
-      "fontCharacter": "\\E05C"
+      "fontCharacter": "\\E05F"
     },
     "save-all": {
-      "fontCharacter": "\\E05C"
+      "fontCharacter": "\\E05F"
     },
     "save-as": {
-      "fontCharacter": "\\E05C"
+      "fontCharacter": "\\E05F"
     },
     "trash": {
-      "fontCharacter": "\\E0C4"
+      "fontCharacter": "\\E0C7"
     },
     "trashcan": {
-      "fontCharacter": "\\E0C4"
+      "fontCharacter": "\\E0C7"
     },
     "edit": {
-      "fontCharacter": "\\E093"
+      "fontCharacter": "\\E096"
     },
     "pencil": {
-      "fontCharacter": "\\E093"
+      "fontCharacter": "\\E096"
     },
     "copy": {
-      "fontCharacter": "\\E03E"
+      "fontCharacter": "\\E041"
     },
     "clippy": {
-      "fontCharacter": "\\E035"
+      "fontCharacter": "\\E038"
     },
     "clone": {
-      "fontCharacter": "\\E03F"
+      "fontCharacter": "\\E042"
     },
     "add": {
-      "fontCharacter": "\\E098"
+      "fontCharacter": "\\E09B"
     },
     "plus": {
-      "fontCharacter": "\\E098"
+      "fontCharacter": "\\E09B"
     },
     "remove": {
-      "fontCharacter": "\\E089"
+      "fontCharacter": "\\E08C"
     },
     "dash": {
-      "fontCharacter": "\\E089"
+      "fontCharacter": "\\E08C"
     },
     "check": {
-      "fontCharacter": "\\E02E"
+      "fontCharacter": "\\E031"
     },
     "check-all": {
-      "fontCharacter": "\\E030"
+      "fontCharacter": "\\E033"
     },
     "close-dirty": {
-      "fontCharacter": "\\E031"
+      "fontCharacter": "\\E034"
     },
     "refresh": {
       "fontCharacter": "\\E00D"
@@ -411,46 +411,46 @@
       "fontCharacter": "\\E003"
     },
     "history-2": {
-      "fontCharacter": "\\E037"
+      "fontCharacter": "\\E03A"
     },
     "clock": {
-      "fontCharacter": "\\E036"
+      "fontCharacter": "\\E039"
     },
     "search-stop": {
-      "fontCharacter": "\\E0CD"
+      "fontCharacter": "\\E0D0"
     },
     "filter": {
-      "fontCharacter": "\\E062"
+      "fontCharacter": "\\E065"
     },
     "filter-filled": {
-      "fontCharacter": "\\E062"
+      "fontCharacter": "\\E065"
     },
     "clear-all": {
-      "fontCharacter": "\\E021"
+      "fontCharacter": "\\E022"
     },
     "list-selection": {
-      "fontCharacter": "\\E0A8"
+      "fontCharacter": "\\E0AB"
     },
     "selection": {
-      "fontCharacter": "\\E0A8"
+      "fontCharacter": "\\E0AB"
     },
     "word-wrap": {
       "fontCharacter": "\\E00B"
     },
     "whitespace": {
-      "fontCharacter": "\\E047"
+      "fontCharacter": "\\E04A"
     },
     "case-sensitive": {
-      "fontCharacter": "\\E0BF"
+      "fontCharacter": "\\E0C2"
     },
     "whole-word": {
-      "fontCharacter": "\\E0C0"
+      "fontCharacter": "\\E0C3"
     },
     "regex": {
       "fontCharacter": "\\E014"
     },
     "preserve-case": {
-      "fontCharacter": "\\E0BF"
+      "fontCharacter": "\\E0C2"
     },
     "replace": {
       "fontCharacter": "\\E010"
@@ -459,169 +459,169 @@
       "fontCharacter": "\\E010"
     },
     "pin": {
-      "fontCharacter": "\\E09D"
+      "fontCharacter": "\\E0A0"
     },
     "pinned": {
-      "fontCharacter": "\\E09D"
+      "fontCharacter": "\\E0A0"
     },
     "bookmark": {
-      "fontCharacter": "\\E01B"
+      "fontCharacter": "\\E01C"
     },
     "tag": {
-      "fontCharacter": "\\E0B9"
+      "fontCharacter": "\\E0BC"
     },
     "symbol-color": {
-      "fontCharacter": "\\E091"
+      "fontCharacter": "\\E094"
     },
     "paintcan": {
-      "fontCharacter": "\\E090"
+      "fontCharacter": "\\E093"
     },
     "preview": {
-      "fontCharacter": "\\E04F"
+      "fontCharacter": "\\E052"
     },
     "eye": {
-      "fontCharacter": "\\E04F"
+      "fontCharacter": "\\E052"
     },
     "eye-closed": {
-      "fontCharacter": "\\E050"
+      "fontCharacter": "\\E053"
     },
     "eye-watch": {
-      "fontCharacter": "\\E04F"
+      "fontCharacter": "\\E052"
     },
     "lock": {
-      "fontCharacter": "\\E07F"
+      "fontCharacter": "\\E082"
     },
     "unlock": {
-      "fontCharacter": "\\E080"
+      "fontCharacter": "\\E083"
     },
     "key": {
-      "fontCharacter": "\\E073"
-    },
-    "shield": {
-      "fontCharacter": "\\E0A9"
-    },
-    "error": {
-      "fontCharacter": "\\E0CD"
-    },
-    "error-small": {
-      "fontCharacter": "\\E0CD"
-    },
-    "warning-alt": {
-      "fontCharacter": "\\E0CA"
-    },
-    "alert": {
-      "fontCharacter": "\\E0CA"
-    },
-    "info": {
-      "fontCharacter": "\\E071"
-    },
-    "question": {
-      "fontCharacter": "\\E09F"
-    },
-    "lightbulb": {
       "fontCharacter": "\\E076"
     },
-    "lightbulb-autofix": {
-      "fontCharacter": "\\E077"
-    },
-    "lightbulb-sparkle": {
-      "fontCharacter": "\\E077"
-    },
-    "bell": {
-      "fontCharacter": "\\E015"
-    },
-    "bell-dot": {
-      "fontCharacter": "\\E016"
-    },
-    "bell-slash": {
-      "fontCharacter": "\\E017"
-    },
-    "megaphone": {
-      "fontCharacter": "\\E087"
-    },
-    "report": {
-      "fontCharacter": "\\E059"
-    },
-    "flag": {
-      "fontCharacter": "\\E059"
-    },
-    "pass": {
-      "fontCharacter": "\\E02F"
-    },
-    "pass-filled": {
-      "fontCharacter": "\\E02F"
-    },
-    "verified": {
-      "fontCharacter": "\\E0A7"
-    },
-    "circle-slash": {
-      "fontCharacter": "\\E09B"
-    },
-    "stop-circle": {
-      "fontCharacter": "\\E0B7"
-    },
-    "circle-large": {
-      "fontCharacter": "\\E031"
-    },
-    "circle-filled": {
-      "fontCharacter": "\\E031"
-    },
-    "circle-outline": {
-      "fontCharacter": "\\E031"
-    },
-    "circle-large-filled": {
-      "fontCharacter": "\\E031"
-    },
-    "circle-large-outline": {
-      "fontCharacter": "\\E031"
-    },
-    "loading": {
-      "fontCharacter": "\\E033"
-    },
-    "sync-spin": {
-      "fontCharacter": "\\E033"
-    },
-    "star": {
-      "fontCharacter": "\\E0B4"
-    },
-    "star-full": {
-      "fontCharacter": "\\E0B4"
-    },
-    "star-empty": {
-      "fontCharacter": "\\E0B4"
-    },
-    "star-half": {
-      "fontCharacter": "\\E0B5"
-    },
-    "heart": {
-      "fontCharacter": "\\E06E"
-    },
-    "thumbsup": {
-      "fontCharacter": "\\E0C2"
-    },
-    "thumbsdown": {
-      "fontCharacter": "\\E0C1"
-    },
-    "smiley": {
+    "shield": {
       "fontCharacter": "\\E0AC"
     },
+    "error": {
+      "fontCharacter": "\\E0D0"
+    },
+    "error-small": {
+      "fontCharacter": "\\E0D0"
+    },
+    "warning-alt": {
+      "fontCharacter": "\\E0CD"
+    },
+    "alert": {
+      "fontCharacter": "\\E0CD"
+    },
+    "info": {
+      "fontCharacter": "\\E074"
+    },
+    "question": {
+      "fontCharacter": "\\E0A2"
+    },
+    "lightbulb": {
+      "fontCharacter": "\\E079"
+    },
+    "lightbulb-autofix": {
+      "fontCharacter": "\\E07A"
+    },
+    "lightbulb-sparkle": {
+      "fontCharacter": "\\E07A"
+    },
+    "bell": {
+      "fontCharacter": "\\E016"
+    },
+    "bell-dot": {
+      "fontCharacter": "\\E017"
+    },
+    "bell-slash": {
+      "fontCharacter": "\\E018"
+    },
+    "megaphone": {
+      "fontCharacter": "\\E08A"
+    },
+    "report": {
+      "fontCharacter": "\\E05C"
+    },
+    "flag": {
+      "fontCharacter": "\\E05C"
+    },
+    "pass": {
+      "fontCharacter": "\\E032"
+    },
+    "pass-filled": {
+      "fontCharacter": "\\E032"
+    },
+    "verified": {
+      "fontCharacter": "\\E0AA"
+    },
+    "circle-slash": {
+      "fontCharacter": "\\E09E"
+    },
+    "stop-circle": {
+      "fontCharacter": "\\E0BA"
+    },
+    "circle-large": {
+      "fontCharacter": "\\E034"
+    },
+    "circle-filled": {
+      "fontCharacter": "\\E034"
+    },
+    "circle-outline": {
+      "fontCharacter": "\\E034"
+    },
+    "circle-large-filled": {
+      "fontCharacter": "\\E034"
+    },
+    "circle-large-outline": {
+      "fontCharacter": "\\E034"
+    },
+    "loading": {
+      "fontCharacter": "\\E036"
+    },
+    "sync-spin": {
+      "fontCharacter": "\\E036"
+    },
+    "star": {
+      "fontCharacter": "\\E0B7"
+    },
+    "star-full": {
+      "fontCharacter": "\\E0B7"
+    },
+    "star-empty": {
+      "fontCharacter": "\\E0B7"
+    },
+    "star-half": {
+      "fontCharacter": "\\E0B8"
+    },
+    "heart": {
+      "fontCharacter": "\\E071"
+    },
+    "thumbsup": {
+      "fontCharacter": "\\E0C5"
+    },
+    "thumbsdown": {
+      "fontCharacter": "\\E0C4"
+    },
+    "smiley": {
+      "fontCharacter": "\\E0AF"
+    },
     "feedback": {
-      "fontCharacter": "\\E02C"
+      "fontCharacter": "\\E02E"
     },
     "git-commit": {
-      "fontCharacter": "\\E066"
-    },
-    "git-merge": {
       "fontCharacter": "\\E069"
     },
+    "git-merge": {
+      "fontCharacter": "\\E06C"
+    },
     "git-pull-request": {
-      "fontCharacter": "\\E06A"
+      "fontCharacter": "\\E06D"
     },
     "git-compare": {
-      "fontCharacter": "\\E067"
+      "fontCharacter": "\\E06A"
     },
     "git-fetch": {
-      "fontCharacter": "\\E039"
+      "fontCharacter": "\\E03C"
     },
     "git-stash": {
       "fontCharacter": "\\E000"
@@ -633,88 +633,88 @@
       "fontCharacter": "\\E000"
     },
     "repo": {
-      "fontCharacter": "\\E068"
+      "fontCharacter": "\\E06B"
     },
     "repo-clone": {
-      "fontCharacter": "\\E068"
+      "fontCharacter": "\\E06B"
     },
     "repo-forked": {
-      "fontCharacter": "\\E068"
+      "fontCharacter": "\\E06B"
     },
     "repo-pull": {
-      "fontCharacter": "\\E039"
+      "fontCharacter": "\\E03C"
     },
     "repo-push": {
-      "fontCharacter": "\\E03A"
+      "fontCharacter": "\\E03D"
     },
     "cloud": {
-      "fontCharacter": "\\E038"
+      "fontCharacter": "\\E03B"
     },
     "cloud-download": {
-      "fontCharacter": "\\E039"
+      "fontCharacter": "\\E03C"
     },
     "cloud-upload": {
-      "fontCharacter": "\\E03A"
+      "fontCharacter": "\\E03D"
     },
     "diff": {
-      "fontCharacter": "\\E067"
+      "fontCharacter": "\\E06A"
     },
     "diff-added": {
-      "fontCharacter": "\\E09A"
+      "fontCharacter": "\\E09D"
     },
     "diff-removed": {
-      "fontCharacter": "\\E08A"
+      "fontCharacter": "\\E08D"
     },
     "diff-modified": {
-      "fontCharacter": "\\E046"
+      "fontCharacter": "\\E049"
     },
     "diff-renamed": {
       "fontCharacter": "\\E00A"
     },
     "diff-ignored": {
-      "fontCharacter": "\\E032"
+      "fontCharacter": "\\E035"
     },
     "diff-single": {
-      "fontCharacter": "\\E067"
+      "fontCharacter": "\\E06A"
     },
     "diff-multiple": {
-      "fontCharacter": "\\E067"
+      "fontCharacter": "\\E06A"
     },
     "compare-changes": {
-      "fontCharacter": "\\E067"
+      "fontCharacter": "\\E06A"
     },
     "request-changes": {
       "fontCharacter": "\\E003"
     },
     "source-control-view-icon-2": {
-      "fontCharacter": "\\E065"
+      "fontCharacter": "\\E068"
     },
     "play": {
-      "fontCharacter": "\\E094"
+      "fontCharacter": "\\E097"
     },
     "run": {
-      "fontCharacter": "\\E094"
+      "fontCharacter": "\\E097"
     },
     "run-all": {
-      "fontCharacter": "\\E095"
+      "fontCharacter": "\\E098"
     },
     "play-circle": {
-      "fontCharacter": "\\E095"
+      "fontCharacter": "\\E098"
     },
     "debug-start": {
-      "fontCharacter": "\\E094"
+      "fontCharacter": "\\E097"
     },
     "debug-continue": {
-      "fontCharacter": "\\E094"
+      "fontCharacter": "\\E097"
     },
     "debug-continue-small": {
-      "fontCharacter": "\\E094"
+      "fontCharacter": "\\E097"
     },
     "debug-pause": {
-      "fontCharacter": "\\E092"
+      "fontCharacter": "\\E095"
     },
     "debug-stop": {
-      "fontCharacter": "\\E0B6"
+      "fontCharacter": "\\E0B9"
     },
     "debug-restart": {
       "fontCharacter": "\\E003"
@@ -723,7 +723,7 @@
       "fontCharacter": "\\E003"
     },
     "debug-disconnect": {
-      "fontCharacter": "\\E097"
+      "fontCharacter": "\\E09A"
     },
     "debug-rerun": {
       "fontCharacter": "\\E00D"
@@ -741,19 +741,19 @@
       "fontCharacter": "\\E001"
     },
     "debug-breakpoint": {
-      "fontCharacter": "\\E031"
+      "fontCharacter": "\\E034"
     },
     "debug-breakpoint-conditional": {
-      "fontCharacter": "\\E031"
+      "fontCharacter": "\\E034"
     },
     "debug-breakpoint-function": {
-      "fontCharacter": "\\E031"
+      "fontCharacter": "\\E034"
     },
     "debug-breakpoint-log": {
-      "fontCharacter": "\\E031"
+      "fontCharacter": "\\E034"
     },
     "debug-breakpoint-data": {
-      "fontCharacter": "\\E031"
+      "fontCharacter": "\\E034"
     },
     "debug-stackframe": {
       "fontCharacter": "\\E008"
@@ -762,358 +762,394 @@
       "fontCharacter": "\\E008"
     },
     "debug-line-by-line": {
-      "fontCharacter": "\\E07E"
+      "fontCharacter": "\\E081"
     },
     "watch": {
-      "fontCharacter": "\\E04F"
+      "fontCharacter": "\\E052"
     },
     "variable-group": {
-      "fontCharacter": "\\E01F"
-    },
-    "stop": {
-      "fontCharacter": "\\E0B6"
-    },
-    "primitive-square": {
-      "fontCharacter": "\\E0B0"
-    },
-    "record": {
-      "fontCharacter": "\\E0A1"
-    },
-    "vm": {
-      "fontCharacter": "\\E06C"
-    },
-    "vm-active": {
-      "fontCharacter": "\\E06C"
-    },
-    "vm-running": {
-      "fontCharacter": "\\E06C"
-    },
-    "server": {
-      "fontCharacter": "\\E06C"
-    },
-    "server-process": {
-      "fontCharacter": "\\E06C"
-    },
-    "server-environment": {
-      "fontCharacter": "\\E06C"
-    },
-    "database": {
-      "fontCharacter": "\\E044"
-    },
-    "dashboard": {
-      "fontCharacter": "\\E063"
-    },
-    "graph": {
-      "fontCharacter": "\\E02A"
-    },
-    "graph-line": {
-      "fontCharacter": "\\E02A"
-    },
-    "graph-scatter": {
-      "fontCharacter": "\\E02B"
-    },
-    "pulse": {
-      "fontCharacter": "\\E09C"
-    },
-    "radio-tower": {
       "fontCharacter": "\\E020"
     },
+    "stop": {
+      "fontCharacter": "\\E0B9"
+    },
+    "primitive-square": {
+      "fontCharacter": "\\E0B3"
+    },
+    "record": {
+      "fontCharacter": "\\E0A4"
+    },
+    "vm": {
+      "fontCharacter": "\\E06F"
+    },
+    "vm-active": {
+      "fontCharacter": "\\E06F"
+    },
+    "vm-running": {
+      "fontCharacter": "\\E06F"
+    },
+    "server": {
+      "fontCharacter": "\\E06F"
+    },
+    "server-process": {
+      "fontCharacter": "\\E06F"
+    },
+    "server-environment": {
+      "fontCharacter": "\\E06F"
+    },
+    "database": {
+      "fontCharacter": "\\E047"
+    },
+    "dashboard": {
+      "fontCharacter": "\\E066"
+    },
+    "graph": {
+      "fontCharacter": "\\E02B"
+    },
+    "graph-line": {
+      "fontCharacter": "\\E02B"
+    },
+    "graph-scatter": {
+      "fontCharacter": "\\E02C"
+    },
+    "pulse": {
+      "fontCharacter": "\\E09F"
+    },
+    "radio-tower": {
+      "fontCharacter": "\\E021"
+    },
     "rocket": {
-      "fontCharacter": "\\E0A3"
+      "fontCharacter": "\\E0A6"
     },
     "beaker-2": {
-      "fontCharacter": "\\E05B"
+      "fontCharacter": "\\E05E"
     },
     "wand": {
-      "fontCharacter": "\\E082"
+      "fontCharacter": "\\E085"
     },
     "tools": {
-      "fontCharacter": "\\E0CB"
+      "fontCharacter": "\\E0CE"
     },
     "wrench": {
-      "fontCharacter": "\\E0CB"
+      "fontCharacter": "\\E0CE"
     },
     "settings": {
-      "fontCharacter": "\\E0AB"
+      "fontCharacter": "\\E0AE"
     },
     "package": {
-      "fontCharacter": "\\E08F"
+      "fontCharacter": "\\E092"
     },
     "archive": {
       "fontCharacter": "\\E000"
     },
     "library": {
-      "fontCharacter": "\\E01C"
+      "fontCharacter": "\\E01D"
     },
     "book": {
-      "fontCharacter": "\\E01A"
+      "fontCharacter": "\\E01B"
     },
     "note": {
-      "fontCharacter": "\\E08D"
+      "fontCharacter": "\\E090"
     },
     "notebook": {
-      "fontCharacter": "\\E08E"
+      "fontCharacter": "\\E091"
     },
     "globe": {
-      "fontCharacter": "\\E06B"
+      "fontCharacter": "\\E06E"
     },
     "link": {
-      "fontCharacter": "\\E079"
+      "fontCharacter": "\\E07C"
     },
     "link-external": {
       "fontCharacter": "\\E009"
     },
     "home": {
-      "fontCharacter": "\\E070"
+      "fontCharacter": "\\E073"
     },
     "mail": {
-      "fontCharacter": "\\E04C"
+      "fontCharacter": "\\E04F"
     },
     "calendar": {
-      "fontCharacter": "\\E024"
-    },
-    "device-mobile": {
-      "fontCharacter": "\\E045"
-    },
-    "device-desktop": {
-      "fontCharacter": "\\E08B"
-    },
-    "desktop-download": {
-      "fontCharacter": "\\E04B"
-    },
-    "export": {
-      "fontCharacter": "\\E04E"
-    },
-    "cloud-2": {
-      "fontCharacter": "\\E038"
-    },
-    "plug": {
-      "fontCharacter": "\\E096"
-    },
-    "circuit-board": {
-      "fontCharacter": "\\E034"
-    },
-    "chip": {
-      "fontCharacter": "\\E042"
-    },
-    "telescope": {
-      "fontCharacter": "\\E019"
-    },
-    "compass": {
-      "fontCharacter": "\\E03D"
-    },
-    "target": {
-      "fontCharacter": "\\E0BB"
-    },
-    "location": {
-      "fontCharacter": "\\E086"
-    },
-    "milestone": {
-      "fontCharacter": "\\E05A"
-    },
-    "project": {
-      "fontCharacter": "\\E072"
-    },
-    "checklist": {
-      "fontCharacter": "\\E07C"
-    },
-    "tasklist": {
-      "fontCharacter": "\\E07C"
-    },
-    "list-ordered": {
-      "fontCharacter": "\\E07E"
-    },
-    "list-unordered": {
-      "fontCharacter": "\\E07B"
-    },
-    "table": {
-      "fontCharacter": "\\E0B8"
-    },
-    "layers": {
-      "fontCharacter": "\\E0B2"
-    },
-    "person": {
-      "fontCharacter": "\\E0C6"
-    },
-    "organization": {
-      "fontCharacter": "\\E023"
-    },
-    "people": {
-      "fontCharacter": "\\E0C8"
-    },
-    "code": {
-      "fontCharacter": "\\E03B"
-    },
-    "terminal-cmd": {
-      "fontCharacter": "\\E0BD"
-    },
-    "json": {
-      "fontCharacter": "\\E01E"
-    },
-    "bracket": {
-      "fontCharacter": "\\E01F"
-    },
-    "bracket-dot": {
-      "fontCharacter": "\\E01F"
-    },
-    "bracket-error": {
-      "fontCharacter": "\\E01F"
-    },
-    "quote": {
-      "fontCharacter": "\\E0A0"
-    },
-    "text-size": {
-      "fontCharacter": "\\E0BF"
-    },
-    "list-filter": {
-      "fontCharacter": "\\E062"
-    },
-    "options": {
-      "fontCharacter": "\\E0AB"
-    },
-    "keyboard": {
-      "fontCharacter": "\\E074"
-    },
-    "mic": {
-      "fontCharacter": "\\E088"
-    },
-    "unmute": {
-      "fontCharacter": "\\E0AE"
-    },
-    "mute": {
-      "fontCharacter": "\\E0AF"
-    },
-    "play-2": {
-      "fontCharacter": "\\E094"
-    },
-    "music": {
-      "fontCharacter": "\\E08C"
-    },
-    "device-camera": {
       "fontCharacter": "\\E025"
     },
-    "device-camera-video": {
+    "device-mobile": {
+      "fontCharacter": "\\E048"
+    },
+    "device-desktop": {
+      "fontCharacter": "\\E08E"
+    },
+    "desktop-download": {
+      "fontCharacter": "\\E04E"
+    },
+    "export": {
+      "fontCharacter": "\\E051"
+    },
+    "cloud-2": {
+      "fontCharacter": "\\E03B"
+    },
+    "plug": {
+      "fontCharacter": "\\E099"
+    },
+    "circuit-board": {
+      "fontCharacter": "\\E037"
+    },
+    "chip": {
+      "fontCharacter": "\\E045"
+    },
+    "telescope": {
+      "fontCharacter": "\\E01A"
+    },
+    "compass": {
+      "fontCharacter": "\\E040"
+    },
+    "target": {
+      "fontCharacter": "\\E0BE"
+    },
+    "location": {
+      "fontCharacter": "\\E089"
+    },
+    "milestone": {
+      "fontCharacter": "\\E05D"
+    },
+    "project": {
+      "fontCharacter": "\\E075"
+    },
+    "checklist": {
+      "fontCharacter": "\\E07F"
+    },
+    "tasklist": {
+      "fontCharacter": "\\E07F"
+    },
+    "list-ordered": {
+      "fontCharacter": "\\E081"
+    },
+    "list-unordered": {
+      "fontCharacter": "\\E07E"
+    },
+    "table": {
+      "fontCharacter": "\\E0BB"
+    },
+    "layers": {
+      "fontCharacter": "\\E0B5"
+    },
+    "person": {
       "fontCharacter": "\\E0C9"
     },
+    "organization": {
+      "fontCharacter": "\\E024"
+    },
+    "people": {
+      "fontCharacter": "\\E0CB"
+    },
+    "code": {
+      "fontCharacter": "\\E03E"
+    },
+    "terminal-cmd": {
+      "fontCharacter": "\\E0C0"
+    },
+    "json": {
+      "fontCharacter": "\\E01F"
+    },
+    "bracket": {
+      "fontCharacter": "\\E020"
+    },
+    "bracket-dot": {
+      "fontCharacter": "\\E020"
+    },
+    "bracket-error": {
+      "fontCharacter": "\\E020"
+    },
+    "quote": {
+      "fontCharacter": "\\E0A3"
+    },
+    "text-size": {
+      "fontCharacter": "\\E0C2"
+    },
+    "list-filter": {
+      "fontCharacter": "\\E065"
+    },
+    "options": {
+      "fontCharacter": "\\E0AE"
+    },
+    "keyboard": {
+      "fontCharacter": "\\E077"
+    },
+    "mic": {
+      "fontCharacter": "\\E08B"
+    },
+    "unmute": {
+      "fontCharacter": "\\E0B1"
+    },
+    "mute": {
+      "fontCharacter": "\\E0B2"
+    },
+    "play-2": {
+      "fontCharacter": "\\E097"
+    },
+    "music": {
+      "fontCharacter": "\\E08F"
+    },
+    "device-camera": {
+      "fontCharacter": "\\E026"
+    },
+    "device-camera-video": {
+      "fontCharacter": "\\E0CC"
+    },
     "watch-2": {
-      "fontCharacter": "\\E036"
+      "fontCharacter": "\\E039"
     },
     "hourglass": {
-      "fontCharacter": "\\E06F"
+      "fontCharacter": "\\E072"
     },
     "combine": {
       "fontCharacter": "\\E011"
     },
     "symbol-class": {
-      "fontCharacter": "\\E043"
-    },
-    "symbol-structure": {
-      "fontCharacter": "\\E043"
-    },
-    "symbol-object": {
-      "fontCharacter": "\\E043"
-    },
-    "symbol-interface": {
-      "fontCharacter": "\\E032"
-    },
-    "symbol-enum": {
-      "fontCharacter": "\\E07D"
-    },
-    "symbol-enum-member": {
       "fontCharacter": "\\E046"
     },
-    "symbol-namespace": {
-      "fontCharacter": "\\E0C5"
+    "symbol-structure": {
+      "fontCharacter": "\\E046"
     },
-    "symbol-module": {
-      "fontCharacter": "\\E08F"
+    "symbol-object": {
+      "fontCharacter": "\\E046"
     },
-    "symbol-package": {
-      "fontCharacter": "\\E08F"
+    "symbol-interface": {
+      "fontCharacter": "\\E035"
     },
-    "symbol-method": {
-      "fontCharacter": "\\E061"
+    "symbol-enum": {
+      "fontCharacter": "\\E080"
     },
-    "symbol-function": {
-      "fontCharacter": "\\E061"
-    },
-    "symbol-constructor": {
-      "fontCharacter": "\\E061"
-    },
-    "symbol-event": {
-      "fontCharacter": "\\E078"
-    },
-    "symbol-field": {
-      "fontCharacter": "\\E0BA"
-    },
-    "symbol-property": {
-      "fontCharacter": "\\E0BA"
-    },
-    "symbol-variable": {
-      "fontCharacter": "\\E01F"
-    },
-    "symbol-constant": {
-      "fontCharacter": "\\E081"
-    },
-    "symbol-parameter": {
-      "fontCharacter": "\\E0AB"
-    },
-    "symbol-type-parameter": {
-      "fontCharacter": "\\E01D"
-    },
-    "symbol-string": {
-      "fontCharacter": "\\E0A0"
-    },
-    "symbol-numeric": {
-      "fontCharacter": "\\E06D"
-    },
-    "symbol-number": {
-      "fontCharacter": "\\E06D"
-    },
-    "symbol-boolean": {
-      "fontCharacter": "\\E0C3"
-    },
-    "symbol-array": {
-      "fontCharacter": "\\E01F"
-    },
-    "symbol-key": {
-      "fontCharacter": "\\E073"
-    },
-    "symbol-keyword": {
-      "fontCharacter": "\\E0BF"
-    },
-    "symbol-operator": {
-      "fontCharacter": "\\E099"
-    },
-    "symbol-file": {
-      "fontCharacter": "\\E051"
-    },
-    "symbol-folder": {
-      "fontCharacter": "\\E05D"
-    },
-    "symbol-reference": {
-      "fontCharacter": "\\E079"
-    },
-    "symbol-snippet": {
-      "fontCharacter": "\\E0A6"
-    },
-    "symbol-text": {
-      "fontCharacter": "\\E0C0"
-    },
-    "symbol-unit": {
-      "fontCharacter": "\\E0A5"
-    },
-    "symbol-null": {
-      "fontCharacter": "\\E032"
-    },
-    "symbol-misc": {
+    "symbol-enum-member": {
       "fontCharacter": "\\E049"
     },
+    "symbol-namespace": {
+      "fontCharacter": "\\E0C8"
+    },
+    "symbol-module": {
+      "fontCharacter": "\\E092"
+    },
+    "symbol-package": {
+      "fontCharacter": "\\E092"
+    },
+    "symbol-method": {
+      "fontCharacter": "\\E064"
+    },
+    "symbol-function": {
+      "fontCharacter": "\\E064"
+    },
+    "symbol-constructor": {
+      "fontCharacter": "\\E064"
+    },
+    "symbol-event": {
+      "fontCharacter": "\\E07B"
+    },
+    "symbol-field": {
+      "fontCharacter": "\\E0BD"
+    },
+    "symbol-property": {
+      "fontCharacter": "\\E0BD"
+    },
+    "symbol-variable": {
+      "fontCharacter": "\\E020"
+    },
+    "symbol-constant": {
+      "fontCharacter": "\\E084"
+    },
+    "symbol-parameter": {
+      "fontCharacter": "\\E0AE"
+    },
+    "symbol-type-parameter": {
+      "fontCharacter": "\\E01E"
+    },
+    "symbol-string": {
+      "fontCharacter": "\\E0A3"
+    },
+    "symbol-numeric": {
+      "fontCharacter": "\\E070"
+    },
+    "symbol-number": {
+      "fontCharacter": "\\E070"
+    },
+    "symbol-boolean": {
+      "fontCharacter": "\\E0C6"
+    },
+    "symbol-array": {
+      "fontCharacter": "\\E020"
+    },
+    "symbol-key": {
+      "fontCharacter": "\\E076"
+    },
+    "symbol-keyword": {
+      "fontCharacter": "\\E0C2"
+    },
+    "symbol-operator": {
+      "fontCharacter": "\\E09C"
+    },
+    "symbol-file": {
+      "fontCharacter": "\\E054"
+    },
+    "symbol-folder": {
+      "fontCharacter": "\\E060"
+    },
+    "symbol-reference": {
+      "fontCharacter": "\\E07C"
+    },
+    "symbol-snippet": {
+      "fontCharacter": "\\E0A9"
+    },
+    "symbol-text": {
+      "fontCharacter": "\\E0C3"
+    },
+    "symbol-unit": {
+      "fontCharacter": "\\E0A8"
+    },
+    "symbol-null": {
+      "fontCharacter": "\\E035"
+    },
+    "symbol-misc": {
+      "fontCharacter": "\\E04C"
+    },
     "symbol-ruler": {
-      "fontCharacter": "\\E0A5"
+      "fontCharacter": "\\E0A8"
     },
     "symbol-value": {
-      "fontCharacter": "\\E04D"
+      "fontCharacter": "\\E050"
+    },
+    "issues": {
+      "fontCharacter": "\\E0A4"
+    },
+    "issue-opened": {
+      "fontCharacter": "\\E0A4"
+    },
+    "issue-reopened": {
+      "fontCharacter": "\\E0A4"
+    },
+    "issue-closed": {
+      "fontCharacter": "\\E032"
+    },
+    "issue-draft": {
+      "fontCharacter": "\\E035"
+    },
+    "git-pull-request-closed": {
+      "fontCharacter": "\\E06D"
+    },
+    "git-pull-request-draft": {
+      "fontCharacter": "\\E06D"
+    },
+    "git-pull-request-go-to-changes": {
+      "fontCharacter": "\\E06A"
+    },
+    "git-pull-request-new-changes": {
+      "fontCharacter": "\\E06A"
+    },
+    "mention": {
+      "fontCharacter": "\\E015"
+    },
+    "comment": {
+      "fontCharacter": "\\E02D"
+    },
+    "comment-add": {
+      "fontCharacter": "\\E02F"
     }
   }
 }

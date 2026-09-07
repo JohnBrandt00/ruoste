@@ -2,7 +2,7 @@
 'use strict';
 const vscode = require('vscode');
 const fonts = require('./fonts');
-const { activateActions } = require('./github');
+const { activateActions, activateWork } = require('./github');
 const { activateSpotify } = require('./spotify');
 const { registerDiagnostics, noteFeature } = require('./diagnostics');
 
@@ -34,6 +34,9 @@ function activate(ctx) {
   });
 
   const actions = safely('GitHub Actions', () => activateActions(ctx));
+  // reuse the Actions client so both pollers share one ETag cache and one
+  // serial request queue against GitHub
+  const work = safely('GitHub Issues & PRs', () => activateWork(ctx, actions?.client));
   const spotify = safely('Spotify', () => activateSpotify(ctx));
 
   // One command that builds the whole utilities column: the pipelines dashboard
@@ -68,6 +71,8 @@ function activate(ctx) {
     githubSignedIn: !!actions?.signedIn,
     repoCount: actions?.repos?.repos?.length,
     rateLimit: actions?.client?.budget(),
+    workItems: work?.allRows().length,
+    workReview: work?.reviewCount,
     spotifyClientId: !!spotify?.auth?.clientId,
     spotifySignedIn: !!spotify?.auth?.signedIn,
     redirectUri: spotify?.auth?.redirectUri,

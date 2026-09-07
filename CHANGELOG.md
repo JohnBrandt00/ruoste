@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.6.0
+
+**Issues and pull requests.** RUOSTE watched what CI was doing to your code and
+had nothing to say about the code itself. A second view, **Issues & PRs**, now
+carries the other half: pull requests waiting on your review, issues assigned to
+you, what you opened, what mentions you, and everything open in the repositories
+open in this window. Sections are yours to choose and reorder.
+
+- **A detail tab per item.** Body and conversation rendered as markdown —
+  headings, fences, task lists, quotes — with labels, assignees and reviewers.
+  For a pull request: branch, diff, commits, mergeability, the changed files and
+  the check runs on the head commit. The markdown is rendered in the extension
+  host and escaped before anything is parsed, so nothing a stranger writes in an
+  issue reaches the webview as markup.
+- **Managing them** from the tree or the tab: comment, close (asking *completed*
+  or *not planned*, as GitHub does), reopen, assign, label, request review, merge
+  and check out the branch. Plus **New Issue…** and a **Search…** that takes
+  GitHub's full query syntax.
+- **A merge is checked before it is attempted** — draft, already closed, or
+  conflicting with its base each get a specific answer instead of a 405 from the
+  API. Checking out is limited to branches of the repository itself; a fork's
+  head needs a remote RUOSTE will not add to your checkout, and says so.
+- **Notifications** for review requests by default. Like the runs notifier, the
+  first pass after start-up is silent and a burst collapses into one summary.
+- **Status bar** shows review requests and assigned items, beside the runs item
+  rather than folded into it — a red build and a review request are different
+  kinds of urgent.
+- **Four requests per poll, not one per repository.** Search answers the
+  cross-repo question directly, and the view shares the Actions client, so both
+  pollers use one ETag cache and one serial queue against GitHub.
+
 ## 2.5.0
 
 **One container again.** 2.3.2 split Actions and Spotify into two activity bar

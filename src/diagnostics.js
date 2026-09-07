@@ -63,6 +63,7 @@ function registerDiagnostics(ctx, getState) {
       `      signed in     ${s.githubSignedIn ? 'yes' : 'no'}`,
       `      repositories  ${s.repoCount ?? '—'}`,
       `      rate limit    ${s.rateLimit || '—'}`,
+      `      issues/prs    ${s.workItems ?? '—'}${s.workReview ? ` (${s.workReview} to review)` : ''}`,
       '',
       '  SPOTIFY',
       `      client id     ${s.spotifyClientId ? 'set' : 'NOT SET'}`,

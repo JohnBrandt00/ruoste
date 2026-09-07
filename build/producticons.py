@@ -166,4 +166,13 @@ MAP = {
  "symbol-snippet":"scissors", "symbol-text":"text-t", "symbol-unit":"ruler",
  "symbol-null":"circle-dashed", "symbol-misc":"dots-three-circle",
  "symbol-ruler":"ruler", "symbol-value":"equals",
+ # ── issues and pull requests ───────────────────────────────────
+ # state is carried by colour, as it is for workflow runs, so the closed and
+ # draft variants keep the shape of the thing rather than inventing a glyph
+ "issues":"record", "issue-opened":"record", "issue-reopened":"record",
+ "issue-closed":"check-circle", "issue-draft":"circle-dashed",
+ "git-pull-request-closed":"git-pull-request", "git-pull-request-draft":"git-pull-request",
+ "git-pull-request-go-to-changes":"git-diff", "git-pull-request-new-changes":"git-diff",
+ "mention":"at", "comment":"chat-circle", "comment-add":"chat-circle-text",
+
 }
