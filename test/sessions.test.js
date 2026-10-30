@@ -446,15 +446,16 @@ test('handleWebviewMessage ignores select with an unknown sessionId and accepts 
 test('handleWebviewMessage opens a report inside the session cwd and refuses one outside', (t) => {
   const base = tmp(t);
   const cwd = path.join(base, 'proj');
-  put(path.join(cwd, 'r', 'a.md'), 'x');
+  const rep = '.claude/work/s/reports/a.md';
+  put(path.join(cwd, rep), 'x');
   put(path.join(base, 'outside.md'), 'x');
   const m = MODEL([ROW({ cwd })]);
-  const ok = handleWebviewMessage({ type: 'openReport', sessionId: SID, path: 'r/a.md' }, m);
+  const ok = handleWebviewMessage({ type: 'openReport', sessionId: SID, path: rep }, m);
   assert.equal(ok.action, 'open');
-  assert.equal(ok.action === 'open' && fs.realpathSync(ok.file), fs.realpathSync(path.join(cwd, 'r', 'a.md')));
+  assert.equal(ok.action === 'open' && fs.realpathSync(ok.file), fs.realpathSync(path.join(cwd, rep)));
   assert.deepEqual(handleWebviewMessage({ type: 'openReport', sessionId: SID, path: '../outside.md' }, m), { action: 'ignore' });
   assert.deepEqual(handleWebviewMessage({ type: 'openReport', sessionId: SID, path: path.join(base, 'outside.md') }, m), { action: 'ignore' });
-  assert.deepEqual(handleWebviewMessage({ type: 'openReport', sessionId: 'nope', path: 'r/a.md' }, m), { action: 'ignore' });
+  assert.deepEqual(handleWebviewMessage({ type: 'openReport', sessionId: 'nope', path: rep }, m), { action: 'ignore' });
 });
 
 test('createStore builds a model that holds no transcript message text', (t) => {
@@ -482,11 +483,37 @@ test('openReport never opens a <pid>.<hash>.key file, even when the session cwd 
   const key = path.join(home, '.claude', 'sessions', '100.abc123.key');
   fs.mkdirSync(path.dirname(key), { recursive: true });
   fs.writeFileSync(key, 'secret');
-  const ok = path.join(home, 'reports', 'r.md');   // control: a normal report in the same cwd opens
+  const ok = path.join(home, '.claude', 'work', 's', 'reports', 'r.md');   // control: a normal report in the same cwd opens
   fs.mkdirSync(path.dirname(ok), { recursive: true });
   fs.writeFileSync(ok, '# r');
   const model = /** @type {any} */ ({ sessions: [{ sessionId: SID, pid: 100, cwd: home, name: 'x', status: 'working', owned: false }] });
-  assert.equal(handleWebviewMessage({ type: 'openReport', sessionId: SID, path: 'reports/r.md' }, model).action, 'open');
+  assert.equal(handleWebviewMessage({ type: 'openReport', sessionId: SID, path: '.claude/work/s/reports/r.md' }, model).action, 'open');
   const r = handleWebviewMessage({ type: 'openReport', sessionId: SID, path: '.claude/sessions/100.abc123.key' }, model);
   assert.equal(r.action, 'ignore');
+});
+
+test('openReport opens only a .md inside <cwd>/.claude/work (allowlist), with the cwd at the home folder', (t) => {
+  const home = tmp(t);
+  const outside = tmp(t);
+  put(path.join(home, '.claude', '.credentials.json'), 'secret');
+  put(path.join(home, '.claude', 'projects', 'p', 's.jsonl'), '{}');
+  put(path.join(home, '.claude', 'sessions', '100.abc123.key'), 'secret');
+  put(path.join(home, '.claude', 'work', 's', 'reports', 'x.md'), '# x');
+  put(path.join(home, '.claude', 'work', 's', 'notes.txt'), 'x');
+  put(path.join(outside, 'leak.md'), 'leak');
+  fs.symlinkSync(path.join(outside, 'leak.md'), path.join(home, '.claude', 'work', 'link.md'), 'file');
+  fs.symlinkSync(outside, path.join(home, '.claude', 'work', 'jct'), 'junction');
+  fs.symlinkSync(path.join(home, '.claude', 'projects', 'p', 's.jsonl'), path.join(home, '.claude', 'work', 'in.md'), 'file');   // .md name, target inside cwd but outside work
+  const model = /** @type {any} */ ({ sessions: [{ sessionId: SID, pid: 100, cwd: home, name: 'x', status: 'working', owned: false }] });
+  const act = (p) => handleWebviewMessage({ type: 'openReport', sessionId: SID, path: p }, model).action;
+  assert.equal(act('.claude/work/s/reports/x.md'), 'open');
+  assert.deepEqual({
+    cred: act('.claude/.credentials.json'),
+    transcript: act('.claude/projects/p/s.jsonl'),
+    key: act('.claude/sessions/100.abc123.key'),
+    txt: act('.claude/work/s/notes.txt'),
+    fileLink: act('.claude/work/link.md'),
+    junction: act('.claude/work/jct/leak.md'),
+    inCwdLink: act('.claude/work/in.md'),
+  }, { cred: 'ignore', transcript: 'ignore', key: 'ignore', txt: 'ignore', fileLink: 'ignore', junction: 'ignore', inCwdLink: 'ignore' });
 });
