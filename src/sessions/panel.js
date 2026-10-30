@@ -22,6 +22,7 @@ function handleWebviewMessage(msg, model) {
       const root = fs.realpathSync(row.cwd);
       const file = fs.realpathSync(path.resolve(row.cwd, msg.path));
       const rel = path.relative(root, file);
+      if (/\.key$/i.test(file)) return ignore;   // session secrets: never open
       if (rel && !rel.startsWith('..') && !path.isAbsolute(rel)) return { action: 'open', file };
     } catch { /* missing file or cwd: refuse */ }
   }
