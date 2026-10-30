@@ -141,6 +141,8 @@ function createStore(deps) {
 
 /** Shown when a control command gets a session that this window did not start. */
 const GUARD_MESSAGE = 'RUOSTE did not start this session.';
+/** Shown when a control command runs from the palette and this window owns no session. */
+const NONE_MESSAGE = 'RUOSTE did not start a session.';
 
 /** Terminals this window started, by sessionId, and the four control commands (P2).
  *  Only a terminal in this registry can be stopped, sent input or shown: an argument that claims
@@ -160,6 +162,10 @@ function createControl(getModel) {
    *  @param {unknown} arg @returns {Promise<vscode.Terminal|undefined>} */
   const target = async (arg) => {
     if (arg === undefined) {
+      if (!terminals.size) {
+        void vscode.window.showWarningMessage(NONE_MESSAGE);
+        return undefined;
+      }
       const rows = getModel().sessions;
       const items = [...terminals.keys()].map((sessionId) => {
         const row = rows.find((r) => r.sessionId === sessionId);
