@@ -136,6 +136,37 @@ function createStore(deps) {
   return { refresh, getAgents };
 }
 
+/** Shown when a control command gets a session that this window did not start. */
+const GUARD_MESSAGE = 'RUOSTE did not start this session.';
+
+/** Terminals this window started, by sessionId, and the four control commands (P2).
+ *  Only a terminal in this registry can be stopped, sent input or shown: an argument that claims
+ *  `owned` is never trusted. Quick pick items carry `sessionId`; a picked item goes through the guard too.
+ *  @param {() => R.ViewModel} getModel */
+function createControl(getModel) {
+  /** @type {Map<string, vscode.Terminal>} */
+  const terminals = new Map();
+  /** The terminal RUOSTE started for `sessionId`; otherwise show GUARD_MESSAGE and return undefined.
+   *  @param {unknown} sessionId @returns {vscode.Terminal|undefined} */
+  const ownedTerminal = (sessionId) => { void sessionId; void getModel; throw new Error('Not implemented'); };
+  /** Pick a workspace folder, open a terminal there and run `claude --session-id <uuid>`.
+   *  @returns {Promise<void>} */
+  const start = async () => { throw new Error('Not implemented'); };
+  /** Ask, then dispose the owned terminal.
+   *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
+   *  @returns {Promise<void>} */
+  const stop = async (arg) => { void arg; throw new Error('Not implemented'); };
+  /** Ask for one line and send it to the owned terminal.
+   *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
+   *  @returns {Promise<void>} */
+  const sendInput = async (arg) => { void arg; throw new Error('Not implemented'); };
+  /** Show the owned terminal.
+   *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
+   *  @returns {Promise<void>} */
+  const showTerminal = async (arg) => { void arg; throw new Error('Not implemented'); };
+  return { terminals, ownedTerminal, start, stop, sendInput, showTerminal };
+}
+
 /** @param {number} pid @returns {boolean} */
 function pidAlive(pid) {
   try { process.kill(pid, 0); return true; }
@@ -163,6 +194,7 @@ function activateSessions(ctx, deps) {
     return model;
   };
   const provider = new SessionsProvider(() => model, store.getAgents, deps && deps.now);
+  const control = createControl(() => model);
   const view = safeTreeView('ruoste.sessions', { treeDataProvider: provider });
   const poller = new Poller(async () => {
     getModel();
@@ -180,8 +212,12 @@ function activateSessions(ctx, deps) {
       const id = arg && (arg.row ? arg.row.sessionId : arg.sessionId);
       panel.openChiefView(ctx, getModel, typeof id === 'string' ? id : undefined);
     }),
+    vscode.commands.registerCommand('ruoste.sessions.start', () => control.start()),
+    vscode.commands.registerCommand('ruoste.sessions.stop', (arg) => control.stop(arg)),
+    vscode.commands.registerCommand('ruoste.sessions.sendInput', (arg) => control.sendInput(arg)),
+    vscode.commands.registerCommand('ruoste.sessions.showTerminal', (arg) => control.showTerminal(arg)),
   );
   return { provider, poller };
 }
 
-module.exports = { activateSessions, Poller, SessionsProvider, createStore };
+module.exports = { activateSessions, Poller, SessionsProvider, createStore, createControl, GUARD_MESSAGE };

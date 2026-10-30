@@ -181,6 +181,30 @@
         "icon": "$(dashboard)"
       },
       {
+        "command": "ruoste.sessions.start",
+        "title": "Start Claude Session",
+        "category": "RUOSTE",
+        "icon": "$(add)"
+      },
+      {
+        "command": "ruoste.sessions.stop",
+        "title": "Stop Claude Session",
+        "category": "RUOSTE",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "ruoste.sessions.sendInput",
+        "title": "Send a Line to Claude Session",
+        "category": "RUOSTE",
+        "icon": "$(send)"
+      },
+      {
+        "command": "ruoste.sessions.showTerminal",
+        "title": "Show Claude Session Terminal",
+        "category": "RUOSTE",
+        "icon": "$(terminal)"
+      },
+      {
         "command": "ruoste.installFont",
         "title": "Install Geist Mono",
         "category": "RUOSTE"
@@ -765,6 +789,22 @@
         },
         {
           "command": "ruoste.sessions.openChiefView",
+          "when": "config.ruoste.sessions.enabled"
+        },
+        {
+          "command": "ruoste.sessions.start",
+          "when": "config.ruoste.sessions.enabled"
+        },
+        {
+          "command": "ruoste.sessions.stop",
+          "when": "config.ruoste.sessions.enabled"
+        },
+        {
+          "command": "ruoste.sessions.sendInput",
+          "when": "config.ruoste.sessions.enabled"
+        },
+        {
+          "command": "ruoste.sessions.showTerminal",
           "when": "config.ruoste.sessions.enabled"
         },
         {
