@@ -4,6 +4,7 @@ const vscode = require('vscode');
 const fonts = require('./fonts');
 const { activateActions, activateWork } = require('./github');
 const { activateSpotify } = require('./spotify');
+const { activateSessions } = require('./sessions');
 const { registerDiagnostics, noteFeature } = require('./diagnostics');
 
 /** Run one feature's setup in isolation. A synchronous failure in one must not
@@ -38,6 +39,7 @@ function activate(ctx) {
   // serial request queue against GitHub
   const work = safely('GitHub Issues & PRs', () => activateWork(ctx, actions?.client));
   const spotify = safely('Spotify', () => activateSpotify(ctx));
+  safely('Claude Sessions', () => activateSessions(ctx));
 
   // One command that builds the whole utilities column: the pipelines dashboard
   // with the player stacked beneath it, in an editor group beside your work.

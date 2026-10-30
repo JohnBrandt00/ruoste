@@ -1,0 +1,53 @@
+/* RUOSTE · Claude sessions: hairlines, one accent, state carried by a coloured mark. */
+:root {
+  --ink:    var(--vscode-editor-background, #14120E);
+  --panel:  var(--vscode-sideBar-background, #100E0B);
+  --fg:     var(--vscode-foreground, #E4DFD3);
+  --mute:   var(--vscode-descriptionForeground, #A6A196);
+  --rule:   var(--vscode-panel-border, #2C2822);
+  --accent: var(--vscode-activityBar-activeBorder, #C57749);
+  --hover:  var(--vscode-list-hoverBackground, rgba(255,255,255,.05));
+  --pass:   var(--vscode-testing-iconPassed, #8DA668);
+  --fail:   var(--vscode-testing-iconFailed, #C76067);
+  --queued: var(--vscode-testing-iconQueued, #C7A560);
+  --merged: var(--vscode-charts-purple, #9A7AA0);
+  --input:  var(--vscode-input-background, #1A1713);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: var(--vscode-editor-font-family, ui-monospace, monospace);
+  font-size: 12px; color: var(--fg); background: var(--ink);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+header {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; background: var(--panel); border-bottom: 1px solid var(--rule);
+}
+.brand { font-weight: 700; letter-spacing: .16em; font-size: 10px; padding: 2px 6px; border: 1px solid var(--accent); color: var(--accent); }
+.spacer { flex: 1 1 auto; }
+#budget { display: flex; flex-wrap: wrap; gap: 12px; color: var(--mute); }
+.win b { color: var(--fg); }
+.win.hot b { color: var(--fail); }
+#banner:empty { display: none; }
+#banner { padding: 6px 14px; border-bottom: 1px solid var(--rule); color: var(--queued); }
+#banner .err { color: var(--fail); }
+main { flex: 1 1 auto; overflow-y: auto; padding: 0 14px 14px; }
+section { padding-top: 12px; }
+h2 { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); font-weight: 400; padding-bottom: 6px; border-bottom: 1px solid var(--rule); }
+.empty { color: var(--mute); padding: 8px 0; }
+.item { display: grid; grid-template-columns: 16px 1fr auto; gap: 2px 8px; align-items: baseline; padding: 6px 4px; border-bottom: 1px solid var(--rule); }
+button.item { width: 100%; font: inherit; color: inherit; background: none; border: 0; border-bottom: 1px solid var(--rule); text-align: left; cursor: pointer; }
+button.item:hover { background: var(--hover); }
+button.item:focus-visible { outline: 1px solid var(--accent); outline-offset: -1px; }
+.item.sel { background: var(--hover); box-shadow: inset 3px 0 0 var(--accent); }
+.item.sel .name { color: var(--accent); font-weight: 700; }
+.icon { text-align: center; }
+.name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sub { grid-column: 2 / 4; color: var(--mute); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tag { color: var(--mute); letter-spacing: .08em; font-size: 10px; }
+.st-working, .st-running { color: var(--pass); }
+.st-needsPermission, .st-needsInput { color: var(--fail); }
+.st-waiting { color: var(--queued); }
+.st-ended, .st-unknown, .st-finished { color: var(--mute); }
+.report { grid-column: 2 / 4; justify-self: start; font: inherit; color: var(--accent); background: none; border: 0; cursor: pointer; text-decoration: underline; padding: 0; }

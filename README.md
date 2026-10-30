@@ -418,6 +418,14 @@ serial queue cover both, and an unchanged section costs nothing.
 | `ruoste.work.exclude` | `[]` | repos to hide — wildcards allowed |
 
 
+## Claude sessions
+
+See every Claude Code session on this machine, and what each one needs, in the RUOSTE sidebar.
+
+- **Sessions list.** Each session shows a status icon: working, needs permission, needs input, waiting or ended. It is read from the files in `~/.claude`. RUOSTE only reads them. It never writes them, and it never reads `.key` files.
+- **Chief View.** **RUOSTE: Open Claude Chief View** opens a panel with the session list, the chief ledger timeline, the agent roster (model, effort, state, status, report, tokens) and the 5-hour and 7-day budget. A report opens only when it is inside the folder of the session.
+- **Off by default.** The view is always in the sidebar. While the setting is off, it shows a short message. Set `ruoste.sessions.enabled` to `true`, then **reload the window**. A change to this setting does not take effect until you reload.
+
 ## Spotify
 
 A full player in the sidebar — Now Playing webview, plus a library tree for your

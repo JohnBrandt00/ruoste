@@ -127,10 +127,25 @@
           "id": "ruoste.spotify.library",
           "name": "Spotify Library",
           "contextualTitle": "RUOSTE \u2014 Spotify Library"
+        },
+        {
+          "id": "ruoste.sessions",
+          "name": "Claude Sessions",
+          "contextualTitle": "RUOSTE \u2014 Claude Sessions"
         }
       ]
     },
     "viewsWelcome": [
+      {
+        "view": "ruoste.sessions",
+        "contents": "Claude Sessions is off. Turn on the setting, then reload the window.\n[Open Setting](command:workbench.action.openSettings?%5B%22ruoste.sessions.enabled%22%5D)",
+        "when": "!config.ruoste.sessions.enabled"
+      },
+      {
+        "view": "ruoste.sessions",
+        "contents": "No Claude sessions are open.",
+        "when": "config.ruoste.sessions.enabled"
+      },
       {
         "view": "ruoste.actions",
         "contents": "Open a folder whose git remote points at GitHub to watch its workflow runs here.\n[Open Folder](command:vscode.openFolder)",
@@ -153,6 +168,18 @@
       }
     ],
     "commands": [
+      {
+        "command": "ruoste.sessions.refresh",
+        "title": "Refresh Claude Sessions",
+        "category": "RUOSTE",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "ruoste.sessions.openChiefView",
+        "title": "Open Claude Chief View",
+        "category": "RUOSTE",
+        "icon": "$(dashboard)"
+      },
       {
         "command": "ruoste.installFont",
         "title": "Install Geist Mono",
@@ -494,6 +521,16 @@
     "menus": {
       "view/title": [
         {
+          "command": "ruoste.sessions.openChiefView",
+          "when": "view == ruoste.sessions && config.ruoste.sessions.enabled",
+          "group": "navigation@1"
+        },
+        {
+          "command": "ruoste.sessions.refresh",
+          "when": "view == ruoste.sessions && config.ruoste.sessions.enabled",
+          "group": "navigation@2"
+        },
+        {
           "command": "ruoste.actions.openDashboard",
           "when": "view == ruoste.actions",
           "group": "navigation@0"
@@ -575,6 +612,11 @@
         }
       ],
       "view/item/context": [
+        {
+          "command": "ruoste.sessions.openChiefView",
+          "when": "view == ruoste.sessions && viewItem =~ /^claudeSession/",
+          "group": "inline@1"
+        },
         {
           "command": "ruoste.actions.open",
           "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.(run|job|repo)/",
@@ -717,6 +759,14 @@
         }
       ],
       "commandPalette": [
+        {
+          "command": "ruoste.sessions.refresh",
+          "when": "config.ruoste.sessions.enabled"
+        },
+        {
+          "command": "ruoste.sessions.openChiefView",
+          "when": "config.ruoste.sessions.enabled"
+        },
         {
           "command": "ruoste.actions.open",
           "when": "false"
@@ -1061,6 +1111,12 @@
           "markdownDescription": "Share of the utilities column given to the player when running **Open Utilities Layout**.",
           "order": 30
         },
+        "ruoste.sessions.enabled": {
+          "type": "boolean",
+          "default": false,
+          "scope": "application",
+          "description": "Show Claude Code sessions in the RUOSTE sidebar. Reload the window after you change this setting."
+        },
         "ruoste.work.sections": {
           "type": "array",
           "items": {
@@ -1194,12 +1250,12 @@
   ],
   "scripts": {
     "build": "python3 build/emit_themes.py && python3 build/emit_icons.py && python3 build/emit_producticons.py && node build/build_font.mjs 0",
-    "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js test/actions.test.js test/work.test.js && python3 build/check_package.py",
+    "check": "tsc -p jsconfig.json && node --test test/util.test.js test/spotify.test.js test/actions.test.js test/work.test.js test/sessions.test.js && python3 build/check_package.py",
     "verify": "node preview/audit.mjs && node preview/spot.mjs && node preview/icons_e2e.mjs",
     "preview": "node preview/render.mjs",
     "package": "vsce package --allow-missing-repository --no-dependencies",
     "all": "npm run build && npm run check && npm run package",
-    "ui": "node preview/spotify_ui.mjs && node preview/pipelines_ui.mjs && node preview/work_ui.mjs"
+    "ui": "node preview/spotify_ui.mjs && node preview/pipelines_ui.mjs && node preview/work_ui.mjs && node preview/sessions_ui.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/core": "^2.1.1",
