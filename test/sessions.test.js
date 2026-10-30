@@ -412,7 +412,7 @@ test('Poller skips a tick while one is in flight', async () => {
   assert.equal(calls, 1);
   /** @type {any} */ (release)();
   await first;
-  await p.tick();
+  void p.tick();   // the third tick stays in flight on purpose: do not await it
   assert.equal(calls, 2);
 });
 
