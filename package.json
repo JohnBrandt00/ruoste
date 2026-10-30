@@ -647,6 +647,16 @@
           "group": "inline@1"
         },
         {
+          "command": "ruoste.sessions.stop",
+          "when": "view == ruoste.sessions && viewItem == claudeSession.owned",
+          "group": "inline@2"
+        },
+        {
+          "command": "ruoste.sessions.stop",
+          "when": "view == ruoste.sessions && viewItem == claudeSession.owned",
+          "group": "2_control@2"
+        },
+        {
           "command": "ruoste.actions.open",
           "when": "view == ruoste.actions && viewItem =~ /^ruoste\\.(run|job|repo)/",
           "group": "inline@1"

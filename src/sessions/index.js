@@ -151,7 +151,26 @@ function createControl(getModel) {
   const terminals = new Map();
   /** The terminal RUOSTE started for `sessionId`; otherwise show GUARD_MESSAGE and return undefined.
    *  @param {unknown} sessionId @returns {vscode.Terminal|undefined} */
-  const ownedTerminal = (sessionId) => { void sessionId; void getModel; throw new Error('Not implemented'); };
+  const ownedTerminal = (sessionId) => {
+    const term = typeof sessionId === 'string' ? terminals.get(sessionId) : undefined;
+    if (!term) void vscode.window.showWarningMessage(GUARD_MESSAGE);
+    return term;
+  };
+  /** The owned terminal for a command argument; every entry path ends in `ownedTerminal`.
+   *  @param {unknown} arg @returns {Promise<vscode.Terminal|undefined>} */
+  const target = async (arg) => {
+    if (arg === undefined) {
+      const rows = getModel().sessions;
+      const items = [...terminals.keys()].map((sessionId) => {
+        const row = rows.find((r) => r.sessionId === sessionId);
+        return { label: row ? row.name : sessionId, description: row ? row.cwd : '', sessionId };
+      });
+      const picked = await vscode.window.showQuickPick(items, { placeHolder: 'Select a Claude session' });
+      return picked ? ownedTerminal(picked.sessionId) : undefined;
+    }
+    const el = /** @type {any} */ (arg);
+    return ownedTerminal(typeof arg === 'string' ? arg : el && el.row ? el.row.sessionId : undefined);
+  };
   /** Pick a workspace folder, open a terminal there and run `claude --session-id <uuid>`.
    *  @returns {Promise<void>} */
   const start = async () => {
@@ -170,7 +189,12 @@ function createControl(getModel) {
   /** Ask, then dispose the owned terminal.
    *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
    *  @returns {Promise<void>} */
-  const stop = async (arg) => { void arg; throw new Error('Not implemented'); };
+  const stop = async (arg) => {
+    const term = await target(arg);
+    if (!term) return;
+    const ok = await vscode.window.showWarningMessage('Stop this Claude session?', { modal: true }, 'Stop');
+    if (ok === 'Stop') term.dispose();
+  };
   /** Ask for one line and send it to the owned terminal.
    *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
    *  @returns {Promise<void>} */
