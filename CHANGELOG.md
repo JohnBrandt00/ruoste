@@ -5,6 +5,7 @@
 **Claude sessions.**
 
 - A new **Claude Sessions** view lists your Claude Code sessions with their status, including **needs permission**. A **Chief View** panel shows the chief ledger timeline, the agent roster and the budget. It is off by default. Set `ruoste.sessions.enabled` to `true` and reload the window. A change to the setting needs a window reload.
+- Four new commands: **RUOSTE: Start Claude Session**, **Stop Claude Session**, **Send a Line to Claude Session** and **Show Claude Session Terminal**. They start `claude` in a VS Code terminal and control only the sessions that RUOSTE started. Stop asks for confirmation. They work only when `ruoste.sessions.enabled` is `true`.
 
 ## 2.7.0
 

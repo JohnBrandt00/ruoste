@@ -198,11 +198,19 @@ function createControl(getModel) {
   /** Ask for one line and send it to the owned terminal.
    *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
    *  @returns {Promise<void>} */
-  const sendInput = async (arg) => { void arg; throw new Error('Not implemented'); };
+  const sendInput = async (arg) => {
+    const term = await target(arg);
+    if (!term) return;
+    const text = await vscode.window.showInputBox({ prompt: 'Type a line to send to Claude.' });
+    if (text) term.sendText(text, true);
+  };
   /** Show the owned terminal.
    *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
    *  @returns {Promise<void>} */
-  const showTerminal = async (arg) => { void arg; throw new Error('Not implemented'); };
+  const showTerminal = async (arg) => {
+    const term = await target(arg);
+    if (term) term.show();
+  };
   /** @param {vscode.Terminal} term */
   const forget = (term) => { for (const [id, t] of terminals) if (t === term) terminals.delete(id); };
   return { terminals, forget, ownedTerminal, start, stop, sendInput, showTerminal };
