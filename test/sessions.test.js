@@ -167,6 +167,18 @@ test('activateSessions registers 2 commands and 1 view when the flag is on', asy
   assert.equal(c.seen.views, 1);
 });
 
+test('with the flag off no sessions menu entry is shown, view/title included', () => {
+  const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+  const ungated = [];
+  for (const [where, grp] of Object.entries(pkg.contributes.menus)) {
+    if (where === 'view/item/context') continue;   // no items exist while the flag is off
+    for (const m of grp)
+      if (String(m.command).startsWith('ruoste.sessions.') && !/config\.ruoste\.sessions\.enabled/.test(m.when || ''))
+        ungated.push(`${where}:${m.command}`);
+  }
+  assert.deepEqual(ungated, []);
+});
+
 test('package.json gates every sessions command, keeps the view always visible and the setting application-scoped', () => {
   const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
   const cmds = pkg.contributes.commands.map((c) => c.command).filter((c) => c.startsWith('ruoste.sessions.'));
