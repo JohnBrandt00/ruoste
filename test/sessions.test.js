@@ -795,3 +795,38 @@ test('stop asks nothing for a session RUOSTE did not start', async (t) => {
 });
 
 guardMatrix('ruoste.sessions.stop');
+
+// P2.T3 send input + show terminal
+test('sendInput sends the typed line to an owned terminal and runs it', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  env.policy.input = 'hello';
+  await env.run('ruoste.sessions.sendInput', env.element(sid));
+  assert.deepEqual(term.sent[term.sent.length - 1], ['hello', true]);
+});
+
+for (const [label, input] of /** @type {const} */ ([['empty', ''], ['cancelled', undefined]])) {
+  test(`sendInput sends nothing when the input is ${label}`, async (t) => {
+    const { env, term, sid } = await ownedAndExternal(t);
+    env.policy.input = input;
+    const before = term.sent.length;
+    await env.run('ruoste.sessions.sendInput', env.element(sid));
+    assert.equal(env.calls.inputs, 1);
+    assert.equal(term.sent.length, before);
+  });
+}
+
+test('sendInput warns and asks for no text for a session RUOSTE did not start', async (t) => {
+  const { env } = await ownedAndExternal(t);
+  await env.run('ruoste.sessions.sendInput', env.element(EXT_SID));
+  assert.deepEqual({ warn: env.calls.warn, inputs: env.calls.inputs }, { warn: [GUARD_MSG], inputs: 0 });
+});
+
+test('showTerminal shows the owned terminal', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  const before = term.shown;
+  await env.run('ruoste.sessions.showTerminal', env.element(sid));
+  assert.equal(term.shown, before + 1);
+});
+
+guardMatrix('ruoste.sessions.sendInput');
+guardMatrix('ruoste.sessions.showTerminal');
