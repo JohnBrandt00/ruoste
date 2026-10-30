@@ -676,3 +676,122 @@ test('package.json shows Start in the sessions view title, gated on the flag', (
   assert.match(title[0].when, /view == ruoste\.sessions/);
   assert.match(title[0].when, /config\.ruoste\.sessions\.enabled/);
 });
+
+// P2.T2 ownership guard + stop
+// The four entry paths of a control command (plan §Invocation paths):
+//   inline         tree inline action: the tree element
+//   context        tree context menu: the tree element (+ the selection, as VS Code passes it)
+//   palette        Command Palette, no argument: a quick pick of owned sessions; the picked item's
+//                  sessionId goes through the guard (a forged item stands in for a session not offered)
+//   executeCommand an arbitrary argument: the sessionId string
+const PATHS = ['inline', 'context', 'palette', 'executeCommand'];
+/** What each command does to the owned terminal; a rise in this number means it acted. */
+const EFFECT = {
+  'ruoste.sessions.stop': (/** @type {any} */ term) => term.disposed,
+  'ruoste.sessions.sendInput': (/** @type {any} */ term) => term.sent.filter(([s]) => s === 'hello').length,
+  'ruoste.sessions.showTerminal': (/** @type {any} */ term) => term.shown,
+};
+
+/** Invoke `cmd` for `sid` along one entry path.
+ *  @param {any} env @param {string} cmd @param {string} via @param {string} sid */
+function invoke(env, cmd, via, sid) {
+  const el = env.element(sid);
+  assert.ok(el, `session ${sid} is listed`);
+  if (via === 'inline') return env.run(cmd, el);
+  if (via === 'context') return env.run(cmd, el, [el]);
+  if (via === 'palette') {
+    env.policy.pick = (items) => items.find((i) => i.sessionId === sid) || { label: 'forged', sessionId: sid };
+    return env.run(cmd);
+  }
+  return vscode.commands.executeCommand(cmd, sid);
+}
+
+/** @param {any} env @param {string} cmd @param {any} term @param {() => any} act */
+async function outcome(env, cmd, term, act) {
+  const guarded = () => env.calls.warn.filter((m) => m === GUARD_MSG).length;
+  const before = EFFECT[cmd](term), warned = guarded();
+  await act();
+  return { acted: EFFECT[cmd](term) > before, warned: guarded() > warned };
+}
+
+/** The guard matrix for one command: every path x {owned, external}, plus the equivalence test.
+ *  @param {string} cmd */
+function guardMatrix(cmd) {
+  const expected = { owned: { acted: true, warned: false }, external: { acted: false, warned: true } };
+  for (const via of PATHS) {
+    for (const who of /** @type {const} */ (['owned', 'external'])) {
+      test(`${cmd} on the ${via} path ${who === 'owned' ? 'acts on an owned session' : 'refuses an external session with a warning'}`, async (t) => {
+        const { env, term, sid } = await ownedAndExternal(t);
+        const got = await outcome(env, cmd, term, () => invoke(env, cmd, via, who === 'owned' ? sid : EXT_SID));
+        assert.deepEqual(got, expected[who]);
+      });
+    }
+  }
+  test(`${cmd} reaches the same decision on all four paths for the same session (equivalence)`, async (t) => {
+    /** @type {Record<string, Record<string, any>>} */ const seen = { owned: {}, external: {} };
+    for (const via of PATHS) {
+      for (const who of /** @type {const} */ (['owned', 'external'])) {
+        const { env, term, sid } = await ownedAndExternal(t);
+        seen[who][via] = await outcome(env, cmd, term, () => invoke(env, cmd, via, who === 'owned' ? sid : EXT_SID));
+      }
+    }
+    const same = (o) => Object.fromEntries(PATHS.map((p) => [p, o]));
+    for (const who of ['owned', 'external']) assert.deepEqual(seen[who], same(seen[who].inline), `${who}: all paths agree`);
+    assert.notDeepEqual(seen.owned.inline, seen.external.inline, 'owned and external are told apart');
+  });
+  test(`${cmd} without an argument offers only the sessions RUOSTE started`, async (t) => {
+    const { env, sid } = await ownedAndExternal(t);
+    await env.run(cmd);
+    assert.equal(env.calls.picks.length, 1);
+    assert.deepEqual(env.calls.picks[0].map((i) => i.sessionId), [sid]);
+  });
+  test(`${cmd} refuses an argument that claims owned for a session RUOSTE did not start`, async (t) => {
+    const { env, term } = await ownedAndExternal(t);
+    const forged = { kind: 'session', row: { ...env.element(EXT_SID).row, owned: true } };
+    const got = await outcome(env, cmd, term, () => vscode.commands.executeCommand(cmd, forged));
+    assert.deepEqual(got, { acted: false, warned: true });
+  });
+  test(`${cmd} refuses an unknown session id with a warning`, async (t) => {
+    const { env, term } = await ownedAndExternal(t);
+    const got = await outcome(env, cmd, term, () => vscode.commands.executeCommand(cmd, '00000000-0000-4000-8000-000000000000'));
+    assert.deepEqual(got, { acted: false, warned: true });
+  });
+  test(`${cmd} refuses a session whose terminal has closed`, async (t) => {
+    const { env, term, sid } = await ownedAndExternal(t);
+    env.closed.fire(term);
+    const got = await outcome(env, cmd, term, () => vscode.commands.executeCommand(cmd, sid));
+    assert.deepEqual(got, { acted: false, warned: true });
+  });
+  test(`package.json shows ${cmd} on owned session items only, inline and in the context menu`, () => {
+    const items = readPkg().contributes.menus['view/item/context'].filter((m) => m.command === cmd);
+    assert.ok(items.some((m) => /^inline/.test(m.group || '')), 'inline entry (path a)');
+    assert.ok(items.some((m) => !/^inline/.test(m.group || '')), 'context menu entry (path b)');
+    for (const m of items) {
+      assert.match(m.when, /view == ruoste\.sessions/);
+      assert.match(m.when, /viewItem == claudeSession\.owned\b/);
+    }
+  });
+}
+
+test('stop disposes an owned terminal after the user confirms', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  env.policy.confirm = true;
+  await env.run('ruoste.sessions.stop', env.element(sid));
+  assert.equal(term.disposed, 1);
+  assert.equal(env.calls.warn.length, 1, 'the user was asked to confirm');
+});
+
+test('stop does not dispose the terminal when the user cancels', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  env.policy.confirm = false;
+  await env.run('ruoste.sessions.stop', env.element(sid));
+  assert.equal(term.disposed, 0);
+});
+
+test('stop asks nothing for a session RUOSTE did not start', async (t) => {
+  const { env } = await ownedAndExternal(t);
+  await env.run('ruoste.sessions.stop', env.element(EXT_SID));
+  assert.deepEqual(env.calls.warn, [GUARD_MSG]);
+});
+
+guardMatrix('ruoste.sessions.stop');
