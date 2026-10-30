@@ -555,6 +555,11 @@
           "group": "navigation@2"
         },
         {
+          "command": "ruoste.sessions.start",
+          "when": "view == ruoste.sessions && config.ruoste.sessions.enabled",
+          "group": "navigation@0"
+        },
+        {
           "command": "ruoste.actions.openDashboard",
           "when": "view == ruoste.actions",
           "group": "navigation@0"

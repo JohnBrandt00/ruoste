@@ -1,6 +1,7 @@
 // @ts-check
 'use strict';
 const os = require('node:os');
+const crypto = require('node:crypto');
 const path = require('node:path');
 const vscode = require('vscode');
 const { safeTreeView } = require('../diagnostics');
@@ -93,7 +94,8 @@ class SessionsProvider {
 }
 
 /** Build the view model from disk. Sessions come first; the rest is for the selected one.
- *  @param {{home:string, isAlive:(pid:number)=>boolean, now:()=>number}} deps
+ *  @param {{home:string, isAlive:(pid:number)=>boolean, now:()=>number,
+ *    isOwned?:(sessionId:string)=>boolean}} deps
  *  @returns {{refresh:(selected?:string)=>R.ViewModel,
  *    getAgents:(sessionId:string)=>R.ReadResult<R.AgentRow[]>}} */
 function createStore(deps) {
@@ -115,7 +117,8 @@ function createStore(deps) {
     if (read.ok) {
       sessions = read.value.map((row) => {
         const file = R.findTranscript(deps.home, row.sessionId);
-        return file ? { ...row, ...R.parseTail(R.readTail(file, TAIL_BYTES)) } : row;
+        const owned = { ...row, owned: !!(deps.isOwned && deps.isOwned(row.sessionId)) };
+        return file ? { ...owned, ...R.parseTail(R.readTail(file, TAIL_BYTES)) } : owned;
       });
       previous = new Map(sessions.map((s) => [s.pid, s]));
       lastError = undefined;
@@ -151,7 +154,19 @@ function createControl(getModel) {
   const ownedTerminal = (sessionId) => { void sessionId; void getModel; throw new Error('Not implemented'); };
   /** Pick a workspace folder, open a terminal there and run `claude --session-id <uuid>`.
    *  @returns {Promise<void>} */
-  const start = async () => { throw new Error('Not implemented'); };
+  const start = async () => {
+    if (!(vscode.workspace.workspaceFolders || []).length) {
+      void vscode.window.showInformationMessage('Open a folder to start a Claude session.');
+      return;
+    }
+    const folder = await vscode.window.showWorkspaceFolderPick();
+    if (!folder) return;
+    const sessionId = crypto.randomUUID();
+    const term = vscode.window.createTerminal({ name: 'Claude', cwd: folder.uri });
+    terminals.set(sessionId, term);
+    term.sendText(`claude --session-id ${sessionId}`);
+    term.show();
+  };
   /** Ask, then dispose the owned terminal.
    *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
    *  @returns {Promise<void>} */
@@ -164,7 +179,9 @@ function createControl(getModel) {
    *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
    *  @returns {Promise<void>} */
   const showTerminal = async (arg) => { void arg; throw new Error('Not implemented'); };
-  return { terminals, ownedTerminal, start, stop, sendInput, showTerminal };
+  /** @param {vscode.Terminal} term */
+  const forget = (term) => { for (const [id, t] of terminals) if (t === term) terminals.delete(id); };
+  return { terminals, forget, ownedTerminal, start, stop, sendInput, showTerminal };
 }
 
 /** @param {number} pid @returns {boolean} */
@@ -179,13 +196,16 @@ function pidAlive(pid) {
 function activateSessions(ctx, deps) {
   // read once: the setting text asks for a window reload after a change
   if (!vscode.workspace.getConfiguration('ruoste.sessions').get('enabled', false)) return undefined;
+  /** @type {R.ViewModel} */ let model;
+  const control = createControl(() => model);
   const store = createStore({
     home: (deps && deps.home) || path.join(os.homedir(), '.claude'),
     isAlive: (deps && deps.isAlive) || pidAlive,
     now: (deps && deps.now) || Date.now,
+    isOwned: (id) => control.terminals.has(id),
   });
   /** @type {string|undefined} */ let selected;
-  let model = store.refresh(selected);
+  model = store.refresh(selected);
   /** @param {string} [sel] @returns {R.ViewModel} */
   const getModel = (sel) => {
     if (sel) selected = sel;
@@ -194,7 +214,6 @@ function activateSessions(ctx, deps) {
     return model;
   };
   const provider = new SessionsProvider(() => model, store.getAgents, deps && deps.now);
-  const control = createControl(() => model);
   const view = safeTreeView('ruoste.sessions', { treeDataProvider: provider });
   const poller = new Poller(async () => {
     getModel();
@@ -205,6 +224,7 @@ function activateSessions(ctx, deps) {
   ctx.subscriptions.push(
     ...(view ? [view, view.onDidChangeVisibility((e) => { if (e.visible) void poller.tick(); })] : []),
     { dispose: () => poller.stop() },
+    vscode.window.onDidCloseTerminal((term) => control.forget(term)),
     vscode.commands.registerCommand('ruoste.sessions.refresh', () => {
       getModel(); provider.refresh(); panel.refreshChiefView();
     }),
