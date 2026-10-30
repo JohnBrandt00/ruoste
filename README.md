@@ -424,6 +424,7 @@ See every Claude Code session on this machine, and what each one needs, in the R
 
 - **Sessions list.** Each session shows a status icon: working, needs permission, needs input, waiting or ended. It is read from the files in `~/.claude`. RUOSTE only reads them. It never writes them, and it never reads `.key` files.
 - **Chief View.** **RUOSTE: Open Claude Chief View** opens a panel with the session list, the chief ledger timeline, the agent roster (model, effort, state, status, report, tokens) and the 5-hour and 7-day budget. A report opens only when it is inside the folder of the session.
+- **Start and control.** **RUOSTE: Start Claude Session** (the **+** button in the view title) opens a VS Code terminal in a folder you pick and runs `claude` there. For a session that RUOSTE started, the row has **Show Terminal**, **Send a Line** and **Stop** actions. **Stop** asks first, then closes the terminal. RUOSTE does not control a session that it did not start. Sessions that started before a window reload are not controlled either. These commands work only when the setting is on.
 - **Off by default.** The view is always in the sidebar. While the setting is off, it shows a short message. Set `ruoste.sessions.enabled` to `true`, then **reload the window**. A change to this setting does not take effect until you reload.
 
 ## Spotify

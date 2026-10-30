@@ -154,7 +154,7 @@ test('activateSessions registers nothing when the flag is off', () => {
   assert.deepEqual(c.seen, { commands: 0, views: 0, timers: 0 });
 });
 
-test('activateSessions registers 2 commands and 1 view when the flag is on', async (t) => {
+test('activateSessions registers 6 commands and 1 view when the flag is on', async (t) => {
   await vscode.workspace.getConfiguration('ruoste.sessions').update('enabled', true);
   t.after(() => vscode.workspace.getConfiguration('ruoste.sessions').update('enabled', false));
   const c = countRegistrations();
@@ -163,7 +163,7 @@ test('activateSessions registers 2 commands and 1 view when the flag is on', asy
   finally { c.restore(); }
   assert.ok(r);
   r.poller.stop();
-  assert.equal(c.seen.commands, 2);
+  assert.equal(c.seen.commands, 6);   // refresh, openChiefView + P2 start, stop, sendInput, showTerminal
   assert.equal(c.seen.views, 1);
 });
 
@@ -517,3 +517,326 @@ test('openReport opens only a .md inside <cwd>/.claude/work (allowlist), with th
     inCwdLink: act('.claude/work/in.md'),
   }, { cred: 'ignore', transcript: 'ignore', key: 'ignore', txt: 'ignore', fileLink: 'ignore', junction: 'ignore', inCwdLink: 'ignore' });
 });
+
+// ── P2 process control ──────────────────────────────────────────────────
+const GUARD_MSG = 'RUOSTE did not start this session.';
+const EXT_SID = '99999999-8888-4777-8666-555555555555';   // a session RUOSTE did not start
+const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
+
+/** A fake vscode.Terminal that records what the extension does to it. @param {any} opts */
+function fakeTerminal(opts) {
+  return {
+    name: opts && opts.name, creationOptions: opts || {}, processId: Promise.resolve(4242),
+    /** @type {any[][]} */ sent: [], shown: 0, disposed: 0,
+    /** @param {string} text @param {boolean} [addNewLine] */
+    sendText(text, addNewLine) { this.sent.push([text, addNewLine]); },
+    show() { this.shown++; }, hide() {}, dispose() { this.disposed++; },
+  };
+}
+
+/** Flag on, fake window/terminal/commands API, activate; everything is restored when the test ends.
+ *  `policy` drives the user's answers: folder pick, confirm button, input text, quick pick choice.
+ *  @param {any} t @param {{folders?: string[]}} [o] */
+function controlEnv(t, o = {}) {
+  const home = tmp(t);
+  const W = /** @type {any} */ (vscode.window), C = /** @type {any} */ (vscode.commands), WS = /** @type {any} */ (vscode.workspace);
+  const saved = { window: { ...W }, commands: { ...C }, folders: WS.workspaceFolders };
+  /** @type {Map<string, Function>} */ const commands = new Map();
+  /** @type {ReturnType<typeof fakeTerminal>[]} */ const terminals = [];
+  const closed = new vscode.EventEmitter();
+  const calls = { info: /** @type {string[]} */ ([]), warn: /** @type {string[]} */ ([]),
+    picks: /** @type {any[][]} */ ([]), folderPicks: 0, inputs: 0 };
+  const folders = (o.folders || [path.join(home, 'a'), path.join(home, 'b')])
+    .map((p, index) => ({ uri: vscode.Uri.file(p), name: path.basename(p), index }));
+  /** @type {{folder:any, confirm:boolean, input:string|undefined, pick:(items:any[])=>any}} */
+  const policy = { folder: undefined, confirm: true, input: 'hello', pick: () => undefined };
+  Object.assign(W, {
+    createTerminal: (opts) => { const term = fakeTerminal(opts); terminals.push(term); return term; },
+    onDidCloseTerminal: closed.event,
+    showWorkspaceFolderPick: async () => { calls.folderPicks++; return policy.folder; },
+    showInformationMessage: async (msg) => { calls.info.push(msg); return undefined; },
+    showWarningMessage: async (msg, ...items) => {
+      calls.warn.push(msg);
+      return policy.confirm ? items.find((i) => typeof i === 'string') : undefined;   // the confirm button, if any
+    },
+    showInputBox: async () => { calls.inputs++; return policy.input; },
+    showQuickPick: async (items) => { const list = await items; calls.picks.push(list); return policy.pick(list); },
+    createTreeView: () => ({ dispose() {}, visible: false, onDidChangeVisibility: () => ({ dispose() {} }) }),
+  });
+  WS.workspaceFolders = folders;
+  C.registerCommand = (id, fn) => { commands.set(id, fn); return { dispose() {} }; };
+  C.executeCommand = async (id, ...args) => {
+    const fn = commands.get(id);
+    assert.ok(fn, `${id} is registered`);
+    return fn(...args);
+  };
+  void vscode.workspace.getConfiguration('ruoste.sessions').update('enabled', true);
+  /** @type {any} */ let r;
+  t.after(() => {
+    if (r) r.poller.stop();
+    Object.assign(W, saved.window); Object.assign(C, saved.commands); WS.workspaceFolders = saved.folders;
+    void vscode.workspace.getConfiguration('ruoste.sessions').update('enabled', false);
+  });
+  r = activateSessions(/** @type {any} */ ({ subscriptions: [], extensionUri: vscode.Uri.file('/x') }),
+    { home, isAlive: alive, now: () => NOW });
+  assert.ok(r, 'activateSessions returns the provider when the flag is on');
+  /** @param {string} id @param {...any} args */
+  const run = (id, ...args) => {
+    const fn = commands.get(id);
+    assert.ok(fn, `${id} is registered`);
+    return fn(...args);
+  };
+  /** the tree element for a session, as the view passes it to an item command @param {string} sid */
+  const element = (sid) => r.provider.getChildren().find((e) => e.row.sessionId === sid);
+  /** @param {string} sid */
+  const contextValue = (sid) => { const el = element(sid); return el && r.provider.getTreeItem(el).contextValue; };
+  /** write a live session file for `sid` @param {number} pid @param {string} sid */
+  const writeSession = (pid, sid) => put(path.join(home, 'sessions', `${pid}.json`), sessionFile({ pid, sessionId: sid, cwd: home }));
+  return { home, commands, terminals, closed, calls, folders, policy, run, element, contextValue, writeSession, provider: r.provider };
+}
+
+/** Start a session through the command, in the second folder. @param {ReturnType<typeof controlEnv>} env */
+async function startOwned(env) {
+  env.policy.folder = env.folders[1];
+  await env.run('ruoste.sessions.start');
+  const term = env.terminals[env.terminals.length - 1];
+  assert.ok(term, 'start opened a terminal');
+  const m = /^claude --session-id (\S+)$/.exec(String(term.sent[0] && term.sent[0][0]));
+  assert.ok(m, `start sent "claude --session-id <uuid>", got ${JSON.stringify(term.sent)}`);
+  return { term, sid: m[1] };
+}
+
+/** One owned session (pid 200) and one external session (pid 100, EXT_SID), both listed. @param {any} t */
+async function ownedAndExternal(t) {
+  const env = controlEnv(t);
+  const { term, sid } = await startOwned(env);
+  env.writeSession(200, sid);
+  env.writeSession(100, EXT_SID);
+  await env.run('ruoste.sessions.refresh');
+  return { env, term, sid };
+}
+
+const readPkg = () => JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
+
+// P2.T1 start
+test('start opens a terminal in the picked folder and runs claude with a new v4 session id', async (t) => {
+  const env = controlEnv(t);
+  env.policy.folder = env.folders[1];
+  await env.run('ruoste.sessions.start');
+  assert.equal(env.terminals.length, 1);
+  const cwd = env.terminals[0].creationOptions.cwd;
+  assert.equal(typeof cwd === 'string' ? cwd : cwd && cwd.fsPath, env.folders[1].uri.fsPath);
+  assert.equal(env.terminals[0].sent.length, 1);
+  const [text, addNewLine] = env.terminals[0].sent[0];
+  const m = /^claude --session-id (\S+)$/.exec(text);
+  assert.ok(m, `sent ${JSON.stringify(text)}`);
+  assert.match(m[1], UUID_V4);
+  assert.notEqual(addNewLine, false, 'the command runs (new line is sent)');
+});
+
+test('start gives each new session a different id', async (t) => {
+  const env = controlEnv(t);
+  const a = await startOwned(env);
+  const b = await startOwned(env);
+  assert.notEqual(a.sid, b.sid);
+});
+
+test('start shows an information message and opens no terminal when no folder is open', async (t) => {
+  const env = controlEnv(t, { folders: [] });
+  await env.run('ruoste.sessions.start');
+  assert.equal(env.calls.info.length, 1);
+  assert.equal(env.terminals.length, 0);
+});
+
+test('start opens nothing when the folder pick is cancelled', async (t) => {
+  const env = controlEnv(t);
+  env.policy.folder = undefined;
+  await env.run('ruoste.sessions.start');
+  assert.equal(env.calls.folderPicks, 1);
+  assert.equal(env.terminals.length, 0);
+  assert.deepEqual(env.calls.info, []);
+});
+
+test('a session that start opened is listed as owned and the others as external', async (t) => {
+  const { env, sid } = await ownedAndExternal(t);
+  assert.deepEqual({ owned: env.contextValue(sid), external: env.contextValue(EXT_SID) },
+    { owned: 'claudeSession.owned', external: 'claudeSession.external' });
+});
+
+test('onDidCloseTerminal removes the session from the registry and its row turns external', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  env.closed.fire(term);
+  await env.run('ruoste.sessions.refresh');
+  assert.equal(env.contextValue(sid), 'claudeSession.external');
+});
+
+test('package.json shows Start in the sessions view title, gated on the flag', () => {
+  const title = readPkg().contributes.menus['view/title'].filter((m) => m.command === 'ruoste.sessions.start');
+  assert.equal(title.length, 1);
+  assert.match(title[0].when, /view == ruoste\.sessions/);
+  assert.match(title[0].when, /config\.ruoste\.sessions\.enabled/);
+});
+
+// P2.T2 ownership guard + stop
+// The four entry paths of a control command (plan §Invocation paths):
+//   inline         tree inline action: the tree element
+//   context        tree context menu: the tree element (+ the selection, as VS Code passes it)
+//   palette        Command Palette, no argument: a quick pick of owned sessions; the picked item's
+//                  sessionId goes through the guard (a forged item stands in for a session not offered)
+//   executeCommand an arbitrary argument: the sessionId string
+const PATHS = ['inline', 'context', 'palette', 'executeCommand'];
+/** What each command does to the owned terminal; a rise in this number means it acted. */
+const EFFECT = {
+  'ruoste.sessions.stop': (/** @type {any} */ term) => term.disposed,
+  'ruoste.sessions.sendInput': (/** @type {any} */ term) => term.sent.filter(([s]) => s === 'hello').length,
+  'ruoste.sessions.showTerminal': (/** @type {any} */ term) => term.shown,
+};
+
+/** Invoke `cmd` for `sid` along one entry path.
+ *  @param {any} env @param {string} cmd @param {string} via @param {string} sid */
+function invoke(env, cmd, via, sid) {
+  const el = env.element(sid);
+  assert.ok(el, `session ${sid} is listed`);
+  if (via === 'inline') return env.run(cmd, el);
+  if (via === 'context') return env.run(cmd, el, [el]);
+  if (via === 'palette') {
+    env.policy.pick = (items) => items.find((i) => i.sessionId === sid) || { label: 'forged', sessionId: sid };
+    return env.run(cmd);
+  }
+  return vscode.commands.executeCommand(cmd, sid);
+}
+
+/** @param {any} env @param {string} cmd @param {any} term @param {() => any} act */
+async function outcome(env, cmd, term, act) {
+  const guarded = () => env.calls.warn.filter((m) => m === GUARD_MSG).length;
+  const before = EFFECT[cmd](term), warned = guarded();
+  await act();
+  return { acted: EFFECT[cmd](term) > before, warned: guarded() > warned };
+}
+
+/** The guard matrix for one command: every path x {owned, external}, plus the equivalence test.
+ *  @param {string} cmd */
+function guardMatrix(cmd) {
+  const expected = { owned: { acted: true, warned: false }, external: { acted: false, warned: true } };
+  for (const via of PATHS) {
+    for (const who of /** @type {const} */ (['owned', 'external'])) {
+      test(`${cmd} on the ${via} path ${who === 'owned' ? 'acts on an owned session' : 'refuses an external session with a warning'}`, async (t) => {
+        const { env, term, sid } = await ownedAndExternal(t);
+        const got = await outcome(env, cmd, term, () => invoke(env, cmd, via, who === 'owned' ? sid : EXT_SID));
+        assert.deepEqual(got, expected[who]);
+      });
+    }
+  }
+  test(`${cmd} reaches the same decision on all four paths for the same session (equivalence)`, async (t) => {
+    /** @type {Record<string, Record<string, any>>} */ const seen = { owned: {}, external: {} };
+    for (const via of PATHS) {
+      for (const who of /** @type {const} */ (['owned', 'external'])) {
+        const { env, term, sid } = await ownedAndExternal(t);
+        seen[who][via] = await outcome(env, cmd, term, () => invoke(env, cmd, via, who === 'owned' ? sid : EXT_SID));
+      }
+    }
+    const same = (o) => Object.fromEntries(PATHS.map((p) => [p, o]));
+    for (const who of ['owned', 'external']) assert.deepEqual(seen[who], same(seen[who].inline), `${who}: all paths agree`);
+    assert.notDeepEqual(seen.owned.inline, seen.external.inline, 'owned and external are told apart');
+  });
+  test(`${cmd} without an argument offers only the sessions RUOSTE started`, async (t) => {
+    const { env, sid } = await ownedAndExternal(t);
+    await env.run(cmd);
+    assert.equal(env.calls.picks.length, 1);
+    assert.deepEqual(env.calls.picks[0].map((i) => i.sessionId), [sid]);
+  });
+  test(`${cmd} refuses an argument that claims owned for a session RUOSTE did not start`, async (t) => {
+    const { env, term } = await ownedAndExternal(t);
+    const forged = { kind: 'session', row: { ...env.element(EXT_SID).row, owned: true } };
+    const got = await outcome(env, cmd, term, () => vscode.commands.executeCommand(cmd, forged));
+    assert.deepEqual(got, { acted: false, warned: true });
+  });
+  test(`${cmd} refuses an unknown session id with a warning`, async (t) => {
+    const { env, term } = await ownedAndExternal(t);
+    const got = await outcome(env, cmd, term, () => vscode.commands.executeCommand(cmd, '00000000-0000-4000-8000-000000000000'));
+    assert.deepEqual(got, { acted: false, warned: true });
+  });
+  test(`${cmd} refuses a session whose terminal has closed`, async (t) => {
+    const { env, term, sid } = await ownedAndExternal(t);
+    env.closed.fire(term);
+    const got = await outcome(env, cmd, term, () => vscode.commands.executeCommand(cmd, sid));
+    assert.deepEqual(got, { acted: false, warned: true });
+  });
+  test(`package.json shows ${cmd} on owned session items only, inline and in the context menu`, () => {
+    const items = readPkg().contributes.menus['view/item/context'].filter((m) => m.command === cmd);
+    assert.ok(items.some((m) => /^inline/.test(m.group || '')), 'inline entry (path a)');
+    assert.ok(items.some((m) => !/^inline/.test(m.group || '')), 'context menu entry (path b)');
+    for (const m of items) {
+      assert.match(m.when, /view == ruoste\.sessions/);
+      assert.match(m.when, /viewItem == claudeSession\.owned\b/);
+    }
+  });
+}
+
+test('stop disposes an owned terminal after the user confirms', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  env.policy.confirm = true;
+  await env.run('ruoste.sessions.stop', env.element(sid));
+  assert.equal(term.disposed, 1);
+  assert.equal(env.calls.warn.length, 1, 'the user was asked to confirm');
+});
+
+test('stop does not dispose the terminal when the user cancels', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  env.policy.confirm = false;
+  await env.run('ruoste.sessions.stop', env.element(sid));
+  assert.equal(term.disposed, 0);
+});
+
+test('stop asks nothing for a session RUOSTE did not start', async (t) => {
+  const { env } = await ownedAndExternal(t);
+  await env.run('ruoste.sessions.stop', env.element(EXT_SID));
+  assert.deepEqual(env.calls.warn, [GUARD_MSG]);
+});
+
+guardMatrix('ruoste.sessions.stop');
+
+// P2.T3 send input + show terminal
+test('sendInput sends the typed line to an owned terminal and runs it', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  env.policy.input = 'hello';
+  await env.run('ruoste.sessions.sendInput', env.element(sid));
+  assert.deepEqual(term.sent[term.sent.length - 1], ['hello', true]);
+});
+
+for (const [label, input] of /** @type {const} */ ([['empty', ''], ['cancelled', undefined]])) {
+  test(`sendInput sends nothing when the input is ${label}`, async (t) => {
+    const { env, term, sid } = await ownedAndExternal(t);
+    env.policy.input = input;
+    const before = term.sent.length;
+    await env.run('ruoste.sessions.sendInput', env.element(sid));
+    assert.equal(env.calls.inputs, 1);
+    assert.equal(term.sent.length, before);
+  });
+}
+
+test('sendInput warns and asks for no text for a session RUOSTE did not start', async (t) => {
+  const { env } = await ownedAndExternal(t);
+  await env.run('ruoste.sessions.sendInput', env.element(EXT_SID));
+  assert.deepEqual({ warn: env.calls.warn, inputs: env.calls.inputs }, { warn: [GUARD_MSG], inputs: 0 });
+});
+
+test('showTerminal shows the owned terminal', async (t) => {
+  const { env, term, sid } = await ownedAndExternal(t);
+  const before = term.shown;
+  await env.run('ruoste.sessions.showTerminal', env.element(sid));
+  assert.equal(term.shown, before + 1);
+});
+
+guardMatrix('ruoste.sessions.sendInput');
+guardMatrix('ruoste.sessions.showTerminal');
+
+// P2-fix1: palette path with an empty registry
+for (const cmd of ['ruoste.sessions.stop', 'ruoste.sessions.sendInput', 'ruoste.sessions.showTerminal']) {
+  test(`${cmd} without an argument warns and opens no quick pick when RUOSTE started no session`, async (t) => {
+    const env = controlEnv(t);
+    await env.run(cmd);
+    assert.deepEqual({ warn: env.calls.warn, picks: env.calls.picks.length, inputs: env.calls.inputs },
+      { warn: ['RUOSTE did not start a session.'], picks: 0, inputs: 0 });
+  });
+}

@@ -1,6 +1,7 @@
 // @ts-check
 'use strict';
 const os = require('node:os');
+const crypto = require('node:crypto');
 const path = require('node:path');
 const vscode = require('vscode');
 const { safeTreeView } = require('../diagnostics');
@@ -93,7 +94,8 @@ class SessionsProvider {
 }
 
 /** Build the view model from disk. Sessions come first; the rest is for the selected one.
- *  @param {{home:string, isAlive:(pid:number)=>boolean, now:()=>number}} deps
+ *  @param {{home:string, isAlive:(pid:number)=>boolean, now:()=>number,
+ *    isOwned?:(sessionId:string)=>boolean}} deps
  *  @returns {{refresh:(selected?:string)=>R.ViewModel,
  *    getAgents:(sessionId:string)=>R.ReadResult<R.AgentRow[]>}} */
 function createStore(deps) {
@@ -115,7 +117,8 @@ function createStore(deps) {
     if (read.ok) {
       sessions = read.value.map((row) => {
         const file = R.findTranscript(deps.home, row.sessionId);
-        return file ? { ...row, ...R.parseTail(R.readTail(file, TAIL_BYTES)) } : row;
+        const owned = { ...row, owned: !!(deps.isOwned && deps.isOwned(row.sessionId)) };
+        return file ? { ...owned, ...R.parseTail(R.readTail(file, TAIL_BYTES)) } : owned;
       });
       previous = new Map(sessions.map((s) => [s.pid, s]));
       lastError = undefined;
@@ -136,6 +139,89 @@ function createStore(deps) {
   return { refresh, getAgents };
 }
 
+/** Shown when a control command gets a session that this window did not start. */
+const GUARD_MESSAGE = 'RUOSTE did not start this session.';
+/** Shown when a control command runs from the palette and this window owns no session. */
+const NONE_MESSAGE = 'RUOSTE did not start a session.';
+
+/** Terminals this window started, by sessionId, and the four control commands (P2).
+ *  Only a terminal in this registry can be stopped, sent input or shown: an argument that claims
+ *  `owned` is never trusted. Quick pick items carry `sessionId`; a picked item goes through the guard too.
+ *  @param {() => R.ViewModel} getModel */
+function createControl(getModel) {
+  /** @type {Map<string, vscode.Terminal>} */
+  const terminals = new Map();
+  /** The terminal RUOSTE started for `sessionId`; otherwise show GUARD_MESSAGE and return undefined.
+   *  @param {unknown} sessionId @returns {vscode.Terminal|undefined} */
+  const ownedTerminal = (sessionId) => {
+    const term = typeof sessionId === 'string' ? terminals.get(sessionId) : undefined;
+    if (!term) void vscode.window.showWarningMessage(GUARD_MESSAGE);
+    return term;
+  };
+  /** The owned terminal for a command argument; every entry path ends in `ownedTerminal`.
+   *  @param {unknown} arg @returns {Promise<vscode.Terminal|undefined>} */
+  const target = async (arg) => {
+    if (arg === undefined) {
+      if (!terminals.size) {
+        void vscode.window.showWarningMessage(NONE_MESSAGE);
+        return undefined;
+      }
+      const rows = getModel().sessions;
+      const items = [...terminals.keys()].map((sessionId) => {
+        const row = rows.find((r) => r.sessionId === sessionId);
+        return { label: row ? row.name : sessionId, description: row ? row.cwd : '', sessionId };
+      });
+      const picked = await vscode.window.showQuickPick(items, { placeHolder: 'Select a Claude session' });
+      return picked ? ownedTerminal(picked.sessionId) : undefined;
+    }
+    const el = /** @type {any} */ (arg);
+    return ownedTerminal(typeof arg === 'string' ? arg : el && el.row ? el.row.sessionId : undefined);
+  };
+  /** Pick a workspace folder, open a terminal there and run `claude --session-id <uuid>`.
+   *  @returns {Promise<void>} */
+  const start = async () => {
+    if (!(vscode.workspace.workspaceFolders || []).length) {
+      void vscode.window.showInformationMessage('Open a folder to start a Claude session.');
+      return;
+    }
+    const folder = await vscode.window.showWorkspaceFolderPick();
+    if (!folder) return;
+    const sessionId = crypto.randomUUID();
+    const term = vscode.window.createTerminal({ name: 'Claude', cwd: folder.uri });
+    terminals.set(sessionId, term);
+    term.sendText(`claude --session-id ${sessionId}`);
+    term.show();
+  };
+  /** Ask, then dispose the owned terminal.
+   *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
+   *  @returns {Promise<void>} */
+  const stop = async (arg) => {
+    const term = await target(arg);
+    if (!term) return;
+    const ok = await vscode.window.showWarningMessage('Stop this Claude session?', { modal: true }, 'Stop');
+    if (ok === 'Stop') term.dispose();
+  };
+  /** Ask for one line and send it to the owned terminal.
+   *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
+   *  @returns {Promise<void>} */
+  const sendInput = async (arg) => {
+    const term = await target(arg);
+    if (!term) return;
+    const text = await vscode.window.showInputBox({ prompt: 'Type a line to send to Claude.' });
+    if (text) term.sendText(text, true);
+  };
+  /** Show the owned terminal.
+   *  @param {unknown} [arg] tree element, sessionId string, or nothing (quick pick of owned sessions)
+   *  @returns {Promise<void>} */
+  const showTerminal = async (arg) => {
+    const term = await target(arg);
+    if (term) term.show();
+  };
+  /** @param {vscode.Terminal} term */
+  const forget = (term) => { for (const [id, t] of terminals) if (t === term) terminals.delete(id); };
+  return { terminals, forget, ownedTerminal, start, stop, sendInput, showTerminal };
+}
+
 /** @param {number} pid @returns {boolean} */
 function pidAlive(pid) {
   try { process.kill(pid, 0); return true; }
@@ -148,13 +234,16 @@ function pidAlive(pid) {
 function activateSessions(ctx, deps) {
   // read once: the setting text asks for a window reload after a change
   if (!vscode.workspace.getConfiguration('ruoste.sessions').get('enabled', false)) return undefined;
+  /** @type {R.ViewModel} */ let model;
+  const control = createControl(() => model);
   const store = createStore({
     home: (deps && deps.home) || path.join(os.homedir(), '.claude'),
     isAlive: (deps && deps.isAlive) || pidAlive,
     now: (deps && deps.now) || Date.now,
+    isOwned: (id) => control.terminals.has(id),
   });
   /** @type {string|undefined} */ let selected;
-  let model = store.refresh(selected);
+  model = store.refresh(selected);
   /** @param {string} [sel] @returns {R.ViewModel} */
   const getModel = (sel) => {
     if (sel) selected = sel;
@@ -173,6 +262,7 @@ function activateSessions(ctx, deps) {
   ctx.subscriptions.push(
     ...(view ? [view, view.onDidChangeVisibility((e) => { if (e.visible) void poller.tick(); })] : []),
     { dispose: () => poller.stop() },
+    vscode.window.onDidCloseTerminal((term) => control.forget(term)),
     vscode.commands.registerCommand('ruoste.sessions.refresh', () => {
       getModel(); provider.refresh(); panel.refreshChiefView();
     }),
@@ -180,8 +270,12 @@ function activateSessions(ctx, deps) {
       const id = arg && (arg.row ? arg.row.sessionId : arg.sessionId);
       panel.openChiefView(ctx, getModel, typeof id === 'string' ? id : undefined);
     }),
+    vscode.commands.registerCommand('ruoste.sessions.start', () => control.start()),
+    vscode.commands.registerCommand('ruoste.sessions.stop', (arg) => control.stop(arg)),
+    vscode.commands.registerCommand('ruoste.sessions.sendInput', (arg) => control.sendInput(arg)),
+    vscode.commands.registerCommand('ruoste.sessions.showTerminal', (arg) => control.showTerminal(arg)),
   );
   return { provider, poller };
 }
 
-module.exports = { activateSessions, Poller, SessionsProvider, createStore };
+module.exports = { activateSessions, Poller, SessionsProvider, createStore, createControl, GUARD_MESSAGE };
