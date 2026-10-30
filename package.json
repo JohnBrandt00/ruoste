@@ -1255,7 +1255,7 @@
     "preview": "node preview/render.mjs",
     "package": "vsce package --allow-missing-repository --no-dependencies",
     "all": "npm run build && npm run check && npm run package",
-    "ui": "node preview/spotify_ui.mjs && node preview/pipelines_ui.mjs && node preview/work_ui.mjs"
+    "ui": "node preview/spotify_ui.mjs && node preview/pipelines_ui.mjs && node preview/work_ui.mjs && node preview/sessions_ui.mjs"
   },
   "devDependencies": {
     "@phosphor-icons/core": "^2.1.1",

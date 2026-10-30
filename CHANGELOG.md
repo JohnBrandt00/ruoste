@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+**Claude sessions.**
+
+- A new **Claude Sessions** view lists your Claude Code sessions with their status, including **needs permission**. A **Chief View** panel shows the chief ledger timeline, the agent roster and the budget. It is off by default. Set `ruoste.sessions.enabled` to `true` and reload the window. A change to the setting needs a window reload.
+
 ## 2.7.0
 
 **Issues and pull requests, three ways deeper.**
