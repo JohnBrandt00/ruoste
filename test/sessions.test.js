@@ -476,3 +476,17 @@ test('createStore builds a model that holds no transcript message text', (t) => 
   assert.equal(model.agents.ok && model.agents.value.length, 1);
   assert.ok(!JSON.stringify(model).includes(secret));
 });
+
+test('openReport never opens a <pid>.<hash>.key file, even when the session cwd is the home folder', (t) => {
+  const home = tmp(t);
+  const key = path.join(home, '.claude', 'sessions', '100.abc123.key');
+  fs.mkdirSync(path.dirname(key), { recursive: true });
+  fs.writeFileSync(key, 'secret');
+  const ok = path.join(home, 'reports', 'r.md');   // control: a normal report in the same cwd opens
+  fs.mkdirSync(path.dirname(ok), { recursive: true });
+  fs.writeFileSync(ok, '# r');
+  const model = /** @type {any} */ ({ sessions: [{ sessionId: SID, pid: 100, cwd: home, name: 'x', status: 'working', owned: false }] });
+  assert.equal(handleWebviewMessage({ type: 'openReport', sessionId: SID, path: 'reports/r.md' }, model).action, 'open');
+  const r = handleWebviewMessage({ type: 'openReport', sessionId: SID, path: '.claude/sessions/100.abc123.key' }, model);
+  assert.equal(r.action, 'ignore');
+});
