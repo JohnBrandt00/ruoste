@@ -522,12 +522,12 @@
       "view/title": [
         {
           "command": "ruoste.sessions.openChiefView",
-          "when": "view == ruoste.sessions",
+          "when": "view == ruoste.sessions && config.ruoste.sessions.enabled",
           "group": "navigation@1"
         },
         {
           "command": "ruoste.sessions.refresh",
-          "when": "view == ruoste.sessions",
+          "when": "view == ruoste.sessions && config.ruoste.sessions.enabled",
           "group": "navigation@2"
         },
         {
