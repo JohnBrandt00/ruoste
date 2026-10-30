@@ -8,7 +8,7 @@ const nonce = () => Array.from({ length: 32 },
   () => 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)]).join('');
 
 /** Validate a message from the webview. Returns what the host must do. A report opens
- *  only when its real path is inside the cwd of a session we know.
+ *  only when its real path is a .md file inside realpath(<session cwd>/.claude/work).
  *  @param {any} msg @param {import('./read').ViewModel} model
  *  @returns {{action:'select', sessionId:string}|{action:'open', file:string}|{action:'ignore'}} */
 function handleWebviewMessage(msg, model) {
@@ -19,10 +19,10 @@ function handleWebviewMessage(msg, model) {
   if (msg.type === 'select') return { action: 'select', sessionId: row.sessionId };
   if (msg.type === 'openReport' && typeof msg.path === 'string' && row.cwd) {
     try {
-      const root = fs.realpathSync(row.cwd);
+      const root = fs.realpathSync(path.join(row.cwd, '.claude', 'work'));
       const file = fs.realpathSync(path.resolve(row.cwd, msg.path));
       const rel = path.relative(root, file);
-      if (/\.key$/i.test(file)) return ignore;   // session secrets: never open
+      if (path.extname(file).toLowerCase() !== '.md') return ignore;   // allowlist: reports are .md only
       if (rel && !rel.startsWith('..') && !path.isAbsolute(rel)) return { action: 'open', file };
     } catch { /* missing file or cwd: refuse */ }
   }
