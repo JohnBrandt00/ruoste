@@ -830,3 +830,13 @@ test('showTerminal shows the owned terminal', async (t) => {
 
 guardMatrix('ruoste.sessions.sendInput');
 guardMatrix('ruoste.sessions.showTerminal');
+
+// P2-fix1: palette path with an empty registry
+for (const cmd of ['ruoste.sessions.stop', 'ruoste.sessions.sendInput', 'ruoste.sessions.showTerminal']) {
+  test(`${cmd} without an argument warns and opens no quick pick when RUOSTE started no session`, async (t) => {
+    const env = controlEnv(t);
+    await env.run(cmd);
+    assert.deepEqual({ warn: env.calls.warn, picks: env.calls.picks.length, inputs: env.calls.inputs },
+      { warn: ['RUOSTE did not start a session.'], picks: 0, inputs: 0 });
+  });
+}
